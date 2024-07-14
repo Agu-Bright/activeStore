@@ -149,6 +149,8 @@ ul {
 /** Overview bgi **/
 .overview-bgi {
   position: relative;
+   background: linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%);
+  ;
 }
 
 .overview-bgi:before {
@@ -158,7 +160,7 @@ ul {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background: linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%);
 }
 
 .delay-02s {
@@ -3170,7 +3172,7 @@ footer {
 
 /** Contact section start **/
 .contact-section {
-  background: rgba(13, 12, 12, 0.04) url(../img/img-3.jpg) top left repeat;
+  background: #40798c;
   background-size: cover;
   top: 0;
   width: 100%;
@@ -3196,7 +3198,7 @@ footer {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(7, 1, 1, 0.85); /* Black color with 50% opacity */
+  /* Black color with 50% opacity */
   /* You can adjust the rgba values to change the color and intensity */
   /* z-index: 1; */
 }

@@ -27,50 +27,6 @@ export default function Home() {
     return shuffled.slice(0, count);
   };
 
-  // useEffect(() => {
-  //   window.__lc = window.__lc || {};
-  //   window.__lc.license = 18231096;
-  //   window.__lc.integration_name = "manual_onboarding";
-  //   window.__lc.product_name = "livechat";
-  //   (function (n, t, c) {
-  //     function i(n) {
-  //       return e._h ? e._h.apply(null, n) : e._q.push(n);
-  //     }
-  //     var e = {
-  //       _q: [],
-  //       _h: null,
-  //       _v: "2.0",
-  //       on: function () {
-  //         i(["on", c.call(arguments)]);
-  //       },
-  //       once: function () {
-  //         i(["once", c.call(arguments)]);
-  //       },
-  //       off: function () {
-  //         i(["off", c.call(arguments)]);
-  //       },
-  //       get: function () {
-  //         if (!e._h)
-  //           throw new Error(
-  //             "[LiveChatWidget] You can't use getters before load."
-  //           );
-  //         return i(["get", c.call(arguments)]);
-  //       },
-  //       call: function () {
-  //         i(["call", c.call(arguments)]);
-  //       },
-  //       init: function () {
-  //         var n = t.createElement("script");
-  //         (n.async = !0),
-  //           (n.type = "text/javascript"),
-  //           (n.src = "https://cdn.livechatinc.com/tracking.js"),
-  //           t.head.appendChild(n);
-  //       },
-  //     };
-  //     !n.__lc.asyncInit && e.init(), (n.LiveChatWidget = n.LiveChatWidget || e);
-  //   })(window, document, [].slice);
-  // }, []);
-
   useEffect(() => {
     const TMDB_API_KEY = " d70595ef3e351a97e5665f2de45fcd45";
     const TMDB_ACCESS_TOKEN =
@@ -139,9 +95,10 @@ export default function Home() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          background: "#EC5766",
         }}
       >
-        <CircularProgress style={{ color: "orange" }} />
+        <CircularProgress style={{ color: "#CDC5B4" }} />
       </div>
     );
   }

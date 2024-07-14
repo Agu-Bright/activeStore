@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import { signIn } from "next-auth/react";
 import { Formik } from "formik";
 import { CircularProgress } from "@mui/material";
@@ -12,8 +12,6 @@ import { Bounce } from "react-toastify"; // Import the Bounce transition if it's
 import "react-toastify/dist/ReactToastify.css";
 import { useSession } from "next-auth/react";
 import { RestaurantContext } from "@context/RestaurantContext";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const postData = async (data) => {
   const Response = await fetch("/api/auth/signup", {
@@ -25,328 +23,15 @@ const postData = async (data) => {
 
 const page = () => {
   const router = useRouter();
-  const [viewPassword, setViewPassword] = useState(false);
   const { data: session } = useSession();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [values, setValues] = useState({
-    accountName: "",
-    email: "",
-    phoneNumber: "",
-    withdrawalPassword: "",
-    password: "",
-    confirmPassword: "",
-    sex: "",
-    referalCode: "",
-  });
-
+  const { restaurantIntent } = useContext(RestaurantContext);
   useEffect(() => {
     if (session?.user) {
-      router.push("/user");
+      router.push(`${restaurantIntent ? "/pricing" : "/"}`);
     }
   }, [session]);
-
-  const [state, setState] = useState({
-    accountName: {
-      status: false,
-      msg: "Username must be between 6 characters and 25 characters",
-    },
-    email: {
-      status: false,
-      msg: "email must be valid",
-    },
-    phoneNumber: { status: false, msg: "Invalid Phone Number" },
-    withdrawalPassword: {
-      status: false,
-      msg: "Withdrawal Password must be between 6 characters to 32 characters",
-    },
-    password: {
-      status: false,
-      msg: "Password must be between 6 characters to 32 characters",
-    },
-    confirmPassword: { status: false, msg: "Confirm Password does not match" },
-    sex: { status: false, msg: "select a gender" },
-    referalCode: { status: false, msg: "Invalid Referral code" },
-  });
-
-  const handleChange = (e) => {
-    if (
-      e.target.name === "accountName" ||
-      e.target.name === "phoneNumber" ||
-      e.target.name === "email"
-    ) {
-      //validate before set
-      setValues((prev) => {
-        return { ...prev, [e.target.name]: e.target.value.trim() };
-      });
-    }
-    if (
-      e.target.name === "withdrawalPassword" ||
-      e.target.name === "password" ||
-      e.target.name === "confirmPassword" ||
-      e.target.name === "referalCode" ||
-      e.target.name === "sex"
-    ) {
-      //validate before set
-      setValues((prev) => {
-        return { ...prev, [e.target.name]: e.target.value };
-      });
-    }
-    console.log(values);
-  };
-
-  useEffect(() => {
-    ///===============account name =====================
-    if (
-      values.accountName.split("").length >= 6 &&
-      values.accountName.split("").length <= 25
-    ) {
-      setState((prev) => {
-        return {
-          ...prev,
-          accountName: {
-            status: true,
-            msg: "valid",
-          },
-        };
-      });
-    } else if (
-      values.accountName.split("").length < 6 ||
-      values.accountName.split("").length > 25
-    ) {
-      setState((prev) => {
-        return {
-          ...prev,
-          accountName: {
-            status: false,
-            msg: "Username must be between 6 characters and 25 characters",
-          },
-        };
-      });
-    }
-    //==================email================================
-    if (
-      values.email.split("").length >= 6 &&
-      values.email.split("").length <= 25
-    ) {
-      setState((prev) => {
-        return {
-          ...prev,
-          email: {
-            status: true,
-            msg: "valid",
-          },
-        };
-      });
-    } else if (
-      values.email.split("").length < 6 ||
-      values.email.split("").length > 25
-    ) {
-      setState((prev) => {
-        return {
-          ...prev,
-          email: {
-            status: false,
-            msg: "Email must be valid",
-          },
-        };
-      });
-    }
-    // ====================== phone number ===============
-    if (
-      values.phoneNumber.split("").length >= 6 &&
-      values.phoneNumber.split("").length <= 25
-    ) {
-      setState((prev) => {
-        return {
-          ...prev,
-          phoneNumber: {
-            status: true,
-            msg: "valid",
-          },
-        };
-      });
-    } else if (
-      values.phoneNumber.split("").length < 6 ||
-      values.phoneNumber.split("").length > 25
-    ) {
-      setState((prev) => {
-        return {
-          ...prev,
-          phoneNumber: { status: false, msg: "Invalid Phone Number" },
-        };
-      });
-    }
-    // ====================== withdrawal password ===============
-    if (
-      values.withdrawalPassword.split("").length >= 6 &&
-      values.withdrawalPassword.split("").length <= 25
-    ) {
-      setState((prev) => {
-        return {
-          ...prev,
-          withdrawalPassword: {
-            status: true,
-            msg: "valid",
-          },
-        };
-      });
-    } else if (
-      values.withdrawalPassword.split("").length < 6 ||
-      values.withdrawalPassword.split("").length > 25
-    ) {
-      setState((prev) => {
-        return {
-          ...prev,
-          withdrawalPassword: {
-            status: false,
-            msg: "Withdrawal Password must be between 6 characters to 32 characters",
-          },
-        };
-      });
-    }
-    // ====================== password ===============
-    if (
-      values.password.split("").length >= 6 &&
-      values.password.split("").length <= 25
-    ) {
-      setState((prev) => {
-        return {
-          ...prev,
-          password: {
-            status: true,
-            msg: "valid",
-          },
-        };
-      });
-    } else if (
-      values.password.split("").length < 6 ||
-      values.password.split("").length > 25
-    ) {
-      setState((prev) => {
-        return {
-          ...prev,
-          password: {
-            status: false,
-            msg: "Password must be between 6 characters to 32 characters",
-          },
-        };
-      });
-    }
-    // ====================== confirm password ===============
-    if (
-      values.confirmPassword.split("").length >= 6 &&
-      values.confirmPassword.split("").length <= 25
-    ) {
-      setState((prev) => {
-        return {
-          ...prev,
-          confirmPassword: {
-            status: true,
-            msg: "valid",
-          },
-        };
-      });
-    } else if (
-      values.confirmPassword.split("").length < 6 ||
-      values.confirmPassword.split("").length > 25
-    ) {
-      setState((prev) => {
-        return {
-          ...prev,
-          confirmPassword: {
-            status: false,
-            msg: "Confirm Password does not match",
-          },
-        };
-      });
-    }
-    // ====================== gender ===============
-    if (values.sex) {
-      setState((prev) => {
-        return {
-          ...prev,
-          sex: {
-            status: true,
-            msg: "valid",
-          },
-        };
-      });
-    } else if (values.sex) {
-      setState((prev) => {
-        return {
-          ...prev,
-          sex: { status: false, msg: "select a gender" },
-        };
-      });
-    }
-
-    // ====================== referral code ===============
-    if (values.referalCode.split("").length === 6) {
-      setState((prev) => {
-        return {
-          ...prev,
-          referalCode: {
-            status: true,
-            msg: "valid",
-          },
-        };
-      });
-    } else if (
-      values.referalCode.split("").length > 6 ||
-      values.referalCode.split("").length > 6
-    ) {
-      setState((prev) => {
-        return {
-          ...prev,
-          referalCode: { status: false, msg: "Invalid Referral code" },
-        };
-      });
-    }
-  }, [values]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      setIsSubmitting(true);
-      const data = await postData(values);
-      if (data.ok) {
-        const status = await signIn("credentials", {
-          redirect: false,
-          accountName: values.accountName,
-          password: values.password,
-          callbackUrl: `/user`,
-        });
-        if (status.ok) {
-          setIsSubmitting(false);
-          router.push("/user");
-        }
-      }
-      if (!data.ok) {
-        setIsSubmitting(false);
-        const res = await data.json();
-        console.log(res);
-        toast.error(res.message, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-      }
-    } catch (error) {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
-    <div
-      className="contact-section overview-bgi"
-      style={{ flexDirection: "column" }}
-    >
+    <div className="contact-section overview-bgi">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -356,283 +41,249 @@ const page = () => {
               <div className="details">
                 {/* <!-- Logo--> */}
                 <a href="/" style={{ fontWeight: "900", fontSize: "1.5em" }}>
-                  {/*
-                   <img
-                    src="img/logos/white-logo.png"
-                    className="cm-logo"
-                    alt="black-logo"
-                  /> 
-                  */}
-                  Registration
+                  Active Store{" "}
                 </a>
+                <h2 style={{ fontWeight: "800", color: "#8075ff" }}>
+                  Create an account{" "}
+                </h2>
                 {/* <!-- Name --> */}
-                <h3>Please Enter your details to register an account</h3>
+
+                <h3 style={{ fontSize: "0.8em" }}> </h3>
+                {/* <!-- Name --> */}
+
                 {/* <!-- Form start--> */}
+                {restaurantIntent && (
+                  <p style={{ textDecoration: "underline" }}>
+                    {" "}
+                    Sign in to access the pricing page{" "}
+                  </p>
+                )}
+                <Formik
+                  initialValues={{
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    password: "",
+                    confirmPassword: "",
+                  }}
+                  validate={(values) => {
+                    const errors = {};
+                    if (!values.email) {
+                      errors.email = "Required";
+                    } else if (
+                      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
+                        values.email
+                      )
+                    ) {
+                      errors.email = "Invalid email address";
+                    }
+                    if (!values.firstName) {
+                      errors.firstName = "Required";
+                    }
+                    if (!values.lastName) {
+                      errors.lastName = "Required";
+                    }
+                    if (!values.password) {
+                      errors.password = "Required";
+                    }
+                    if (!values.confirmPassword) {
+                      errors.confirmPassword = "Required";
+                    }
+                    if (
+                      values.password &&
+                      values.confirmPassword &&
+                      values.password !== values.confirmPassword
+                    ) {
+                      errors.confirmPassword = "passwords dont match";
+                      errors.password = "passwords dont match";
+                    }
+                    return errors;
+                  }}
+                  onSubmit={async (values, { setSubmitting }) => {
+                    // setTimeout(() => {
+                    //   alert(JSON.stringify(values, null, 2));
+                    //   setSubmitting(false);
+                    // }, 400);
+                    try {
+                      const data = await postData(values);
 
-                <form onSubmit={handleSubmit}>
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      name="accountName"
-                      className="input-text"
-                      placeholder="Account Name"
-                      onChange={handleChange}
-                      value={values.accountName}
-                    />
+                      if (data.ok) {
+                        const status = await signIn("credentials", {
+                          redirect: false,
+                          email: values.email,
+                          password: values.password,
+                          callbackUrl: `${restaurantIntent ? "/pricing" : "/"}`,
+                        });
+                        if (status.ok) {
+                          router.push(`${restaurantIntent ? "/pricing" : "/"}`);
+                          setSubmitting(false);
+                        }
+                      }
+                      if (!data.ok) {
+                        const res = await data.json();
+                        console.log(res);
+                        toast.error(res.message, {
+                          position: "top-center",
+                          autoClose: 5000,
+                          hideProgressBar: true,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "light",
+                          transition: Bounce,
+                        });
+                        setSubmitting(false);
+                      }
+                    } catch (error) {
+                      console.log(error);
+                    }
+                  }}
+                >
+                  {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting,
+                  }) => (
+                    <form onSubmit={handleSubmit}>
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          name="firstName"
+                          className="input-text"
+                          placeholder="First Name"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.firstName}
+                        />
+                        <span style={{ color: "red" }}>
+                          {" "}
+                          {errors.firstName &&
+                            touched.firstName &&
+                            errors.firstName}
+                        </span>
+                      </div>
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          name="lastName"
+                          className="input-text"
+                          placeholder="Last Name"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.lastName}
+                        />
+                        <span style={{ color: "red" }}>
+                          {" "}
+                          {errors.lastName &&
+                            touched.lastName &&
+                            errors.lastName}
+                        </span>
+                      </div>
+                      <div className="form-group">
+                        <input
+                          type="email"
+                          name="email"
+                          className="input-text"
+                          placeholder="Email Address"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.email}
+                        />
+                        <span style={{ color: "red" }}>
+                          {" "}
+                          {errors.email && touched.email && errors.email}
+                        </span>
+                      </div>
+                      <div className="form-group">
+                        <input
+                          type="password"
+                          name="password"
+                          className="input-text"
+                          placeholder="Password"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.password}
+                        />
+                        <span style={{ color: "red" }}>
+                          {" "}
+                          {errors.password &&
+                            touched.password &&
+                            errors.password}
+                        </span>
+                      </div>
+                      <div className="form-group">
+                        <input
+                          type="password"
+                          name="confirmPassword"
+                          className="input-text"
+                          placeholder="Confirm Password"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.confirmPassword}
+                        />
+                        <span style={{ color: "red" }}>
+                          {" "}
+                          {errors.confirmPassword &&
+                            touched.confirmPassword &&
+                            errors.confirmPassword}
+                        </span>
+                      </div>
+                      <div className="form-group mb-0">
+                        <button
+                          type="submit"
+                          className="btn-md button-theme btn-block"
+                          disabled={isSubmitting}
+                        >
+                          {isSubmitting ? (
+                            <CircularProgress
+                              size={20}
+                              sx={{ color: "white" }}
+                            />
+                          ) : (
+                            "Signup"
+                          )}
+                        </button>
+                      </div>
+                    </form>
+                  )}
+                </Formik>
 
-                    <div
-                      style={{
-                        color: `${state.accountName.status ? "green" : "red"}`,
-                        textAlign: "start",
-                        width: "100%",
-                      }}
-                    >
-                      {state.accountName.msg}
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      name="email"
-                      className="input-text"
-                      placeholder="Email"
-                      onChange={handleChange}
-                      value={values.email}
+                <button
+                  onClick={() =>
+                    signIn("google", {
+                      callbackUrl: `${
+                        restaurantIntent
+                          ? "http://localhost:3000/pricing"
+                          : "http://localhost:3000"
+                      }`,
+                    })
+                  }
+                  className="btn-md btn-block"
+                  style={{
+                    padding: "0px",
+                    height: "auto",
+                    marginTop: "7px",
+                    background: "white",
+                    color: "black",
+                    fontWeight: "600",
+                    border: "1px solid #b6afaf",
+                  }}
+                >
+                  <span>
+                    <Image
+                      height={30}
+                      width={30}
+                      alt="svgImg"
+                      src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDEwMCAxMDAiPgo8cGF0aCBmaWxsPSIjZjllNjVjIiBkPSJNODQuNDY3LDQ0SDUwdjEzaDIwLjg1NkM2Ny45MzEsNjUuNzE3LDU5LjcwMiw3Miw1MCw3MmMtMTIuMTUsMC0yMi05Ljg1LTIyLTIyczkuODUtMjIsMjItMjIJYzQuNzk5LDAsOS4yMzUsMS41NDEsMTIuODUxLDQuMTQ5bDkuMjY5LTkuMjY5QzY2LjA5MSwxNy45NTYsNTguMzkxLDE1LDUwLDE1Yy0xOS4zMywwLTM1LDE1LjY3LTM1LDM1czE1LjY3LDM1LDM1LDM1CXMzNS0xNS42NywzNS0zNUM4NSw0Ny45NTIsODQuODA2LDQ1Ljk1MSw4NC40NjcsNDR6Ij48L3BhdGg+PHBhdGggZmlsbD0iIzc4YTJkMiIgZD0iTTUwLDU3aDIwLjg1NmMtMS41NzcsNC42OTktNC43MDQsOC42NzktOC43NjMsMTEuMzZsOS44Nyw4Ljg4NEM3OS45MTEsNzAuODI4LDg1LDYxLjAxLDg1LDUwCWMwLTIuMDQ4LTAuMTk0LTQuMDQ5LTAuNTMzLTZINTBWNTd6Ij48L3BhdGg+PHBhdGggZmlsbD0iIzYwYmU5MiIgZD0iTTYyLjA5Myw2OC4zNkM1OC42MjIsNzAuNjUzLDU0LjQ3Miw3Miw1MCw3MmMtOC45OTcsMC0xNi43MjctNS40MDMtMjAuMTM3LTEzLjEzOUwxOC44MTgsNjUuODkJQzI0LjYwOSw3Ny4yMywzNi4zOTMsODUsNTAsODVjOC4zMiwwLDE1Ljk1Ny0yLjkwOCwyMS45NjMtNy43NTZMNjIuMDkzLDY4LjM2eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiNmMTViNmMiIGQ9Ik0yOS42NzcsNDEuNTY5QzMyLjk4NSwzMy42MDMsNDAuODM3LDI4LDUwLDI4YzQuNzk5LDAsOS4yMzUsMS41NDEsMTIuODUxLDQuMTQ5bDkuMjY5LTkuMjY5CUM2Ni4wOTEsMTcuOTU2LDU4LjM5MSwxNSw1MCwxNWMtMTMuNzcyLDAtMjUuNjgxLDcuOTU4LTMxLjM5NCwxOS41MjRMMjkuNjc3LDQxLjU2OXoiPjwvcGF0aD48cGF0aCBmaWxsPSIjMWYyMTJiIiBkPSJNNTAsODZjLTE5Ljg1MSwwLTM2LTE2LjE0OS0zNi0zNnMxNi4xNDktMzYsMzYtMzZjOC4yNzEsMCwxNi4zNTMsMi44NzgsMjIuNzUzLDguMTA1CWMwLjIxOSwwLjE3OSwwLjM1MiwwLjQ0MiwwLjM2NiwwLjcyNGMwLjAxNCwwLjI4Mi0wLjA5MiwwLjU1OC0wLjI5MiwwLjc1N2wtOS4yNjksOS4yNjljLTAuMzQ3LDAuMzQ3LTAuODk1LDAuMzkxLTEuMjkyLDAuMTA0CUM1OC42NzUsMzAuMzY5LDU0LjQzMywyOSw1MCwyOWMtMTEuNTc5LDAtMjEsOS40Mi0yMSwyMXM5LjQyMSwyMSwyMSwyMWM4LjU2MywwLDE2LjE5Ni01LjE2OCwxOS40MTctMTNINTBjLTAuNTUzLDAtMS0wLjQ0OC0xLTFWNDQJYzAtMC41NTIsMC40NDctMSwxLTFoMzQuNDY3YzAuNDg2LDAsMC45MDIsMC4zNSwwLjk4NSwwLjgyOUM4NS44MTUsNDUuOTIyLDg2LDQ3Ljk5OSw4Niw1MEM4Niw2OS44NTEsNjkuODUxLDg2LDUwLDg2eiBNNTAsMTYJYy0xOC43NDgsMC0zNCwxNS4yNTItMzQsMzRzMTUuMjUyLDM0LDM0LDM0czM0LTE1LjI1MiwzNC0zNGMwLTEuNjI0LTAuMTI5LTMuMzAyLTAuMzg0LTVINTF2MTFoMTkuODU2CWMwLjMyMiwwLDAuNjI0LDAuMTU1LDAuODEyLDAuNDE2YzAuMTg4LDAuMjYxLDAuMjM5LDAuNTk3LDAuMTM3LDAuOTAyQzY4LjY1Nyw2Ni42OTgsNTkuODk1LDczLDUwLDczYy0xMi42ODMsMC0yMy0xMC4zMTgtMjMtMjMJczEwLjMxNy0yMywyMy0yM2M0LjU2OSwwLDguOTU0LDEuMzI5LDEyLjczNSwzLjg1MWw3Ljg4My03Ljg4M0M2NC43MiwxOC40NjcsNTcuNDQyLDE2LDUwLDE2eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiMxZjIxMmIiIGQ9Ik03MS41LDc4Yy0wLjExOSwwLTAuMjM5LTAuMDQyLTAuMzM1LTAuMTI4bC00LTMuNmMtMC4yMDUtMC4xODUtMC4yMjItMC41MDEtMC4wMzctMC43MDYJYzAuMTg3LTAuMjA1LDAuNTAyLTAuMjIxLDAuNzA3LTAuMDM3bDQsMy42YzAuMjA1LDAuMTg1LDAuMjIyLDAuNTAxLDAuMDM3LDAuNzA2QzcxLjc3Miw3Ny45NDQsNzEuNjM3LDc4LDcxLjUsNzh6Ij48L3BhdGg+PHBhdGggZmlsbD0iIzFmMjEyYiIgZD0iTTY1LjUsNzIuNmMtMC4xMTksMC0wLjIzOS0wLjA0Mi0wLjMzNS0wLjEyOGwtMS43NzctMS42Yy0wLjIwNS0wLjE4NS0wLjIyMi0wLjUwMS0wLjAzNy0wLjcwNgljMC4xODctMC4yMDUsMC41MDItMC4yMjEsMC43MDctMC4wMzdsMS43NzcsMS42YzAuMjA1LDAuMTg1LDAuMjIyLDAuNTAxLDAuMDM3LDAuNzA2QzY1Ljc3Miw3Mi41NDQsNjUuNjM3LDcyLjYsNjUuNSw3Mi42eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiMxZjIxMmIiIGQ9Ik0yNy45MjksNjBjLTAuMTY1LDAtMC4zMjYtMC4wODItMC40MjItMC4yMzFjLTAuMTQ4LTAuMjMzLTAuMDc5LTAuNTQyLDAuMTUzLTAuNjlsMS41NzEtMQljMC4yMzEtMC4xNDYsMC41NDEtMC4wOCwwLjY5LDAuMTUzYzAuMTQ4LDAuMjMzLDAuMDc5LDAuNTQyLTAuMTUzLDAuNjlsLTEuNTcxLDFDMjguMTE0LDU5Ljk3NSwyOC4wMjEsNjAsMjcuOTI5LDYweiI+PC9wYXRoPjxwYXRoIGZpbGw9IiMxZjIxMmIiIGQ9Ik0yMy41LDYyLjgxOGMtMC4xNjUsMC0wLjMyNi0wLjA4Mi0wLjQyMi0wLjIzMWMtMC4xNDgtMC4yMzMtMC4wNzktMC41NDIsMC4xNTMtMC42OWwyLTEuMjczCWMwLjIzMS0wLjE0NiwwLjU0MS0wLjA4MSwwLjY5LDAuMTUzYzAuMTQ4LDAuMjMzLDAuMDc5LDAuNTQyLTAuMTUzLDAuNjlsLTIsMS4yNzNDMjMuNjg2LDYyLjc5MywyMy41OTMsNjIuODE4LDIzLjUsNjIuODE4eiI+PC9wYXRoPjxwYXRoIGZpbGw9IiMxZjIxMmIiIGQ9Ik0xOC41LDY2Yy0wLjE2NSwwLTAuMzI2LTAuMDgyLTAuNDIyLTAuMjMxYy0wLjE0OC0wLjIzMy0wLjA3OS0wLjU0MiwwLjE1My0wLjY5bDMtMS45MDkJYzAuMjMtMC4xNDYsMC41NDEtMC4wOCwwLjY5LDAuMTUzYzAuMTQ4LDAuMjMzLDAuMDc5LDAuNTQyLTAuMTUzLDAuNjlsLTMsMS45MDlDMTguNjg2LDY1Ljk3NSwxOC41OTMsNjYsMTguNSw2NnoiPjwvcGF0aD48cGF0aCBmaWxsPSIjMWYyMTJiIiBkPSJNMjQuNSwzOC4xODJjLTAuMDkzLDAtMC4xODYtMC4wMjUtMC4yNjktMC4wNzhsLTUtMy4xODJjLTAuMjMyLTAuMTQ4LTAuMzAyLTAuNDU4LTAuMTUzLTAuNjkJYzAuMTQ5LTAuMjMzLDAuNDYtMC4yOTksMC42OS0wLjE1M2w1LDMuMTgyYzAuMjMyLDAuMTQ4LDAuMzAyLDAuNDU4LDAuMTUzLDAuNjlDMjQuODI2LDM4LjEsMjQuNjY1LDM4LjE4MiwyNC41LDM4LjE4MnoiPjwvcGF0aD48cGF0aCBmaWxsPSIjMWYyMTJiIiBkPSJNMjcuNSw0MC4wOTFjLTAuMDkzLDAtMC4xODYtMC4wMjUtMC4yNjktMC4wNzhsLTEtMC42MzZjLTAuMjMyLTAuMTQ4LTAuMzAyLTAuNDU4LTAuMTUzLTAuNjkJYzAuMTUtMC4yMzMsMC40Ni0wLjI5OSwwLjY5LTAuMTUzbDEsMC42MzZjMC4yMzIsMC4xNDgsMC4zMDIsMC40NTgsMC4xNTMsMC42OUMyNy44MjYsNDAuMDA5LDI3LjY2NSw0MC4wOTEsMjcuNSw0MC4wOTF6Ij48L3BhdGg+Cjwvc3ZnPg=="
                     />
-
-                    <div
-                      style={{
-                        color: `${state.email.status ? "green" : "red"}`,
-                        textAlign: "start",
-                        width: "100%",
-                      }}
-                    >
-                      {state.email.msg}
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      name="phoneNumber"
-                      className="input-text"
-                      placeholder="Phone Number"
-                      onChange={handleChange}
-                      value={values.phoneNumber}
-                    />
-                    <div
-                      style={{
-                        color: `${state.phoneNumber.status ? "green" : "red"}`,
-                        textAlign: "start",
-                        width: "100%",
-                      }}
-                    >
-                      {state.phoneNumber.msg}
-                    </div>{" "}
-                  </div>
-                  <div className="form-group">
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <input
-                        type={viewPassword ? "text" : "password"}
-                        name="withdrawalPassword"
-                        className="input-text"
-                        placeholder="Withdrawal Password"
-                        style={{ borderRight: "none" }}
-                        onChange={handleChange}
-                        value={values.withdrawalPassword}
-                      />
-                      <span
-                        style={{
-                          borderLeft: "none",
-                          height: "100%",
-                        }}
-                        onClick={() => setViewPassword((prev) => !prev)}
-                        className="text-xl absolute font-bold right-[23px] top-[5px]"
-                      >
-                        {viewPassword ? (
-                          <VisibilityIcon
-                            fontSize="small"
-                            className="size-4 text-gray-500"
-                          />
-                        ) : (
-                          <VisibilityOffIcon
-                            fontSize="small"
-                            className="size-4 text-gray-500"
-                          />
-                        )}
-                      </span>
-                    </div>
-                    <div
-                      style={{
-                        color: `${
-                          state.withdrawalPassword.status ? "green" : "red"
-                        }`,
-                        textAlign: "start",
-                        width: "100%",
-                      }}
-                    >
-                      {state.withdrawalPassword.msg}
-                    </div>{" "}
-                  </div>
-                  <div className="form-group">
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <input
-                        type={viewPassword ? "text" : "password"}
-                        name="password"
-                        className="input-text"
-                        style={{ borderRight: "none" }}
-                        placeholder="Password"
-                        onChange={handleChange}
-                        value={values.password}
-                      />
-                      <span
-                        style={{
-                          borderLeft: "none",
-                          height: "100%",
-                        }}
-                        onClick={() => setViewPassword((prev) => !prev)}
-                        className="text-xl absolute font-bold right-[23px] top-[5px]"
-                      >
-                        {viewPassword ? (
-                          <VisibilityIcon
-                            fontSize="small"
-                            className="size-4 text-gray-500"
-                          />
-                        ) : (
-                          <VisibilityOffIcon
-                            fontSize="small"
-                            className="size-4 text-gray-500"
-                          />
-                        )}
-                      </span>
-                    </div>
-                    <div
-                      style={{
-                        color: `${state.password.status ? "green" : "red"}`,
-                        textAlign: "start",
-                        width: "100%",
-                      }}
-                    >
-                      {state.password.msg}
-                    </div>{" "}
-                  </div>
-                  <div className="form-group">
-                    <div style={{ display: "flex", alignItems: "center" }}>
-                      <input
-                        type={viewPassword ? "text" : "password"}
-                        name="confirmPassword"
-                        style={{ borderRight: "none" }}
-                        className="input-text"
-                        placeholder="Enter Passwod Again"
-                        onChange={handleChange}
-                        value={values.confirmPassword}
-                      />
-                      <span
-                        style={{
-                          borderLeft: "none",
-                          height: "100%",
-                        }}
-                        onClick={() => setViewPassword((prev) => !prev)}
-                        className="text-xl absolute font-bold right-[23px] top-[5px]"
-                      >
-                        {viewPassword ? (
-                          <VisibilityIcon
-                            fontSize="small"
-                            className="size-4 text-gray-500"
-                          />
-                        ) : (
-                          <VisibilityOffIcon
-                            fontSize="small"
-                            className="size-4 text-gray-500"
-                          />
-                        )}
-                      </span>
-                    </div>
-                    <div
-                      style={{
-                        color: `${
-                          state.confirmPassword.status ? "green" : "red"
-                        }`,
-                        textAlign: "start",
-                        width: "100%",
-                      }}
-                    >
-                      {state.confirmPassword.msg}
-                    </div>{" "}
-                  </div>
-                  <div className="form-group">
-                    <select
-                      name="sex"
-                      className="input-text"
-                      onChange={handleChange}
-                      value={values.sex}
-                    >
-                      <option value="">Select Gender</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </select>
-                    <div
-                      style={{
-                        color: `${state.sex.status ? "green" : "red"}`,
-                        textAlign: "start",
-                        width: "100%",
-                      }}
-                    >
-                      {state.sex.msg}
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <input
-                      type="text"
-                      name="referalCode"
-                      className="input-text"
-                      placeholder="Referral Code"
-                      onChange={handleChange}
-                      value={values.referalCode}
-                    />
-                    <div
-                      style={{
-                        color: `${state.referalCode.status ? "green" : "red"}`,
-                        textAlign: "start",
-                        width: "100%",
-                      }}
-                    >
-                      {state.referalCode.msg}
-                    </div>{" "}
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "start",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <div>
-                      <input
-                        type="radio"
-                        style={{
-                          border: "2px solid black",
-                          marginRight: "10px",
-                        }}
-                      />{" "}
-                    </div>
-                    <div>I have read and agreed to T & C</div>
-                  </div>
-                  <div className="form-group mb-0">
-                    <button
-                      type="submit"
-                      className="btn-md button-theme btn-block"
-                      disabled={isSubmitting}
-                      style={{ background: "orange", color: "white" }}
-                    >
-                      {isSubmitting ? (
-                        <CircularProgress size={20} sx={{ color: "white" }} />
-                      ) : (
-                        "Signup"
-                      )}
-                    </button>
-                  </div>
-                </form>
+                  </span>{" "}
+                  Sign up with Google
+                </button>
               </div>
               {/* <!-- Footer --> */}
               <div className="footer">
@@ -645,9 +296,6 @@ const page = () => {
           </div>
         </div>
       </div>
-      <p style={{ color: "white", zIndex: "999", marginTop: "30px" }}>
-        Copyright @2024 Com Score. All Rights Reserved
-      </p>
       <ToastContainer />
     </div>
   );

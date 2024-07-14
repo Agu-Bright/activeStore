@@ -33,9 +33,11 @@ const page = () => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          background:
+            "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
         }}
       >
-        <CircularProgress style={{ color: "orange" }} />
+        <CircularProgress style={{ color: "white" }} />
       </div>
     );
   }
@@ -60,10 +62,15 @@ const page = () => {
                       href="/"
                       style={{ fontWeight: "900", fontSize: "1.5em" }}
                     >
-                      Log Market place{" "}
+                      Active Store{" "}
                     </a>
                     {/* <!-- Name --> */}
-                    <h3>Hello Welcome, lets get started</h3>
+                    <h2 style={{ fontWeight: "800", color: "#8075ff" }}>
+                      Good To see you !!
+                    </h2>
+                    <h3 style={{ fontSize: "0.8em" }}>
+                      Welcome back, let's get started{" "}
+                    </h3>
 
                     {/* <!-- Form start --> */}
                     <Formik
@@ -117,10 +124,10 @@ const page = () => {
                         <form onSubmit={handleSubmit}>
                           <div className="form-group">
                             <input
-                              type="text"
+                              type="email"
                               name="username"
                               className="input-text"
-                              placeholder="Account Name"
+                              placeholder="Email"
                               onChange={handleChange}
                               onBlur={handleBlur}
                               value={values.username}
@@ -177,7 +184,7 @@ const page = () => {
 
                           <div className="form-group mb-0">
                             <button
-                              style={{ background: "orange", color: "white" }}
+                              style={{ background: "#8075ff", color: "white" }}
                               type="submit"
                               className="btn-md button-theme btn-block"
                               disabled={isSubmitting}
@@ -188,7 +195,7 @@ const page = () => {
                                   sx={{ color: "white" }}
                                 />
                               ) : (
-                                "Sign In Now"
+                                "Log in"
                               )}
                             </button>
                           </div>
@@ -238,13 +245,24 @@ const page = () => {
                     }}
                   >
                     <div>
-                      Don't have an account?
-                      <Link href="signup">Register here</Link>
+                      Don't have an account?{" "}
+                      <Link
+                        href="signup"
+                        style={{
+                          textDecoration: "underline",
+                          fontWeight: "700",
+                        }}
+                      >
+                        Register here
+                      </Link>
                     </div>
                     <div>
                       <Link
                         href="/user/forgotPassword"
-                        style={{ textDecoration: "underline" }}
+                        style={{
+                          textDecoration: "underline",
+                          fontWeight: "700",
+                        }}
                       >
                         Forgot Password
                       </Link>
@@ -257,7 +275,7 @@ const page = () => {
           </div>
           <ToastContainer />
           <p style={{ color: "white", zIndex: "999", marginTop: "30px" }}>
-            Copyright @2024 Com Score. All Rights Reserved
+            Copyright @2024 Active Store.
           </p>
         </div>
       </>
