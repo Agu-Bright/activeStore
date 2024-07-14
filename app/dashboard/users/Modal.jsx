@@ -1,0 +1,104 @@
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { borderRadius } from "@mui/system";
+import { IconButton, Stack } from "@mui/material";
+import ClearIcon from "@mui/icons-material/Clear";
+import { Bounce } from "react-toastify"; // Import the Bounce transition if it's provided by your toast library
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import axios from "axios";
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  borderRadius: "10px",
+  p: 4,
+};
+
+export default function DeleteModal({
+  open,
+  setOpen,
+  active,
+  setActive,
+  setState,
+}) {
+  const handleClose = () => setOpen(false);
+
+  React.useEffect(() => {
+    return () => {
+      setActive();
+    };
+  }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      const { data } = await axios.delete(`/api/admin/delete/${id}`);
+      toast.success("user Deleted", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      setOpen(false);
+      setState((prev) => !prev);
+    } catch (error) {
+      toast.error("Error Deleting", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
+  return (
+    <div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Stack direction="row" justifyContent="space-between">
+            <div></div>
+            <IconButton onClick={handleClose}>
+              <ClearIcon />
+            </IconButton>
+          </Stack>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            User Deletion{" "}
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Are you sure, you want to delete {active?.user?.accountName}{" "}
+          </Typography>
+          <Stack direction="row" justifyContent="space-between">
+            <div></div>
+            <button
+              onClick={() => handleDelete(active?.user?._id)}
+              style={{ color: "white", background: "red", border: "none" }}
+            >
+              Delete
+            </button>
+          </Stack>
+        </Box>
+      </Modal>
+    </div>
+  );
+}
