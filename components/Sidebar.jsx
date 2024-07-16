@@ -19,30 +19,37 @@ const Sidebar = () => {
       <div className="dashboard-nav dashboard_row" style={{ zIndex: "999" }}>
         <div className="dashboard-inner">
           <ul style={{ marginTop: "10px" }}>
-            <li className="active">
-              <Link href="/user/home" style={{ display: "flex" }}>
+            <li className={`${pathname === "/user" ? "active" : ""}`}>
+              <Link href="/user" style={{ display: "flex" }}>
                 <HomeIcon sx={{ marginRight: "10px" }} /> <div>Home</div>
               </Link>
             </li>
 
-            <li className="active">
+            <li className={`${pathname === "/user/orders" ? "active" : ""}`}>
               <Link href="/user/orders" style={{ display: "flex" }}>
                 <HomeRepairServiceIcon sx={{ marginRight: "10px" }} />{" "}
                 <div>My Orders</div>
               </Link>
             </li>
-            <li className="active">
+            <li className={`${pathname === "/user/add-fund" ? "active" : ""}`}>
               <Link href="/user/add-fund" style={{ display: "flex" }}>
                 <AccountBalanceWalletIcon sx={{ marginRight: "10px" }} />{" "}
                 <div>Add Funds</div>
               </Link>
             </li>
-            <li className="active">
+            <li className={`${pathname === "/user/rules" ? "active" : ""}`}>
               <Link href="/user/rules" style={{ display: "flex" }}>
                 <GavelIcon sx={{ marginRight: "10px" }} /> <div>Rules</div>
               </Link>
             </li>
-            <li className="active">
+            <li
+              // className={`${pathname === "/user/support" ? "active" : ""}`}
+              style={{
+                borderLeft: `${
+                  pathname === "/user/support" ? "solid #8075ff" : ""
+                }`,
+              }}
+            >
               <Link href="/user/support" style={{ display: "flex" }}>
                 <SupportAgentIcon sx={{ marginRight: "10px" }} />{" "}
                 <div>Customer Care</div>
@@ -69,14 +76,15 @@ const Sidebar = () => {
               </li>
             )}
 
-            <li className="active" onClick={signOut}>
-              <Link href="#" style={{ display: "flex" }}>
-                <LogoutIcon sx={{ marginRight: "10px" }} /> <div>Sign Out</div>
-              </Link>
-            </li>
-            <li className="active">
+            <li className={`${pathname === "/user/profile" ? "active" : ""}`}>
               <Link href="/user/profile" style={{ display: "flex" }}>
                 <Person2Icon sx={{ marginRight: "10px" }} /> <div>profile</div>
+              </Link>
+            </li>
+            <li onClick={signOut}>
+              <Link href="#" style={{ display: "flex" }}>
+                <LogoutIcon sx={{ marginRight: "10px", color: "red" }} />{" "}
+                <div style={{ color: "red" }}>Sign Out</div>
               </Link>
             </li>
           </ul>

@@ -105,12 +105,5 @@ export default function Home() {
 
   if (status === "unauthenticated") {
     router.push("/user/login");
-  } else
-    return (
-      <NavPage>
-        <Box
-          sx={{ width: "100%", border: "1px solid black", height: "100vh" }}
-        ></Box>
-      </NavPage>
-    );
+  } else return <NavPage>support</NavPage>;
 }
