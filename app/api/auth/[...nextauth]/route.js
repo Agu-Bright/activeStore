@@ -19,10 +19,10 @@ export const authOptions = {
         await connectDB;
         //check user existance
         const result = await User.findOne({
-          accountName: credentials.accountName,
+          email: credentials.email,
         });
         if (!result) {
-          throw new Error("No User found with accountname");
+          throw new Error("Invalid Credentials");
         }
         //check if password is correct or not
         const isPasswordCorrect = await bcrypt.compare(
@@ -33,7 +33,6 @@ export const authOptions = {
         if (!isPasswordCorrect) {
           throw new Error("Invalid username or Password", 401);
         }
-
         return result;
       },
     }),
@@ -51,11 +50,7 @@ export const authOptions = {
       const sessionUser = await User.findById(token.id);
       session.user.id = sessionUser._id.toString();
       session.user.role = sessionUser.role;
-      session.user.accountName = sessionUser?.accountName;
-      session.user.phoneNumber = sessionUser?.phoneNumber;
-      session.user.sex = sessionUser?.sex;
-      session.user.referalCode = sessionUser?.referalCode;
-      session.user.badge = sessionUser?.badge;
+      session.user.username = sessionUser?.username;
       return session;
     },
 
@@ -69,18 +64,14 @@ export const authOptions = {
 
         //check if the use exists
         const userExists = await User.findOne({
-          accountName: profile.accountName,
+          email: profile.email,
         });
         if (!userExists) {
           //create a new user and save it to the database
           await User.create({
-            accountName: profile.accountName,
-            phoneNumber: profile.phoneNumber,
-            withdrawalPassword: profile.withdrawalPassword,
+            username: profile.username,
             password: profile.password,
             confirmPassword: profile.confirmPassword,
-            sex: profile.sex,
-            referalCode: profile?.referalCode,
           });
           //send welcome mail
           // await sendMail("welcome", sessionUser.fullName, profile.email);

@@ -61,10 +61,10 @@ const page = () => {
                     className="cm-logo"
                     alt="black-logo"
                   /> */}
-                  Executive Taskbox office
+                  Active Store{" "}
                 </a>
                 {/* <!-- Name --> */}
-                <h3>Recover your password</h3>
+                <h3 style={{ fontSize: "0.8em" }}>Recover your password</h3>
                 {/* <!-- Form start --> */}
                 <form onSubmit={(e) => handleSubmit(e, email)}>
                   <div className="form-group">
@@ -82,7 +82,7 @@ const page = () => {
                       <button
                         type="submit"
                         className="btn-md button-theme btn-block"
-                        style={{ background: "orange", color: "white" }}
+                        style={{ background: "#8075ff", color: "white" }}
                       >
                         Send Me Email
                       </button>
@@ -99,7 +99,16 @@ const page = () => {
               {/* <!-- Footer --> */}
               <div className="footer">
                 <span>
-                  Already a member? <Link href="/user/login">Login here</Link>
+                  Already a member?{" "}
+                  <Link
+                    href="/user/login"
+                    style={{
+                      textDecoration: "underline",
+                      fontWeight: "700",
+                    }}
+                  >
+                    Login here
+                  </Link>
                 </span>
               </div>
             </div>

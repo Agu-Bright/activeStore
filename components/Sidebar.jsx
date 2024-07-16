@@ -3,61 +3,53 @@ import Link from "next/link";
 import React from "react";
 import { signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import Person2Icon from "@mui/icons-material/Person2";
+import HomeIcon from "@mui/icons-material/Home";
+import HomeRepairServiceIcon from "@mui/icons-material/HomeRepairService";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import GavelIcon from "@mui/icons-material/Gavel";
+import SupportAgentIcon from "@mui/icons-material/SupportAgent";
+import LogoutIcon from "@mui/icons-material/Logout";
 const Sidebar = () => {
   const pathname = usePathname();
   const { data: session } = useSession();
   console.log(pathname);
   return (
     <>
-      <div className="dashboard-nav dashboard_row">
+      <div className="dashboard-nav dashboard_row" style={{ zIndex: "999" }}>
         <div className="dashboard-inner">
-          <ul>
+          <ul style={{ marginTop: "10px" }}>
             <li className="active">
-              <Link href="/dashboard">
-                <i className="flaticon-dashboard"></i> Dashboard
+              <Link href="/user/home" style={{ display: "flex" }}>
+                <HomeIcon sx={{ marginRight: "10px" }} /> <div>Home</div>
               </Link>
             </li>
-            {session?.user?.role === "admin" && (
-              <li className={pathname === "/dashboard/users" ? "active" : ""}>
-                <Link href="/dashboard/users">
-                  <i className="flaticon-calendar"></i> Users
-                </Link>
-              </li>
-            )}
-            {session?.user?.role === "admin" && (
-              <li
-                className={
-                  pathname === "/dashboard/customer-service" ? "active" : ""
-                }
-              >
-                <Link href="/dashboard/customer-service">
-                  <i className="flaticon-calendar"></i> Customer Service
-                </Link>
-              </li>
-            )}
-            {session?.user?.role === "admin" && (
-              <li
-                className={
-                  pathname === "/dashboard/create-customer" ? "active" : ""
-                }
-              >
-                <Link href="/dashboard/create-customer">
-                  <i className="flaticon-calendar"></i> Create Customer
-                </Link>
-              </li>
-            )}
-          </ul>
-          <h4>Task Management</h4>
-          <ul>
-            <li
-              className={pathname === "/dashboard/manage-tasks" ? "active" : ""}
-            >
-              <Link href="/dashboard/manage-tasks">
-                <i className="flaticon-mail-1"></i> Manage Tasks{" "}
-                {/* <span className="nav-tag">6</span> */}
+
+            <li className="active">
+              <Link href="/user/orders" style={{ display: "flex" }}>
+                <HomeRepairServiceIcon sx={{ marginRight: "10px" }} />{" "}
+                <div>My Orders</div>
+              </Link>
+            </li>
+            <li className="active">
+              <Link href="/user/add-fund" style={{ display: "flex" }}>
+                <AccountBalanceWalletIcon sx={{ marginRight: "10px" }} />{" "}
+                <div>Add Funds</div>
+              </Link>
+            </li>
+            <li className="active">
+              <Link href="/user/rules" style={{ display: "flex" }}>
+                <GavelIcon sx={{ marginRight: "10px" }} /> <div>Rules</div>
+              </Link>
+            </li>
+            <li className="active">
+              <Link href="/user/support" style={{ display: "flex" }}>
+                <SupportAgentIcon sx={{ marginRight: "10px" }} />{" "}
+                <div>Customer Care</div>
               </Link>
             </li>
           </ul>
+
           <h4>Account</h4>
           <ul>
             {/* <li className={pathname === "/dashboard-profile" ? "active" : ""}>
@@ -77,9 +69,14 @@ const Sidebar = () => {
               </li>
             )}
 
-            <li>
-              <Link href="#" onClick={signOut}>
-                <i className="flaticon-logout"></i>Logout
+            <li className="active" onClick={signOut}>
+              <Link href="#" style={{ display: "flex" }}>
+                <LogoutIcon sx={{ marginRight: "10px" }} /> <div>Sign Out</div>
+              </Link>
+            </li>
+            <li className="active">
+              <Link href="/user/profile" style={{ display: "flex" }}>
+                <Person2Icon sx={{ marginRight: "10px" }} /> <div>profile</div>
               </Link>
             </li>
           </ul>

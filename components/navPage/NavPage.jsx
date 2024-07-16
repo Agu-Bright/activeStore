@@ -11,6 +11,7 @@ import { RestaurantContext } from "@context/RestaurantContext";
 import { useRouter } from "next/navigation";
 import Call from "@components/CallModal";
 import LiveChatScript from "@components/LiveChat";
+import Sidebar from "@components/Sidebar";
 
 const NavPage = ({ children, buttonNav, topNav, title, type }) => {
   const { active, setActive, handleOpen, open, setOpen } =
@@ -40,68 +41,24 @@ const NavPage = ({ children, buttonNav, topNav, title, type }) => {
           position: "relative",
         }}
       >
-        <Navbar fixed={false} topNav={topNav} title={title} />
-        {children}
-        {buttonNav !== false && (
-          <div className="butom_nav_bar">
-            <Stack direction="row" justifyContent="space-around">
-              <IconButton
-                onClick={() => {
-                  router.push("/user");
-                  setActive("home");
+        <Navbar fixed={false} topNav={topNav} title={title} type="dashboard" />
+        <div className="dashboard">
+          <div className="container-fluid ">
+            <div className="row">
+              <Sidebar />
+              <div
+                className="dashboard-content dashboard_row"
+                style={{
+                  width: "100%",
                 }}
               >
-                <HomeIcon
-                  style={{ color: `${active === "home" ? "orange" : "gray"}` }}
-                />
-              </IconButton>
-              <IconButton
-                onClick={() => {
-                  setActive("audio");
-                  toggleChat();
-                }}
-              >
-                <SpatialAudioIcon
-                  style={{ color: `${active === "audio" ? "orange" : "gray"}` }}
-                />
-              </IconButton>
-              <IconButton
-                onClick={() => {
-                  setActive("play");
-                  router.push("/user/tasks");
-                }}
-              >
-                <PlayCircleIcon
-                  style={{ color: `${active === "play" ? "orange" : "gray"}` }}
-                />
-              </IconButton>
-              <IconButton
-                onClick={() => {
-                  setActive("rev");
-                  router.push("/user/history");
-                }}
-              >
-                <RestoreIcon
-                  style={{ color: `${active === "rev" ? "orange" : "gray"}` }}
-                />
-              </IconButton>
-              <IconButton
-                onClick={() => {
-                  setActive("account");
-                  router.push("/user/account");
-                }}
-              >
-                <PersonOutlineIcon
-                  style={{
-                    color: `${active === "account" ? "orange" : "gray"}`,
-                  }}
-                />
-              </IconButton>
-            </Stack>
+                <div>{children}</div>
+              </div>
+            </div>
           </div>
-        )}
-        <Call open={open} setOpen={setOpen} />
-        <LiveChatScript />
+        </div>
+
+        {/* <LiveChatScript /> */}
       </div>
     );
 };

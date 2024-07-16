@@ -74,18 +74,18 @@ const page = () => {
 
                     {/* <!-- Form start --> */}
                     <Formik
-                      initialValues={{ username: "", password: "" }}
+                      initialValues={{ email: "", password: "" }}
                       validate={(values) => {
                         const errors = {};
-                        if (!values.username) {
-                          errors.username = "Required";
+                        if (!values.email) {
+                          errors.email = "Required";
                         }
                         return errors;
                       }}
                       onSubmit={async (values, { setSubmitting }) => {
                         const status = await signIn("credentials", {
                           redirect: false,
-                          accountName: values.username,
+                          email: values.email,
                           password: values.password,
                           callbackUrl: "/",
                         });
@@ -125,18 +125,16 @@ const page = () => {
                           <div className="form-group">
                             <input
                               type="email"
-                              name="username"
+                              name="email"
                               className="input-text"
                               placeholder="Email"
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              value={values.username}
+                              value={values.email}
                             />
                             <span style={{ color: "red" }}>
                               {" "}
-                              {errors.username &&
-                                touched.username &&
-                                errors.username}
+                              {errors.email && touched.email && errors.email}
                             </span>
                           </div>
                           <div className="form-group">
@@ -195,7 +193,7 @@ const page = () => {
                                   sx={{ color: "white" }}
                                 />
                               ) : (
-                                "Log in"
+                                "Sign In"
                               )}
                             </button>
                           </div>

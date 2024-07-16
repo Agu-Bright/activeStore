@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import crypto from "crypto";
 
 const userSchema = new mongoose.Schema({
-  accountName: {
+  username: {
     type: String,
     unique: [true, "Account Name Already Exists"],
     required: [true, "Account Name is Required"],
@@ -11,47 +11,18 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
   },
-  referalCode: {
-    type: Number,
-  },
-  phoneNumber: {
-    type: String,
-    unique: [true, "phone Number is uniqie"],
-    required: [true, "Phoned Number is Required"],
-  },
-  sex: {
-    type: String,
-    required: [true, "Sex is Required"],
-  },
   password: {
     type: String,
     required: [true, "Password is Required"],
-  },
-  withdrawalPassword: {
-    type: String,
-    required: [true, "Withdrawal Password is Required"],
-  },
-  badge: {
-    type: String,
-    required: true,
-    default: "bronze",
   },
   role: {
     type: String,
     default: "user",
   },
-  pwd: { type: String },
-  request: {
-    type: Boolean,
-    default: false,
-  },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  assignedTasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
-  completed: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
-  previous: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });

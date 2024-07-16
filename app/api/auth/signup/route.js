@@ -1,6 +1,6 @@
 import User from "@models/user";
-import Wallet from "@models/wallet";
 import connectDB from "@utils/connectDB";
+import Wallet from "@models/wallet";
 import { sendMail } from "@utils/nodemailer";
 
 export const POST = async (req, res) => {
@@ -9,15 +9,13 @@ export const POST = async (req, res) => {
     const body = await req.json();
     if (
       !body ||
-      !body.accountName ||
-      !body.phoneNumber ||
-      !body.withdrawalPassword ||
+      !body.username ||
+      !body.email ||
       !body.password ||
-      !body.confirmPassword ||
-      !body.sex
+      !body.confirmPassword
     )
       return new Response(
-        JSON.stringify({ success: false, message: "provide form data" }),
+        JSON.stringify({ success: false, message: "All field is required" }),
         {
           status: 404,
         }
@@ -31,22 +29,18 @@ export const POST = async (req, res) => {
       );
     }
     const user = await User.create({
-      accountName: body.accountName,
-      phoneNumber: body.phoneNumber,
+      username: body.username,
       withdrawalPassword: body.withdrawalPassword,
       password: body.password,
       confirmPassword: body.confirmPassword,
-      sex: body.sex,
-      referalCode: body?.referalCode,
       email: body?.email,
     });
 
+    // await sendMail("welcome", user.accountName, user.email);
     //create wallet for this user
     const _wallet = await Wallet.create({
       user: user._id,
     });
-    await sendMail("welcome", user.accountName, user.email);
-
     return new Response(JSON.stringify({ success: true, user }), {
       status: 200,
     });

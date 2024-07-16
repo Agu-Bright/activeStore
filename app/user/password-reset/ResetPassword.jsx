@@ -129,15 +129,15 @@ const ResetPassword = () => {
                       <button
                         onClick={() => handleSubmit(password, confirmPassword)}
                         className="btn-md button-theme btn-block"
-                        style={{ background: "orange", color: "white" }}
+                        style={{ background: "#8075ff", color: "white" }}
                       >
                         Reset Password
                       </button>
                     )}
                     {loading && (
                       <button
+                        style={{ background: "#8075ff", color: "white" }}
                         className="btn-md button-theme btn-block"
-                        style={{ background: "orange", color: "white" }}
                       >
                         <CircularProgress size={25} sx={{ color: "white" }} />
                       </button>
@@ -149,7 +149,16 @@ const ResetPassword = () => {
               {/* <!-- Footer --> */}
               <div className="footer">
                 <span>
-                  Already a member? <Link href="user/login">Login here</Link>
+                  Already a member?{" "}
+                  <Link
+                    href="/user/login"
+                    style={{
+                      textDecoration: "underline",
+                      fontWeight: "700",
+                    }}
+                  >
+                    Login here
+                  </Link>
                 </span>
               </div>
             </div>

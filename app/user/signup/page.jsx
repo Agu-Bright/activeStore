@@ -25,11 +25,7 @@ const page = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const { restaurantIntent } = useContext(RestaurantContext);
-  useEffect(() => {
-    if (session?.user) {
-      router.push(`${restaurantIntent ? "/pricing" : "/"}`);
-    }
-  }, [session]);
+
   return (
     <div className="contact-section overview-bgi">
       <div className="container">
@@ -52,16 +48,10 @@ const page = () => {
                 {/* <!-- Name --> */}
 
                 {/* <!-- Form start--> */}
-                {restaurantIntent && (
-                  <p style={{ textDecoration: "underline" }}>
-                    {" "}
-                    Sign in to access the pricing page{" "}
-                  </p>
-                )}
+
                 <Formik
                   initialValues={{
-                    firstName: "",
-                    lastName: "",
+                    username: "",
                     email: "",
                     password: "",
                     confirmPassword: "",
@@ -77,11 +67,8 @@ const page = () => {
                     ) {
                       errors.email = "Invalid email address";
                     }
-                    if (!values.firstName) {
-                      errors.firstName = "Required";
-                    }
-                    if (!values.lastName) {
-                      errors.lastName = "Required";
+                    if (!values.username) {
+                      errors.username = "Required";
                     }
                     if (!values.password) {
                       errors.password = "Required";
@@ -100,10 +87,6 @@ const page = () => {
                     return errors;
                   }}
                   onSubmit={async (values, { setSubmitting }) => {
-                    // setTimeout(() => {
-                    //   alert(JSON.stringify(values, null, 2));
-                    //   setSubmitting(false);
-                    // }, 400);
                     try {
                       const data = await postData(values);
 
@@ -112,10 +95,10 @@ const page = () => {
                           redirect: false,
                           email: values.email,
                           password: values.password,
-                          callbackUrl: `${restaurantIntent ? "/pricing" : "/"}`,
+                          callbackUrl: "/",
                         });
                         if (status.ok) {
-                          router.push(`${restaurantIntent ? "/pricing" : "/"}`);
+                          router.push("/user");
                           setSubmitting(false);
                         }
                       }
@@ -153,37 +136,20 @@ const page = () => {
                       <div className="form-group">
                         <input
                           type="text"
-                          name="firstName"
+                          name="username"
                           className="input-text"
-                          placeholder="First Name"
+                          placeholder="Username"
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          value={values.firstName}
+                          value={values.username}
                         />
                         <span style={{ color: "red" }}>
-                          {" "}
-                          {errors.firstName &&
-                            touched.firstName &&
-                            errors.firstName}
+                          {errors.username &&
+                            touched.username &&
+                            errors.username}
                         </span>
                       </div>
-                      <div className="form-group">
-                        <input
-                          type="text"
-                          name="lastName"
-                          className="input-text"
-                          placeholder="Last Name"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.lastName}
-                        />
-                        <span style={{ color: "red" }}>
-                          {" "}
-                          {errors.lastName &&
-                            touched.lastName &&
-                            errors.lastName}
-                        </span>
-                      </div>
+
                       <div className="form-group">
                         <input
                           type="email"
@@ -235,6 +201,7 @@ const page = () => {
                       </div>
                       <div className="form-group mb-0">
                         <button
+                          style={{ background: "#8075ff", color: "white" }}
                           type="submit"
                           className="btn-md button-theme btn-block"
                           disabled={isSubmitting}
@@ -253,7 +220,7 @@ const page = () => {
                   )}
                 </Formik>
 
-                <button
+                {/* <button
                   onClick={() =>
                     signIn("google", {
                       callbackUrl: `${
@@ -283,7 +250,7 @@ const page = () => {
                     />
                   </span>{" "}
                   Sign up with Google
-                </button>
+                </button> */}
               </div>
               {/* <!-- Footer --> */}
               <div className="footer">

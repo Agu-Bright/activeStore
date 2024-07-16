@@ -95,7 +95,7 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
                   className="navbar-brand logo"
                   href="/user"
                 >
-                  Taskbox Office
+                  Active Store{" "}
                 </Link>
 
                 <div
@@ -173,7 +173,14 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
         </>
       ) : (
         <>
-          <header className="main-header header-2 fixed-header">
+          <header
+            className="main-header header-2 fixed-header"
+            style={{
+              zIndex: "999",
+              borderBottom: "0.1px solid #d6d3d3",
+              boxShadow: "1px 2px 5px #e4e4e4",
+            }}
+          >
             <div className="container-fluid">
               <nav className="navbar navbar-expand-lg navbar-light">
                 <Link
@@ -181,7 +188,7 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
                   className="navbar-brand logo"
                   href="/dashboard"
                 >
-                  Taskbox Office Dashboard
+                  Active Store{" "}
                 </Link>
                 <button
                   onClick={() => setSideBar(true)}
