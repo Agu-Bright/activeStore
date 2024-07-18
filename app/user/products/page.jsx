@@ -89,13 +89,14 @@ export default function Home() {
   if (status === "loading") {
     return (
       <div
+        className="contact-section overview-bgi"
         style={{
           width: "100vw",
           height: "100vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#EC5766",
+          //   background: "#EC5766",
         }}
       >
         <CircularProgress style={{ color: "#CDC5B4" }} />
