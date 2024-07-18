@@ -15,23 +15,6 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation } from "swiper/modules";
-
-import "swiper/css";
-import TableList from "./Table";
-
-import React from "react";
-import Image from "next/image";
-
-const Topic = ({ title, src }) => {
-  return (
-    <div>
-      <Image src={src} alt="img" width={30} height={30} />
-      <span style={{ marginLeft: "10px" }}>{title}</span>
-    </div>
-  );
-};
 
 export default function Home() {
   const { data: session, status } = useSession();
@@ -122,59 +105,5 @@ export default function Home() {
 
   if (status === "unauthenticated") {
     router.push("/user/login");
-  } else
-    return (
-      <NavPage>
-        <Box sx={{ width: "100%", height: "100vh" }}>
-          <Stack direction="row" justifyContent="space-between">
-            <h2 style={{ fontSize: "1em" }}>
-              <span style={{ color: "#8075ff", fontWeight: "800" }}>
-                Welcome!!{" "}
-              </span>
-              <span style={{}}>{session?.user?.username}</span> 😇
-            </h2>
-            <h2 style={{ fontSize: "1em" }}>
-              <span style={{ fontWeight: "800", paddingRight: "10px" }}>
-                Balance:
-              </span>
-              <span style={{ textDecoration: "underline", cursor: "pointer" }}>
-                0.00 USD
-              </span>
-            </h2>
-          </Stack>
-          <h1
-            style={{
-              textAlign: "center",
-              fontWeight: "800",
-              fontSize: "3em",
-              background:
-                "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            Buy social accounts and channels
-          </h1>
-          <h6 style={{ textAlign: "center" }}>
-            Leading marketplace to buy established Tiktok accounts, Youtube
-            channels, Theme pages etc.
-          </h6>
-
-          <Box
-            sx={{
-              height: "30vh",
-              border: "1px solid #e6dede",
-              width: "100%",
-              marginBottom: "20px",
-            }}
-          ></Box>
-          <TableList title={<Topic title="Popular" src="/img/star.png" />} />
-          <TableList title={<Topic title="Facebook" src="/img/star.png" />} />
-          <TableList title={<Topic title="Twitter" src="/img/star.png" />} />
-          <TableList title={<Topic title="Instagram" src="/img/star.png" />} />
-          <TableList title={<Topic title="Email" src="/img/star.png" />} />
-          <TableList title={<Topic title="Others" src="/img/star.png" />} />
-        </Box>
-      </NavPage>
-    );
+  } else return <NavPage>Popular products</NavPage>;
 }

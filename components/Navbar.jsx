@@ -31,7 +31,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const Navbar = ({ fixed, type, data, topNav, title }) => {
-  const { setState, user } = useContext(RestaurantContext);
+  const { setState, user, myWallet } = useContext(RestaurantContext);
 
   //menu state
   const router = useRouter();
@@ -206,6 +206,12 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
                   className="collapse navbar-collapse"
                   id="navbarSupportedContent"
                 ></div>
+                <div>
+                  <span style={{ paddingRight: "10px", fontWeight: "800" }}>
+                    Balance:
+                  </span>
+                  {myWallet.balance || 0.0} USD
+                </div>
               </nav>
             </div>
           </header>
