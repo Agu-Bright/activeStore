@@ -169,8 +169,10 @@ export default function Home() {
             }}
           ></Box>
           <TableList title={<Topic title="Popular" src="/img/star.png" />} />
-          <TableList title={<Topic title="Facebook" src="/img/star.png" />} />
-          <TableList title={<Topic title="Twitter" src="/img/star.png" />} />
+          <TableList
+            title={<Topic title="Facebook" src="/img/facebook-1.png" />}
+          />
+          <TableList title={<Topic title="Twitter" src="/img/twitter.png" />} />
           <TableList title={<Topic title="Instagram" src="/img/star.png" />} />
           <TableList title={<Topic title="Email" src="/img/star.png" />} />
           <TableList title={<Topic title="Others" src="/img/star.png" />} />
