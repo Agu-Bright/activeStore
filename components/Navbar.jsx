@@ -210,7 +210,7 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
                   <span style={{ paddingRight: "10px", fontWeight: "800" }}>
                     Balance:
                   </span>
-                  {myWallet.balance || 0.0} USD
+                  {myWallet?.balance || 0.0} USD
                 </div>
               </nav>
             </div>

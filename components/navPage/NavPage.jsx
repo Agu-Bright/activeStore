@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import Call from "@components/CallModal";
 import LiveChatScript from "@components/LiveChat";
 import Sidebar from "@components/Sidebar";
+import BasicModal from "@app/user/Modal";
 
 const NavPage = ({ children, buttonNav, topNav, title, type }) => {
   const { active, setActive, handleOpen, open, setOpen } =
@@ -52,12 +53,14 @@ const NavPage = ({ children, buttonNav, topNav, title, type }) => {
                   width: "100%",
                 }}
               >
-                <div>{children}</div>
+                <div>
+                  {children}
+                  <BasicModal />
+                </div>
               </div>
             </div>
           </div>
         </div>
-
         {/* <LiveChatScript /> */}
       </div>
     );
