@@ -6,16 +6,17 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Divider, Stack } from "@mui/material";
+import { Button, Divider, Stack } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import LocalMallIcon from "@mui/icons-material/LocalMall";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
 const rows = [
-  createData("FaceBook", 159, 6.0),
+  createData("UK used facebook", 6000, 6.0),
   createData("Instagram", 237, 9.0),
   createData("Twitter", 262, 16.0),
   createData("Gmail", 305, 3.7),
@@ -50,9 +51,9 @@ export default function TableList({ title }) {
             <TableHead>
               <TableRow>
                 <TableCell>Item</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell align="right">Price</TableCell>
-                <TableCell align="right">Action</TableCell>
+                <TableCell>Price</TableCell>
+                <TableCell>Stock</TableCell>
+                <TableCell sx={{ textAlign: "end" }}>Action</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -62,12 +63,29 @@ export default function TableList({ title }) {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
+                    <Image
+                      src="/img/facebook.png"
+                      height={30}
+                      width={40}
+                      style={{ marginRight: "10px" }}
+                    />
                     {row.name}
                   </TableCell>
-                  <TableCell align="right">{row.calories}</TableCell>
-                  <TableCell align="right">{row.fat}</TableCell>
-                  <TableCell align="right">{row.carbs}</TableCell>
-                  <TableCell align="right">{row.protein}</TableCell>
+
+                  <TableCell>{row.calories}</TableCell>
+                  <TableCell>10</TableCell>
+                  {/* <TableCell>{row.fat}</TableCell> */}
+
+                  <TableCell sx={{ textAlign: "end" }}>
+                    <Button
+                      variant="outlined"
+                      sx={{ background: "primary" }}
+                      startIcon={<LocalMallIcon />}
+                    >
+                      Buy
+                    </Button>
+                  </TableCell>
+                  {/* <TableCell>{row.protein}</TableCell> */}
                 </TableRow>
               ))}
             </TableBody>
