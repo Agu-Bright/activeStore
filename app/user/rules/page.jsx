@@ -95,7 +95,7 @@ export default function Home() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#EC5766",
+          background: "#8075ff",
         }}
       >
         <CircularProgress style={{ color: "#CDC5B4" }} />
@@ -108,8 +108,8 @@ export default function Home() {
   } else
     return (
       <NavPage>
-        <div class="card p-3">
-          <div class="card-body p-3"></div>
+        <div className="card p-3">
+          <div className="card-body p-3"></div>
 
           <h4>RULES</h4>
 
