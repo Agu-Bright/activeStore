@@ -50,6 +50,7 @@ export default function TableList({ title }) {
             <TableHead>
               <TableRow>
                 <TableCell>Item</TableCell>
+                <TableCell>Description</TableCell>
                 <TableCell align="right">Price</TableCell>
                 <TableCell align="right">Action</TableCell>
               </TableRow>
