@@ -45,12 +45,12 @@ export const POST = async (req, res) => {
       status: 200,
     });
   } catch (error) {
-    if ((error.code = 11000 && error.keyPattern && error.keyValue)) {
-      return new Response(
-        JSON.stringify({ success: false, message: "User already exist" }),
-        { status: 500 }
-      );
-    }
+    // if ((error.code = 11000 && error.keyPattern && error.keyValue)) {
+    //   return new Response(
+    //     JSON.stringify({ success: false, message: "User already exist" }),
+    //     { status: 500 }
+    //   );
+    // }
     return new Response(
       JSON.stringify({ success: false, message: error.message }),
       { status: 500 }

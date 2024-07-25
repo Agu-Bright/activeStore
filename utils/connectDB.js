@@ -8,7 +8,7 @@ const connectDb = async () => {
   }
   try {
     await mongoose.connect(process.env.MONGO_URI, {
-      dbName: "camscore",
+      dbName: "activeStore",
       //   useUnifiedTopology: true,
       //   useNewUrlParser: true,
     });

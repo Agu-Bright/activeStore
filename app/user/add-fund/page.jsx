@@ -10,6 +10,7 @@ import {
   Paper,
   IconButton,
   Avatar,
+  Divider,
 } from "@mui/material";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -19,72 +20,9 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [active, setActive] = useState("popular");
-  const [movies, setMovies] = useState();
 
-  const getRandomMovies = (movies, count) => {
-    const shuffled = movies.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
-  };
-
-  useEffect(() => {
-    const TMDB_API_KEY = " d70595ef3e351a97e5665f2de45fcd45";
-    const TMDB_ACCESS_TOKEN =
-      "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNzA1OTVlZjNlMzUxYTk3ZTU2NjVmMmRlNDVmY2Q0NSIsInN1YiI6IjY2NzA0MWQ0ODRmMDE5YTBlYWExYjcxYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-M4AqRw0LtobEQ4YQ-eAxJxaSz8ym__7cLqyry-7Uvk";
-    const fetchMovies = async () => {
-      try {
-        const { data } = await axios.get(
-          `https://api.themoviedb.org/3/movie/${active}`,
-          {
-            headers: {
-              Authorization: `Bearer ${TMDB_ACCESS_TOKEN}`,
-            },
-            params: {
-              api_key: TMDB_API_KEY,
-              // sort_by: "popularity.desc", // You can modify this to fetch movies based on different criteria
-              page: 1, // Fetch the first page of results
-            },
-          }
-        );
-
-        const randomMovies = getRandomMovies(data?.results, 12);
-        const movieData = randomMovies.map((movie) => ({
-          name: movie.title,
-          image: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-          rating: movie.vote_average,
-        }));
-        setMovies(movieData);
-      } catch (error) {
-        console.error("Error fetching movies:", error);
-      }
-    };
-
-    fetchMovies();
-  }, [active]);
-
-  const [bronzV, setBronzV] = useState(true);
-  const [silverV, setSilverV] = useState(true);
-  const [goldV, setGoldV] = useState(true);
-  const [diamondV, setDiamondV] = useState(true);
-
-  const handleToggle = (type) => {
-    if (type === "bronze") {
-      setBronzV((prev) => !prev);
-      return;
-    }
-    if (type === "silver") {
-      setSilverV((prev) => !prev);
-      return;
-    }
-    if (type === "gold") {
-      setGoldV((prev) => !prev);
-      return;
-    }
-    if (type === "diamond") {
-      setDiamondV((prev) => !prev);
-      return;
-    }
-  };
+  const [amount, setAmount] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
 
   if (status === "loading") {
     return (
@@ -121,58 +59,66 @@ export default function Home() {
                   value="Gb5PbOqLlLdJh5BpT2LbuQfNeVshcSHabkTfXluW"
                 />
 
-                <p class="mt-3 p-3">
+                <p class="mt-3" style={{fontWeight:"700"}}>
                   Top up your wallet easily using Bank Transfer or Card
                 </p>
 
                 <div class="card">
                   <div class="card-body">
-                    <h6>Enter Amount (NGN)</h6>
+                    <h6 style={{fontWeight: "700"}}>Enter Amount (NGN)</h6>
                     <input
+                      style={{ margin: "10px 0px" }}
                       placeholder="Enter amount"
                       type="number"
                       name="amount"
                       class="text-dark p-2 form-control"
                       required=""
                     />
-                    <input
-                      type="text"
-                      hidden=""
-                      value="enkpay"
-                      name="payment"
-                    />
                   </div>
                 </div>
 
-                <div class="card">
-                  <div class="card-body">
-                    <h6 class="mb-1 mt-1">Select Payment Gateway</h6>
-                    <div class="d-flex align-items-center mb-3">
-                      <div class="col-12">
-                        <select
-                          class="text-dark form-control2 p-2"
-                          name="gateway"
-                          required=""
-                        >
-                          <option value="">Select payment method</option>
-                          <option value="250">Instant Payment</option>
-                          <option value="1000">Manual Payment</option>
-                        </select>
+                {amount && (
+                  <div class="card">
+                    <div class="card-body">
+                      <h6 class="mb-1 mt-1">Select Payment Gateway</h6>
+                      <div class="d-flex align-items-center mb-3">
+                        <div class="col-12">
+                          <select
+                            class="text-dark form-control2 p-2"
+                            name="gateway"
+                            required=""
+                          >
+                            <option value="">Select payment method</option>
+                            <option value="250">Instant Payment</option>
+                            <option value="1000">Manual Payment</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                )}
 
                 <button
                   type="submit"
+                  style={{
+                    border: "none",
+                    color: "white",
+                    fontWeight: "800",
+                    borderRadius: "10px",
+                    fontSize: "1.2em",
+                    background:
+                      "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
+                  }}
                   // style={{background: linear-gradient(279deg, #FF0B9E -6.58%, #FF6501 121.69%); color: white;"}}
                   class="btn  w-100 mt-3"
                   id="btn-confirm"
                 >
-                  Contine{" "}
+                  Continue{" "}
                 </button>
               </form>
             </div>
+
+            <Divider sx={{ margin: "20px 0px" }} />
 
             <div class="col-md-12">
               <h5 class="mt-4 mb-4">Latest Payments History</h5>
