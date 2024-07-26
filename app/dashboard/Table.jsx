@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MUIDataTable from "mui-datatables";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -8,8 +8,10 @@ import { Bounce } from "react-toastify"; // Import the Bounce transition if it's
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import BasicModal from "./Modal";
+import { RestaurantContext } from "@context/RestaurantContext";
 
 const Table = () => {
+  const { formatMoney, formatDateToReadable } = useContext(RestaurantContext);
   const handleCopy = (address) => {
     // const referralCode = session?.user?.referalCode;
     if (address) {
@@ -51,10 +53,9 @@ const Table = () => {
   const [withdraws, setWithdraws] = useState([]);
   const columns = [
     "Account Name",
-    "Phone Number",
-    "Network",
+    "Email",
+    "Payment Method",
     "Amount",
-    "Transaction Hash",
     "screenshot",
     "status",
     "Created At",
@@ -123,33 +124,21 @@ const Table = () => {
               fontSize: "12px",
               background: "green",
             }}
-            src={`${
-              order?.user?.sex === "male" ? "/img/man.png" : "/img/woman.png"
-            }`}
+            src="/img/man.png"
             alt="avatar"
           />
 
-          <span style={{ marginLeft: "5px" }}>{order?.user?.accountName} </span>
+          <span style={{ marginLeft: "5px" }}>{order?.user?.username} </span>
         </div>,
 
-        order?.user?.phoneNumber,
-        order?.network,
+        order?.user?.email,
+        order?.method,
         <div>
           {" "}
           <span style={{ color: "black", fontWeight: "800" }}>$</span>{" "}
           {order?.amount}
         </div>,
 
-        <>
-          {order?.transactionHash && (
-            <div
-              style={{ textDecoration: "underline", cursor: "pointer" }}
-              onClick={() => handleCopy(order?.transactionHash)}
-            >
-              {order?.transactionHash}
-            </div>
-          )}
-        </>,
         <>
           {order?.screenShot && (
             <a href={order?.screenShot} target="_blank">
@@ -165,7 +154,7 @@ const Table = () => {
         >
           {order?.status}
         </div>,
-        order?.createdAt,
+        formatDateToReadable(order?.createdAt),
         <button
           onClick={() => {
             if (order?.status !== "success") {
@@ -189,99 +178,99 @@ const Table = () => {
     );
   //========================================data2==================================
 
-  const column2 = [
-    "Account Name",
-    "Phone Number",
-    "Account Balance",
-    "Network",
-    "Amount",
-    "status",
-    "Created At",
-    "Actions",
-  ];
-  const data2 = [];
+  // const column2 = [
+  //   "Account Name",
+  //   "Phone Number",
+  //   "Account Balance",
+  //   "Network",
+  //   "Amount",
+  //   "status",
+  //   "Created At",
+  //   "Actions",
+  // ];
+  // const data2 = [];
 
-  withdraws &&
-    withdraws.map((order) =>
-      data2.push([
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-start",
-          }}
-        >
-          <Avatar
-            sx={{
-              width: "25px",
-              height: "25px",
-              fontSize: "12px",
-              background: "green",
-            }}
-            src={`${
-              order?.user?.sex === "male" ? "/img/man.png" : "/img/woman.png"
-            }`}
-            alt="avatar"
-          />
+  // withdraws &&
+  //   withdraws.map((order) =>
+  //     data2.push([
+  //       <div
+  //         style={{
+  //           display: "flex",
+  //           alignItems: "center",
+  //           justifyContent: "flex-start",
+  //         }}
+  //       >
+  //         <Avatar
+  //           sx={{
+  //             width: "25px",
+  //             height: "25px",
+  //             fontSize: "12px",
+  //             background: "green",
+  //           }}
+  //           src={`${
+  //             order?.user?.sex === "male" ? "/img/man.png" : "/img/woman.png"
+  //           }`}
+  //           alt="avatar"
+  //         />
 
-          <span style={{ marginLeft: "5px" }}>{order?.user?.accountName} </span>
-        </div>,
+  //         <span style={{ marginLeft: "5px" }}>{order?.user?.accountName} </span>
+  //       </div>,
 
-        order?.user?.phoneNumber,
-        order?.wallet?.balance,
-        order?.wallet?.network,
-        <div>
-          {" "}
-          <span style={{ color: "black", fontWeight: "800" }}>$</span>{" "}
-          {order?.amount}
-        </div>,
-        <div
-          style={{
-            textDecoration: "underline",
-            color: getColor(order?.status),
-          }}
-        >
-          {order?.status}
-        </div>,
-        order?.createdAt,
-        <button
-          onClick={() => {
-            if (order?.status !== "success") {
-              setActive(order);
-              setTimeout(() => {
-                handleOpen();
-              }, 1000);
-            }
-          }}
-          style={{
-            cursor: "pointer",
-            color: "white",
-            background: getColor(order?.status),
-            textAlign: "center",
-            borderRadius: "5px",
-          }}
-        >
-          {order?.status !== "success" ? "Update" : "complete"}
-        </button>,
-      ])
-    );
+  //       order?.user?.phoneNumber,
+  //       order?.wallet?.balance,
+  //       order?.wallet?.network,
+  //       <div>
+  //         {" "}
+  //         <span style={{ color: "black", fontWeight: "800" }}>$</span>{" "}
+  //         {order?.amount}
+  //       </div>,
+  //       <div
+  //         style={{
+  //           textDecoration: "underline",
+  //           color: getColor(order?.status),
+  //         }}
+  //       >
+  //         {order?.status}
+  //       </div>,
+  //       order?.createdAt,
+  //       <button
+  //         onClick={() => {
+  //           if (order?.status !== "success") {
+  //             setActive(order);
+  //             setTimeout(() => {
+  //               handleOpen();
+  //             }, 1000);
+  //           }
+  //         }}
+  //         style={{
+  //           cursor: "pointer",
+  //           color: "white",
+  //           background: getColor(order?.status),
+  //           textAlign: "center",
+  //           borderRadius: "5px",
+  //         }}
+  //       >
+  //         {order?.status !== "success" ? "Update" : "complete"}
+  //       </button>,
+  //     ])
+  //   );
 
   return (
     <>
       <MUIDataTable
-        title="Deposit Requests"
+        title="Account Top Ups"
         data={data}
         columns={columns}
         options={options}
       />
-      <div style={{ marginTop: "20px" }}>
+      {/* <div style={{ marginTop: "20px" }}>
         <MUIDataTable
           title="Withdrawal Requests"
           data={data2}
           columns={column2}
           options={options}
         />
-      </div>
+      </div> */}
       <ToastContainer />
       <BasicModal
         open={open}

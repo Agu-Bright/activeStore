@@ -11,13 +11,10 @@ const depositModel = new mongoose.Schema({
     required: true,
     ref: "Wallet",
   },
-  transactionHash: {
-    type: String,
-  },
   screenShot: {
     type: String,
   },
-  network: {
+  method: {
     type: String,
   },
   amount: {

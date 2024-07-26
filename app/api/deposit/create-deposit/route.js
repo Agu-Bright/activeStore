@@ -25,9 +25,12 @@ export const POST = async (req, res) => {
   try {
     await connectDB;
     const body = await req.json();
-    if (!body || !body.network)
+    if (!body || !body.amount || !body.method)
       return new Response(
-        JSON.stringify({ success: false, message: "Incomplet upload details" }),
+        JSON.stringify({
+          success: false,
+          message: "Incomplet Deposit details",
+        }),
         {
           status: 404,
         }
@@ -42,14 +45,13 @@ export const POST = async (req, res) => {
         }
       );
     }
-    //create wallet for this user
+    //create deposit for this user
     const deposit = await Deposit.create({
       user: session?.user.id,
       wallet: wallet.user,
-      network: body.network,
-      screenShot: body?.screenShot,
-      transactionHash: body?.transactionHash,
+      method: body.method,
       amount: body.amount,
+      screenShot: body?.screenShot,
     });
     return new Response(JSON.stringify({ success: true, deposit }), {
       status: 200,

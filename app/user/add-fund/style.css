@@ -1,0 +1,13 @@
+.inputField:focus {
+  border-color: #4caf50; /* Green border color */
+  color: #4caf50; /* Green text color */
+  outline: none; /* Remove the default outline */
+}
+
+/* Additional optional styling */
+.inputField {
+  border: 1px solid #ccc; /* Default border color */
+  padding: 10px;
+  font-size: 16px;
+  transition: border-color 0.3s, color 0.3s; /* Smooth transition */
+}

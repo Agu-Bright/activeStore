@@ -13,6 +13,7 @@ import Call from "@components/CallModal";
 import LiveChatScript from "@components/LiveChat";
 import Sidebar from "@components/Sidebar";
 import BasicModal from "@app/user/Modal";
+import { ToastContainer } from "react-toastify";
 
 const NavPage = ({ children, buttonNav, topNav, title, type }) => {
   const { active, setActive, handleOpen, open, setOpen } =
@@ -61,6 +62,8 @@ const NavPage = ({ children, buttonNav, topNav, title, type }) => {
             </div>
           </div>
         </div>
+        <ToastContainer />
+
         {/* <LiveChatScript /> */}
       </div>
     );

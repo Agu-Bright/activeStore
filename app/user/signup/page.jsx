@@ -204,7 +204,7 @@ const page = () => {
                           style={{ background: "#8075ff", color: "white" }}
                           type="submit"
                           className="btn-md button-theme btn-block"
-                          disabled={isSubmitting}
+                          // disabled={isSubmitting}
                         >
                           {isSubmitting ? (
                             <CircularProgress

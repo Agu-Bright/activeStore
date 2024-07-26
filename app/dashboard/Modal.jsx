@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import { borderRadius } from "@mui/system";
 import { Stack } from "@mui/material";
 import axios from "axios";
+import { RestaurantContext } from "@context/RestaurantContext";
 
 const style = {
   position: "absolute",
@@ -26,6 +27,7 @@ export default function BasicModal({
   setState,
   setState2,
 }) {
+  const { formatMoney } = React.useContext(RestaurantContext);
   const handleApprove = async (_id) => {
     try {
       const { data } = await axios.post("/api/deposit/update-deposit", {
@@ -101,12 +103,12 @@ export default function BasicModal({
             </Typography>
           )}
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Are you sure you have credited{" "}
+            Are you sure you want to credit{" "}
+            <span style={{ fontWeight: "750" }}>{active?.user?.username}</span>{" "}
+            with the sum of ₦
             <span style={{ fontWeight: "750" }}>
-              {active?.user?.accountName}
-            </span>{" "}
-            with the sum of $
-            <span style={{ fontWeight: "750" }}>{active?.amount}</span>
+              {formatMoney(Number(active?.amount))}
+            </span>
           </Typography>
           <Stack justifyContent="space-between" direction="row">
             <Button
