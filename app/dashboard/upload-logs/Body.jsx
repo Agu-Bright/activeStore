@@ -61,8 +61,8 @@ const Body = () => {
                           <a href="/">Index</a>
                         </li> */}
                           <li>
-                            <a href="/create-customer" className="active">
-                              Create Customer Service
+                            <a href="#" className="active">
+                              Create and manage your logs{" "}
                             </a>
                           </li>
                         </ul>
