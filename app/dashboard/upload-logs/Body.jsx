@@ -1,7 +1,7 @@
 import InfoCards from "@components/InfoCard";
 import Sidebar from "@components/Sidebar";
 import { useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Bounce } from "react-toastify"; //
 import "react-toastify/dist/ReactToastify.css";
@@ -13,22 +13,40 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import LogsUpload from "./LogsUpload";
 import axios from "axios";
 import Image from "next/image";
+import BasicModal from "../Modal";
+import { RestaurantContext } from "@context/RestaurantContext";
 
 const Body = () => {
   const { data: session } = useSession();
+  const { toggle } = useContext(RestaurantContext);
 
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState("");
+
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get(`/api/getCategories`);
-        console.log(data);
+        const { data } = await axios.get(`/api/logs/getCategories`);
+        setCategories(data?.categories);
       } catch (error) {
-        console.log(error);
+        toast.error(error?.response?.data?.message, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
       }
     })();
-  }, []);
+  }, [toggle]);
 
   return (
     <div className="dashboard">
@@ -102,6 +120,7 @@ const Body = () => {
                         You Curently have no Log
                       </h5>
                       <button
+                        onClick={() => setOpen(true)}
                         style={{
                           border: "none",
                           color: "white",
@@ -143,7 +162,7 @@ const Body = () => {
                               Manage Logs{" "}
                             </a>
                             <div>
-                              <LogsUpload />
+                              <LogsUpload categories={categories} />
                             </div>
                           </div>
                         </div>
@@ -156,6 +175,7 @@ const Body = () => {
           </div>
         </div>
       </div>
+      <BasicModal open={open} type="createCategory" handleClose={handleClose} />
       <ToastContainer />
     </div>
   );

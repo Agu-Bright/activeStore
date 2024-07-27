@@ -6,23 +6,29 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Button from "@mui/material/Button";
 
-export default function LogsUpload() {
+export default function LogsUpload({ categories }) {
   return (
     <div style={{ width: "100%", marginTop: "20px" }}>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-        >
-          Accordion 1
-        </AccordionSummary>
-        <AccordionDetails>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          malesuada lacus ex, sit amet blandit leo lobortis eget.
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
+      {categories.map((category) => {
+        return (
+          <Accordion>
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1-content"
+              id="panel1-header"
+            >
+              {category?.catType}{" "}
+            </AccordionSummary>
+            <AccordionDetails>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
+              eget.
+            </AccordionDetails>
+          </Accordion>
+        );
+      })}
+
+      {/* <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2-content"
@@ -51,7 +57,7 @@ export default function LogsUpload() {
           <Button>Cancel</Button>
           <Button>Agree</Button>
         </AccordionActions>
-      </Accordion>
+      </Accordion> */}
     </div>
   );
 }

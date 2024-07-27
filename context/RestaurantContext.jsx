@@ -21,6 +21,7 @@ const RestaurantContextProvider = ({ children }) => {
   const [time, setTime] = useState();
   const [activeSub, setActiveSub] = useState();
   const [togggleWallet, setToggleWallet] = useState(true);
+  const [toggle, setToggle] = useState(true);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -29,7 +30,6 @@ const RestaurantContextProvider = ({ children }) => {
     setCuisine("");
     setSearch("");
   };
-  const [toggle, setToggle] = useState(false);
   useEffect(() => {
     (async () => {
       try {
