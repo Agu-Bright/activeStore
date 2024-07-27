@@ -13,49 +13,70 @@ import LogoutIcon from "@mui/icons-material/Logout";
 const Sidebar = () => {
   const pathname = usePathname();
   const { data: session } = useSession();
-  console.log(pathname);
+  const root = pathname.split("/")[1];
+  console.log(pathname.split("/"));
   return (
     <>
       <div className="dashboard-nav dashboard_row" style={{ zIndex: "999" }}>
         <div className="dashboard-inner">
-          <ul style={{ marginTop: "10px" }}>
-            <li className={`${pathname === "/user" ? "active" : ""}`}>
-              <Link href="/user" style={{ display: "flex" }}>
-                <HomeIcon sx={{ marginRight: "10px" }} /> <div>Home</div>
-              </Link>
-            </li>
+          {root === "user" && (
+            <ul style={{ marginTop: "10px" }}>
+              <li className={`${pathname === "/user" ? "active" : ""}`}>
+                <Link href="/user" style={{ display: "flex" }}>
+                  <HomeIcon sx={{ marginRight: "10px" }} /> <div>Home</div>
+                </Link>
+              </li>
 
-            <li className={`${pathname === "/user/orders" ? "active" : ""}`}>
-              <Link href="/user/orders" style={{ display: "flex" }}>
-                <HomeRepairServiceIcon sx={{ marginRight: "10px" }} />{" "}
-                <div>My Orders</div>
-              </Link>
-            </li>
-            <li className={`${pathname === "/user/add-fund" ? "active" : ""}`}>
-              <Link href="/user/add-fund" style={{ display: "flex" }}>
-                <AccountBalanceWalletIcon sx={{ marginRight: "10px" }} />{" "}
-                <div>Add Funds</div>
-              </Link>
-            </li>
-            <li className={`${pathname === "/user/rules" ? "active" : ""}`}>
-              <Link href="/user/rules" style={{ display: "flex" }}>
-                <GavelIcon sx={{ marginRight: "10px" }} /> <div>Rules</div>
-              </Link>
-            </li>
-            <li
-              // className={`${pathname === "/user/support" ? "active" : ""}`}
-              style={{
-                borderLeft: `${
-                  pathname === "/user/support" ? "solid #8075ff" : ""
-                }`,
-              }}
-            >
-              <Link href="/user/support" style={{ display: "flex" }}>
-                <SupportAgentIcon sx={{ marginRight: "10px" }} />{" "}
-                <div>Customer Care</div>
-              </Link>
-            </li>
-          </ul>
+              <li className={`${pathname === "/user/orders" ? "active" : ""}`}>
+                <Link href="/user/orders" style={{ display: "flex" }}>
+                  <HomeRepairServiceIcon sx={{ marginRight: "10px" }} />{" "}
+                  <div>My Orders</div>
+                </Link>
+              </li>
+              <li
+                className={`${pathname === "/user/add-fund" ? "active" : ""}`}
+              >
+                <Link href="/user/add-fund" style={{ display: "flex" }}>
+                  <AccountBalanceWalletIcon sx={{ marginRight: "10px" }} />{" "}
+                  <div>Add Funds</div>
+                </Link>
+              </li>
+              <li className={`${pathname === "/user/rules" ? "active" : ""}`}>
+                <Link href="/user/rules" style={{ display: "flex" }}>
+                  <GavelIcon sx={{ marginRight: "10px" }} /> <div>Rules</div>
+                </Link>
+              </li>
+              <li
+                // className={`${pathname === "/user/support" ? "active" : ""}`}
+                style={{
+                  borderLeft: `${
+                    pathname === "/user/support" ? "solid #8075ff" : ""
+                  }`,
+                }}
+              >
+                <Link href="/user/support" style={{ display: "flex" }}>
+                  <SupportAgentIcon sx={{ marginRight: "10px" }} />{" "}
+                  <div>Customer Care</div>
+                </Link>
+              </li>
+            </ul>
+          )}
+          {root === "dashboard" && (
+            <ul style={{ marginTop: "10px" }}>
+              <li className={`${pathname === "/dashboard" ? "active" : ""}`}>
+                <Link href="/dashboard" style={{ display: "flex" }}>
+                  <HomeIcon sx={{ marginRight: "10px" }} /> <div>Dashboard</div>
+                </Link>
+              </li>
+
+              <li className={`${pathname === "/user/orders" ? "active" : ""}`}>
+                <Link href="/dashboard/upload-logs" style={{ display: "flex" }}>
+                  <HomeRepairServiceIcon sx={{ marginRight: "10px" }} />{" "}
+                  <div>Upload Logs</div>
+                </Link>
+              </li>
+            </ul>
+          )}
 
           <h4>Account</h4>
           <ul>
@@ -76,11 +97,14 @@ const Sidebar = () => {
               </li>
             )}
 
-            <li className={`${pathname === "/user/profile" ? "active" : ""}`}>
-              <Link href="/user/profile" style={{ display: "flex" }}>
-                <Person2Icon sx={{ marginRight: "10px" }} /> <div>profile</div>
-              </Link>
-            </li>
+            {root === "user" && (
+              <li className={`${pathname === "/user/profile" ? "active" : ""}`}>
+                <Link href="/user/profile" style={{ display: "flex" }}>
+                  <Person2Icon sx={{ marginRight: "10px" }} />{" "}
+                  <div>profile</div>
+                </Link>
+              </li>
+            )}
             <li onClick={signOut}>
               <Link href="#" style={{ display: "flex" }}>
                 <LogoutIcon sx={{ marginRight: "10px", color: "red" }} />{" "}
