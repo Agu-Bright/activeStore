@@ -8,7 +8,7 @@ import LiveChatScript from "@components/LiveChat";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Comscore",
+  title: "ActiveStore",
   description: "Comsscore",
 };
 
