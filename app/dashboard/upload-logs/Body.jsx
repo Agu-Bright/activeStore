@@ -142,36 +142,57 @@ const Body = () => {
                 )}
 
                 {categories && categories.length > 0 && (
-                  <div
-                    style={{
-                      flexDirection: "column",
-                      border: "1px solid #e3dcdc",
-                      borderRadius: "10px",
-                      justifyContent: "flex-start",
-                      padding: "20px 0px",
-                      minHeight: "70vh",
-                    }}
-                  >
-                    <div className="container">
-                      <div className="row">
-                        <div className="col-lg-12">
-                          {/* <!-- Form content box start --> */}
-                          <div>
-                            {/* <!-- details --> */}
-                            <a
-                              href="/"
-                              style={{ fontWeight: "900", fontSize: "1.5em" }}
-                            >
-                              Manage Logs{" "}
-                            </a>
+                  <>
+                    <div
+                      style={{
+                        flexDirection: "column",
+                        border: "1px solid #e3dcdc",
+                        borderRadius: "10px",
+                        justifyContent: "flex-start",
+                        padding: "20px 0px",
+                        minHeight: "70vh",
+                      }}
+                    >
+                      <div className="container">
+                        <div className="row">
+                          <div className="col-lg-12">
+                            {/* <!-- Form content box start --> */}
                             <div>
-                              <LogsUpload categories={categories} />
+                              {/* <!-- details --> */}
+                              <a
+                                href="/"
+                                style={{ fontWeight: "900", fontSize: "1.5em" }}
+                              >
+                                Manage Logs{" "}
+                              </a>
+                              <div>
+                                <LogsUpload categories={categories} />
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+
+                    <button
+                      onClick={() => {
+                        setType("createCategory");
+                        setOpen(true);
+                      }}
+                      style={{
+                        border: "none",
+                        color: "white",
+                        fontWeight: "800",
+                        borderRadius: "10px",
+                        fontSize: "1.2em",
+                        background:
+                          "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
+                      }}
+                      className="btn-md  btn-block"
+                    >
+                      Add Log
+                    </button>
+                  </>
                 )}
               </>
             </div>

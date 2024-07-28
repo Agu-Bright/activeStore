@@ -109,7 +109,7 @@ export default function BasicModal({
 
   //=======================================create category=================================//
   const [category, setCategory] = React.useState("");
-  const { setToggle } = React.useContext(RestaurantContext);
+  const { setToggle, catType } = React.useContext(RestaurantContext);
 
   const handleCreateCategory = async () => {
     if (!category) {
@@ -151,20 +151,25 @@ export default function BasicModal({
   const [index, setIndex] = React.useState(0);
   const [social, setSocial] = React.useState("facebook");
   const [description, setDesciption] = React.useState("");
-  const [username, setUsername] = React.useState("");
+  // const [username, setUsername] = React.useState("");
   const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [log, setLog] = React.useState("");
   const [logs, setLogs] = React.useState([]);
   const [uploading, setUploading] = React.useState(false);
 
   const handleUpload = async () => {
     try {
       setUploading(true);
-      const { data } = await axios.post("/api/logs/createLog", {
+      const { data } = await axios.post("/api/logs/creatLog", {
         social,
         description,
         logs,
+        catType,
       });
+      console.log(data);
+      setIndex(0);
+      handleClose();
+      setToggle((prev) => !prev);
       setUploading(false);
     } catch (error) {
       setUploading(false);
@@ -523,16 +528,6 @@ export default function BasicModal({
                         }}
                       >
                         <IconButton
-                          onClick={() => {
-                            setLogs((prev) => {
-                              console.log(prev);
-                              const newAray = prev.filter(
-                                (item, index) => index === _index
-                              );
-                              console.log(newAray);
-                              return newAray;
-                            });
-                          }}
                           sx={{
                             position: "absolute",
                             top: 0,
@@ -542,10 +537,7 @@ export default function BasicModal({
                           <CancelIcon sx={{ color: "red" }} />
                         </IconButton>
                         <div>
-                          username: <span>{log.username}</span>{" "}
-                        </div>
-                        <div>
-                          password:<span>{log.password}</span>{" "}
+                          details: <span>{log.log}</span>{" "}
                         </div>
                       </div>
                     ))}
@@ -560,35 +552,21 @@ export default function BasicModal({
                   <div className="form-group" style={{ width: "100%" }}>
                     <input
                       type="text"
-                      name="username"
+                      name="log"
                       className="input-text"
-                      placeholder="username"
-                      style={{ width: "100%" }}
-                      onChange={(e) => setUsername(e.target.value)}
-                      value={username}
-                    />
-
-                    <input
-                      type="text"
-                      name="password"
-                      className="input-text"
-                      placeholder="password"
+                      placeholder="@username,password,email,password..."
                       style={{ width: "100%", marginTop: "5px" }}
-                      onChange={(e) => setPassword(e.target.value)}
-                      value={password}
+                      onChange={(e) => setLog(e.target.value)}
+                      value={log}
                     />
                   </div>
-                  {username && password && (
+                  {log && (
                     <button
                       onClick={() => {
                         setLogs((prev) => {
-                          return [
-                            ...prev,
-                            { username: username, password: password },
-                          ];
+                          return [...prev, { log: log }];
                         });
-                        setUsername("");
-                        setPassword("");
+                        setLog("");
                         toast.success("Success, You can add more", {
                           position: "top-center",
                           autoClose: 5000,

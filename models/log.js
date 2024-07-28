@@ -9,8 +9,13 @@ const logModel = new mongoose.Schema({
   },
   logs: [
     {
-      username: String,
-      password: String,
+      log: {
+        type: String,
+      },
+      available: {
+        type: Boolean,
+        default: true,
+      },
     },
   ],
   age: {

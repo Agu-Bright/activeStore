@@ -22,6 +22,7 @@ const RestaurantContextProvider = ({ children }) => {
   const [activeSub, setActiveSub] = useState();
   const [togggleWallet, setToggleWallet] = useState(true);
   const [toggle, setToggle] = useState(true);
+  const [catType, setCatType] = useState("");
 
   const [open, setOpen] = useState(false);
   const [type, setType] = useState(false);
@@ -165,6 +166,8 @@ const RestaurantContextProvider = ({ children }) => {
         setToggle,
         type,
         setType,
+        catType,
+        setCatType,
       }}
     >
       {children}
