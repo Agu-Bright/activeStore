@@ -4,12 +4,20 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { borderRadius } from "@mui/system";
-import { Stack } from "@mui/material";
+import {
+  Avatar,
+  CircularProgress,
+  Divider,
+  IconButton,
+  Paper,
+  Stack,
+} from "@mui/material";
 import axios from "axios";
 import { RestaurantContext } from "@context/RestaurantContext";
 import { toast } from "react-toastify";
 import { Bounce } from "react-toastify"; // Import the Bounce transition if it's provided by your toast library
 import "react-toastify/dist/ReactToastify.css";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const style = {
   position: "absolute",
@@ -17,6 +25,17 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  borderRadius: "10px",
+  p: 4,
+};
+const style2 = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 500,
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: "10px",
@@ -128,6 +147,41 @@ export default function BasicModal({
     }
   };
 
+  //=======================================CREAT LOG=================================//
+  const [index, setIndex] = React.useState(0);
+  const [social, setSocial] = React.useState("facebook");
+  const [description, setDesciption] = React.useState("");
+  const [username, setUsername] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [logs, setLogs] = React.useState([]);
+  const [uploading, setUploading] = React.useState(false);
+
+  const handleUpload = async () => {
+    try {
+      setUploading(true);
+      const { data } = await axios.post("/api/logs/createLog", {
+        social,
+        description,
+        logs,
+      });
+      setUploading(false);
+    } catch (error) {
+      setUploading(false);
+      toast.error(error?.response?.data?.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
+
   if (type === "createCategory") {
     return (
       <div>
@@ -159,6 +213,476 @@ export default function BasicModal({
             <Stack justifyContent="space-between" direction="row">
               <Button sx={{ color: "red", visibility: "hidden" }}></Button>
               <Button onClick={() => handleCreateCategory()}>Create</Button>
+            </Stack>
+          </Box>
+        </Modal>
+      </div>
+    );
+  } else if (type === "createLog") {
+    return (
+      <div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style2}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Create Log{" "}
+            </Typography>
+            <Divider />
+            {index === 0 && (
+              <Typography id="modal-modal-description" sx={{ mt: 0.5 }}>
+                Choose the social Account Type
+              </Typography>
+            )}
+            {index === 1 && (
+              <Typography id="modal-modal-description" sx={{ mt: 0.5 }}>
+                Log Description{" "}
+              </Typography>
+            )}
+            {index === 0 && (
+              <Stack spacing={2} sx={{ marginTop: "10px" }}>
+                <Paper
+                  onClick={() => setSocial("facebook")}
+                  sx={{
+                    padding: "15px 10px",
+                    cursor: "pointer",
+                    display: "flex",
+                    padding: "2px",
+                    background: `${
+                      social === "facebook"
+                        ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
+                        : "white"
+                    }`,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      border: "2px solid white",
+                      padding: "10px",
+                      width: "100%",
+                      borderRadius: "5px",
+                      display: "flex",
+                    }}
+                  >
+                    <Box sx={{ width: "20%" }}>
+                      <Avatar
+                        src="/img/facebook.png"
+                        sx={{ borderRadius: "2px" }}
+                      />
+                    </Box>
+                    <Typography
+                      sx={{
+                        width: "75%",
+                        color: `${social === "facebook" ? "white" : "black"}`,
+                        fontWeight: "800",
+                        fontSize: "1.5em",
+                      }}
+                    >
+                      Facebook
+                    </Typography>
+                  </Box>
+                </Paper>
+                {/* facebook */}
+                <Paper
+                  onClick={() => setSocial("instagram")}
+                  sx={{
+                    padding: "15px 10px",
+                    cursor: "pointer",
+                    display: "flex",
+                    padding: "2px",
+                    background: `${
+                      social === "instagram"
+                        ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
+                        : "white"
+                    }`,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      border: "2px solid white",
+                      padding: "10px",
+                      width: "100%",
+                      borderRadius: "5px",
+                      display: "flex",
+                    }}
+                  >
+                    <Box sx={{ width: "20%" }}>
+                      <Avatar
+                        src="/img/instagram.png"
+                        sx={{ borderRadius: "2px" }}
+                      />
+                    </Box>
+                    <Typography
+                      sx={{
+                        width: "75%",
+                        color: `${social === "instagram" ? "white" : "black"}`,
+                        fontWeight: "800",
+                        fontSize: "1.5em",
+                      }}
+                    >
+                      Instagram
+                    </Typography>
+                  </Box>
+                </Paper>
+                {/* twittter */}
+                <Paper
+                  onClick={() => setSocial("twitter")}
+                  sx={{
+                    padding: "15px 10px",
+                    cursor: "pointer",
+                    display: "flex",
+                    padding: "2px",
+                    background: `${
+                      social === "twitter"
+                        ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
+                        : "white"
+                    }`,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      border: "2px solid white",
+                      padding: "10px",
+                      width: "100%",
+                      borderRadius: "5px",
+                      display: "flex",
+                    }}
+                  >
+                    <Box sx={{ width: "20%" }}>
+                      <Avatar
+                        src="/img/twitter.png"
+                        sx={{ borderRadius: "2px" }}
+                      />
+                    </Box>
+                    <Typography
+                      sx={{
+                        width: "75%",
+                        color: `${social === "twitter" ? "white" : "black"}`,
+                        fontWeight: "800",
+                        fontSize: "1.5em",
+                      }}
+                    >
+                      Twitter
+                    </Typography>
+                  </Box>
+                </Paper>
+                <Paper
+                  onClick={() => setSocial("gmail")}
+                  sx={{
+                    padding: "15px 10px",
+                    cursor: "pointer",
+                    display: "flex",
+                    padding: "2px",
+                    background: `${
+                      social === "gmail"
+                        ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
+                        : "white"
+                    }`,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      border: "2px solid white",
+                      padding: "10px",
+                      width: "100%",
+                      borderRadius: "5px",
+                      display: "flex",
+                    }}
+                  >
+                    <Box sx={{ width: "20%" }}>
+                      <Avatar
+                        src="/img/gmail.png"
+                        sx={{ borderRadius: "2px" }}
+                      />
+                    </Box>
+                    <Typography
+                      sx={{
+                        width: "75%",
+                        color: `${social === "gmail" ? "white" : "black"}`,
+                        fontWeight: "800",
+                        fontSize: "1.5em",
+                      }}
+                    >
+                      Gmail
+                    </Typography>
+                  </Box>
+                </Paper>
+                <Paper
+                  onClick={() => setSocial("tiktok")}
+                  sx={{
+                    padding: "15px 10px",
+                    cursor: "pointer",
+                    display: "flex",
+                    padding: "2px",
+                    background: `${
+                      social === "tiktok"
+                        ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
+                        : "white"
+                    }`,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      border: "2px solid white",
+                      padding: "10px",
+                      width: "100%",
+                      borderRadius: "5px",
+                      display: "flex",
+                    }}
+                  >
+                    <Box sx={{ width: "20%" }}>
+                      <Avatar
+                        src="/img/tiktok.png"
+                        sx={{ borderRadius: "2px" }}
+                      />
+                    </Box>
+                    <Typography
+                      sx={{
+                        width: "75%",
+                        color: `${social === "tiktok" ? "white" : "black"}`,
+                        fontWeight: "800",
+                        fontSize: "1.5em",
+                      }}
+                    >
+                      Tiktok
+                    </Typography>
+                  </Box>
+                </Paper>
+                <Paper
+                  onClick={() => setSocial("others")}
+                  sx={{
+                    padding: "15px 10px",
+                    cursor: "pointer",
+                    display: "flex",
+                    padding: "2px",
+                    background: `${
+                      social === "others"
+                        ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
+                        : "white"
+                    }`,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      border: "2px solid white",
+                      padding: "10px",
+                      width: "100%",
+                      borderRadius: "5px",
+                      display: "flex",
+                    }}
+                  >
+                    <Box sx={{ width: "20%" }}>
+                      <Avatar
+                        src="/img/others.png"
+                        sx={{ borderRadius: "2px" }}
+                      />
+                    </Box>
+                    <Typography
+                      sx={{
+                        width: "75%",
+                        color: `${social === "others" ? "white" : "black"}`,
+                        fontWeight: "800",
+                        fontSize: "1.5em",
+                      }}
+                    >
+                      Others
+                    </Typography>
+                  </Box>
+                </Paper>
+              </Stack>
+            )}
+            {index === 1 && (
+              <div className="form-group" style={{ width: "100%" }}>
+                <input
+                  type="text"
+                  name="log"
+                  className="input-text"
+                  placeholder="Aged Facebook | 0-5 friends"
+                  style={{ width: "100%" }}
+                  onChange={(e) => setDesciption(e.target.value)}
+                  value={description}
+                />
+              </div>
+            )}
+            {index === 2 && (
+              <div>
+                <div>
+                  {logs &&
+                    logs.length > 0 &&
+                    logs.map((log, _index) => (
+                      <div
+                        style={{
+                          position: "relative",
+                          border: "0.1px solid gray",
+                          margin: "10px",
+                          borderRadius: "5px",
+                          padding: "5px",
+                        }}
+                      >
+                        <IconButton
+                          onClick={() => {
+                            setLogs((prev) => {
+                              console.log(prev);
+                              const newAray = prev.filter(
+                                (item, index) => index === _index
+                              );
+                              console.log(newAray);
+                              return newAray;
+                            });
+                          }}
+                          sx={{
+                            position: "absolute",
+                            top: 0,
+                            right: 0,
+                          }}
+                        >
+                          <CancelIcon sx={{ color: "red" }} />
+                        </IconButton>
+                        <div>
+                          username: <span>{log.username}</span>{" "}
+                        </div>
+                        <div>
+                          password:<span>{log.password}</span>{" "}
+                        </div>
+                      </div>
+                    ))}
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <div className="form-group" style={{ width: "100%" }}>
+                    <input
+                      type="text"
+                      name="username"
+                      className="input-text"
+                      placeholder="username"
+                      style={{ width: "100%" }}
+                      onChange={(e) => setUsername(e.target.value)}
+                      value={username}
+                    />
+
+                    <input
+                      type="text"
+                      name="password"
+                      className="input-text"
+                      placeholder="password"
+                      style={{ width: "100%", marginTop: "5px" }}
+                      onChange={(e) => setPassword(e.target.value)}
+                      value={password}
+                    />
+                  </div>
+                  {username && password && (
+                    <button
+                      onClick={() => {
+                        setLogs((prev) => {
+                          return [
+                            ...prev,
+                            { username: username, password: password },
+                          ];
+                        });
+                        setUsername("");
+                        setPassword("");
+                        toast.success("Success, You can add more", {
+                          position: "top-center",
+                          autoClose: 5000,
+                          hideProgressBar: true,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "light",
+                          transition: Bounce,
+                        });
+                      }}
+                      style={{
+                        width: "20%",
+                        border: "none",
+                        borderRadius: "5px",
+                        background: "rgba(128,117,255,1) 0%",
+                        color: "white",
+                        cursor: "pointer",
+                        padding: "10px 0px",
+                      }}
+                    >
+                      Add
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <Stack
+              justifyContent="space-between"
+              direction="row"
+              sx={{ marginTop: "10px" }}
+            >
+              <Button
+                onClick={() => {
+                  setIndex((prev) => prev - 1);
+                }}
+                sx={{
+                  color: "red",
+                  visibility: `${index === 0 ? "hidden" : "visible"}`,
+                }}
+              >
+                Previous
+              </Button>
+              {!uploading && (
+                <Button
+                  onClick={() => {
+                    if (index === 1) {
+                      if (!description) {
+                        toast.error("Description is required", {
+                          position: "top-center",
+                          autoClose: 5000,
+                          hideProgressBar: true,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "light",
+                          transition: Bounce,
+                        });
+                        return;
+                      }
+                      setIndex((prev) => prev + 1);
+                    } else if (index === 2) {
+                      if (logs.length === 0) {
+                        toast.error("Add at least one log to upload", {
+                          position: "top-center",
+                          autoClose: 5000,
+                          hideProgressBar: true,
+                          closeOnClick: true,
+                          pauseOnHover: true,
+                          draggable: true,
+                          progress: undefined,
+                          theme: "light",
+                          transition: Bounce,
+                        });
+                        return;
+                      }
+                      handleUpload();
+                    } else setIndex((prev) => prev + 1);
+                  }}
+                >
+                  {`${index === 2 ? "Upload" : "Continue"}`}
+                </Button>
+              )}
+              {uploading && (
+                <Button>
+                  <CircularProgress
+                    size={20}
+                    sx={{ color: "rgba(128,117,255,1) 0%" }}
+                  />
+                </Button>
+              )}
             </Stack>
           </Box>
         </Modal>

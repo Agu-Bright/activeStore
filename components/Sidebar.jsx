@@ -72,7 +72,7 @@ const Sidebar = () => {
               <li className={`${pathname === "/user/orders" ? "active" : ""}`}>
                 <Link href="/dashboard/upload-logs" style={{ display: "flex" }}>
                   <HomeRepairServiceIcon sx={{ marginRight: "10px" }} />{" "}
-                  <div>Upload Logs</div>
+                  <div>Manage Logs</div>
                 </Link>
               </li>
             </ul>

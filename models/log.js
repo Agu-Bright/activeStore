@@ -7,6 +7,12 @@ const logModel = new mongoose.Schema({
   image: {
     type: String,
   },
+  logs: [
+    {
+      username: String,
+      password: String,
+    },
+  ],
   age: {
     type: Number,
   },

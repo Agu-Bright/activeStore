@@ -18,11 +18,11 @@ import { RestaurantContext } from "@context/RestaurantContext";
 
 const Body = () => {
   const { data: session } = useSession();
-  const { toggle } = useContext(RestaurantContext);
+  const { toggle, open, setOpen, type, setType } =
+    useContext(RestaurantContext);
 
   const [categories, setCategories] = useState("");
 
-  const [open, setOpen] = useState(false);
   const handleClose = () => {
     setOpen(false);
   };
@@ -120,7 +120,10 @@ const Body = () => {
                         You Curently have no Log
                       </h5>
                       <button
-                        onClick={() => setOpen(true)}
+                        onClick={() => {
+                          setType("createCategory");
+                          setOpen(true);
+                        }}
                         style={{
                           border: "none",
                           color: "white",
@@ -175,7 +178,7 @@ const Body = () => {
           </div>
         </div>
       </div>
-      <BasicModal open={open} type="createCategory" handleClose={handleClose} />
+      <BasicModal open={open} type={type} handleClose={handleClose} />
       <ToastContainer />
     </div>
   );

@@ -5,6 +5,8 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Button from "@mui/material/Button";
+import { Box, Divider, Stack } from "@mui/material";
+import Details from "./Details";
 
 export default function LogsUpload({ categories }) {
   return (
@@ -19,11 +21,8 @@ export default function LogsUpload({ categories }) {
             >
               {category?.catType}{" "}
             </AccordionSummary>
-            <AccordionDetails>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-              eget.
-            </AccordionDetails>
+            <Divider />
+            <Details />
           </Accordion>
         );
       })}

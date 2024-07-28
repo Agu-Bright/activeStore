@@ -24,6 +24,7 @@ const RestaurantContextProvider = ({ children }) => {
   const [toggle, setToggle] = useState(true);
 
   const [open, setOpen] = useState(false);
+  const [type, setType] = useState(false);
   const handleOpen = () => setOpen(true);
 
   const clearFilter = () => {
@@ -162,6 +163,8 @@ const RestaurantContextProvider = ({ children }) => {
         formatDateToReadable,
         toggle,
         setToggle,
+        type,
+        setType,
       }}
     >
       {children}
