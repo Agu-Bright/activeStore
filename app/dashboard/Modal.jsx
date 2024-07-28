@@ -152,10 +152,20 @@ export default function BasicModal({
   const [social, setSocial] = React.useState("facebook");
   const [description, setDesciption] = React.useState("");
   // const [username, setUsername] = React.useState("");
-  const [email, setEmail] = React.useState("");
   const [log, setLog] = React.useState("");
+  const [price, setPrice] = React.useState("");
   const [logs, setLogs] = React.useState([]);
   const [uploading, setUploading] = React.useState(false);
+
+  React.useEffect(() => {
+    return () => {
+      setIndex(0);
+      setSocial("facebook");
+      setDesciption("");
+      setLog("");
+      setLogs([]);
+    };
+  }, []);
 
   const handleUpload = async () => {
     try {
@@ -164,13 +174,19 @@ export default function BasicModal({
         social,
         description,
         logs,
+        price,
         catType,
       });
-      console.log(data);
       setIndex(0);
       handleClose();
       setToggle((prev) => !prev);
       setUploading(false);
+      setIndex(0);
+      setSocial("facebook");
+      setDesciption("");
+      setLog("");
+      setPrice("");
+      setLogs([]);
     } catch (error) {
       setUploading(false);
       toast.error(error?.response?.data?.message, {
@@ -457,7 +473,7 @@ export default function BasicModal({
                   </Box>
                 </Paper>
                 <Paper
-                  onClick={() => setSocial("others")}
+                  // onClick={() => setSocial("others")}
                   sx={{
                     padding: "15px 10px",
                     cursor: "pointer",
@@ -493,7 +509,7 @@ export default function BasicModal({
                         fontSize: "1.5em",
                       }}
                     >
-                      Others
+                      Add Custom
                     </Typography>
                   </Box>
                 </Paper>
@@ -509,6 +525,15 @@ export default function BasicModal({
                   style={{ width: "100%" }}
                   onChange={(e) => setDesciption(e.target.value)}
                   value={description}
+                />
+                <input
+                  type="number"
+                  name="log"
+                  className="input-text"
+                  placeholder="Price"
+                  style={{ width: "100%", marginTop: "10px" }}
+                  onChange={(e) => setPrice(e.target.value)}
+                  value={price}
                 />
               </div>
             )}

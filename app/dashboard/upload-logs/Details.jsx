@@ -122,9 +122,9 @@ const Details = ({ category }) => {
                           marginRight: "15px",
                         }}
                       >
-                        {log.social}
+                        {log?.social}
                       </Typography>
-                      <Typography>{log.description}</Typography>
+                      <Typography>{log?.description}</Typography>
                     </Box>
                     <Box
                       sx={{
@@ -132,9 +132,13 @@ const Details = ({ category }) => {
                         alignItems: "center",
                       }}
                     >
-                      <Typography>
+                      <Typography sx={{ marginRight: "10px" }}>
                         <span style={{ fontWeight: "800" }}>Stock:</span>
                         <span>{log?.logs.length}</span>
+                      </Typography>
+                      <Typography>
+                        <span style={{ fontWeight: "800" }}>Price:</span>
+                        <span>₦{log?.price}</span>
                       </Typography>
                     </Box>
                   </Stack>
