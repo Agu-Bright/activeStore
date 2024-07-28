@@ -190,7 +190,7 @@ const Body = () => {
                       }}
                       className="btn-md  btn-block"
                     >
-                      Add Log
+                      Add Category
                     </button>
                   </>
                 )}

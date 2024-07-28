@@ -82,6 +82,7 @@ const Details = ({ category }) => {
                   cursor: "pointer",
                   display: "flex",
                   padding: "2px",
+                  marginTop: "10px",
                   background:
                     "linear-gradient(90deg, #efeff4 0%, #e8e7f2 35%, #d3e5e8 100%)",
                 }}
@@ -140,6 +141,34 @@ const Details = ({ category }) => {
                 </Box>
               </Paper>
             ))}
+          {logs && logs.length > 0 && (
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              sx={{ marginTop: "10px" }}
+            >
+              <div></div>
+              <button
+                onClick={() => {
+                  setType("createLog");
+                  setCatType(category);
+                  setOpen(true);
+                }}
+                style={{
+                  border: "none",
+                  color: "white",
+                  fontWeight: "800",
+                  borderRadius: "10px",
+                  fontSize: "1em",
+                  background:
+                    "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
+                }}
+                // className="btn-md  btn-block"
+              >
+                Add Log
+              </button>{" "}
+            </Stack>
+          )}
         </div>
       </Stack>
     </AccordionDetails>
