@@ -129,6 +129,62 @@ export default function Home() {
                 );
               })}
           </>
+          <>
+            {categories.length == 0 && (
+              <div
+                style={{
+                  width: "100%",
+                  height: "50vh",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginTop: "10px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Image src="/img/photo.png" width={200} height={200} />
+                  <Typography sx={{ textAlign: "center", fontWeight: "800" }}>
+                    No Log Uploaded yet
+                  </Typography>
+                  <a
+                    href="/dashboard/upload-logs"
+                    target="_blank"
+                    style={{
+                      border: "none",
+                      color: "white",
+                      fontWeight: "800",
+                      borderRadius: "10px",
+                      fontSize: "1.2em",
+                      marginTop: "20px",
+                      textAlign: "center",
+                      background:
+                        "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
+                    }}
+                    className="btn-md  btn-block"
+                  >
+                    Manage Logs{" "}
+                  </a>
+                  <Typography
+                    style={{
+                      fontWeight: "300",
+                      fontSize: "0.8em",
+                      marginTop: "10px",
+                    }}
+                  >
+                    <span style={{ fontWeight: "800" }}>N/B:</span> {""} This
+                    button is only visible my the admin
+                  </Typography>
+                </div>
+              </div>
+            )}
+          </>
           {/* <TableList
             title={<Topic title="Facebook" src="/img/facebook-1.png" />}
           />
