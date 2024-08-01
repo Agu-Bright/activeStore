@@ -149,7 +149,8 @@ export default function BasicModal({
 
   //=======================================CREAT LOG=================================//
   const [index, setIndex] = React.useState(0);
-  const [social, setSocial] = React.useState("facebook");
+  const [mounted, setMounted] = React.useState(false);
+  const [social, setSocial] = React.useState("");
   const [description, setDesciption] = React.useState("");
   // const [username, setUsername] = React.useState("");
   const [log, setLog] = React.useState("");
@@ -157,29 +158,48 @@ export default function BasicModal({
   const [logs, setLogs] = React.useState([]);
   const [uploading, setUploading] = React.useState(false);
 
+  const [adddImage, setAddImage] = React.useState(false);
+  const [image, setImage] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+  const [customLog, setCustomLog] = React.useState("");
+
+  const handleImageUpload = () => {
+    const el = document.getElementById("screenshot");
+    if (el) {
+      el.click();
+    }
+  };
+
   React.useEffect(() => {
-    return () => {
+    if (!open) {
       setIndex(0);
       setSocial("facebook");
       setDesciption("");
       setLog("");
       setLogs([]);
-    };
-  }, []);
+      setAddImage(false);
+    }
+  }, [open]);
 
   const handleUpload = async () => {
     try {
       setUploading(true);
-      const { data } = await axios.post("/api/logs/creatLog", {
-        social,
-        description,
-        logs,
-        price,
-        catType,
-      });
+      const uploadData = customLog
+        ? { social: customLog, description, logs, price, catType, image }
+        : {
+            social,
+            description,
+            logs,
+            price,
+            catType,
+          };
+
+      const { data } = await axios.post("/api/logs/creatLog", uploadData);
       setIndex(0);
       handleClose();
       setToggle((prev) => !prev);
+      setCustomLog("");
+      setImage("");
       setUploading(false);
       setIndex(0);
       setSocial("facebook");
@@ -265,254 +285,356 @@ export default function BasicModal({
             )}
             {index === 0 && (
               <Stack spacing={2} sx={{ marginTop: "10px" }}>
-                <Paper
-                  onClick={() => setSocial("facebook")}
-                  sx={{
-                    padding: "15px 10px",
-                    cursor: "pointer",
-                    display: "flex",
-                    padding: "2px",
-                    background: `${
-                      social === "facebook"
-                        ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
-                        : "white"
-                    }`,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      border: "2px solid white",
-                      padding: "10px",
-                      width: "100%",
-                      borderRadius: "5px",
-                      display: "flex",
+                <>
+                  {!adddImage ? (
+                    <>
+                      <Paper
+                        onClick={() => setSocial("facebook")}
+                        sx={{
+                          padding: "15px 10px",
+                          cursor: "pointer",
+                          display: "flex",
+                          padding: "2px",
+                          background: `${
+                            social === "facebook"
+                              ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
+                              : "white"
+                          }`,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            border: "2px solid white",
+                            padding: "10px",
+                            width: "100%",
+                            borderRadius: "5px",
+                            display: "flex",
+                          }}
+                        >
+                          <Box sx={{ width: "20%" }}>
+                            <Avatar
+                              src="/img/facebook.png"
+                              sx={{ borderRadius: "2px" }}
+                            />
+                          </Box>
+                          <Typography
+                            sx={{
+                              width: "75%",
+                              color: `${
+                                social === "facebook" ? "white" : "black"
+                              }`,
+                              fontWeight: "800",
+                              fontSize: "1.5em",
+                            }}
+                          >
+                            Facebook
+                          </Typography>
+                        </Box>
+                      </Paper>
+                      {/* facebook */}
+                      <Paper
+                        onClick={() => setSocial("instagram")}
+                        sx={{
+                          padding: "15px 10px",
+                          cursor: "pointer",
+                          display: "flex",
+                          padding: "2px",
+                          background: `${
+                            social === "instagram"
+                              ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
+                              : "white"
+                          }`,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            border: "2px solid white",
+                            padding: "10px",
+                            width: "100%",
+                            borderRadius: "5px",
+                            display: "flex",
+                          }}
+                        >
+                          <Box sx={{ width: "20%" }}>
+                            <Avatar
+                              src="/img/instagram.png"
+                              sx={{ borderRadius: "2px" }}
+                            />
+                          </Box>
+                          <Typography
+                            sx={{
+                              width: "75%",
+                              color: `${
+                                social === "instagram" ? "white" : "black"
+                              }`,
+                              fontWeight: "800",
+                              fontSize: "1.5em",
+                            }}
+                          >
+                            Instagram
+                          </Typography>
+                        </Box>
+                      </Paper>
+                      {/* twittter */}
+                      <Paper
+                        onClick={() => setSocial("twitter")}
+                        sx={{
+                          padding: "15px 10px",
+                          cursor: "pointer",
+                          display: "flex",
+                          padding: "2px",
+                          background: `${
+                            social === "twitter"
+                              ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
+                              : "white"
+                          }`,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            border: "2px solid white",
+                            padding: "10px",
+                            width: "100%",
+                            borderRadius: "5px",
+                            display: "flex",
+                          }}
+                        >
+                          <Box sx={{ width: "20%" }}>
+                            <Avatar
+                              src="/img/twitter.png"
+                              sx={{ borderRadius: "2px" }}
+                            />
+                          </Box>
+                          <Typography
+                            sx={{
+                              width: "75%",
+                              color: `${
+                                social === "twitter" ? "white" : "black"
+                              }`,
+                              fontWeight: "800",
+                              fontSize: "1.5em",
+                            }}
+                          >
+                            Twitter
+                          </Typography>
+                        </Box>
+                      </Paper>
+                      <Paper
+                        onClick={() => setSocial("gmail")}
+                        sx={{
+                          padding: "15px 10px",
+                          cursor: "pointer",
+                          display: "flex",
+                          padding: "2px",
+                          background: `${
+                            social === "gmail"
+                              ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
+                              : "white"
+                          }`,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            border: "2px solid white",
+                            padding: "10px",
+                            width: "100%",
+                            borderRadius: "5px",
+                            display: "flex",
+                          }}
+                        >
+                          <Box sx={{ width: "20%" }}>
+                            <Avatar
+                              src="/img/gmail.png"
+                              sx={{ borderRadius: "2px" }}
+                            />
+                          </Box>
+                          <Typography
+                            sx={{
+                              width: "75%",
+                              color: `${
+                                social === "gmail" ? "white" : "black"
+                              }`,
+                              fontWeight: "800",
+                              fontSize: "1.5em",
+                            }}
+                          >
+                            Gmail
+                          </Typography>
+                        </Box>
+                      </Paper>
+                      <Paper
+                        onClick={() => setSocial("tiktok")}
+                        sx={{
+                          padding: "15px 10px",
+                          cursor: "pointer",
+                          display: "flex",
+                          padding: "2px",
+                          background: `${
+                            social === "tiktok"
+                              ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
+                              : "white"
+                          }`,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            border: "2px solid white",
+                            padding: "10px",
+                            width: "100%",
+                            borderRadius: "5px",
+                            display: "flex",
+                          }}
+                        >
+                          <Box sx={{ width: "20%" }}>
+                            <Avatar
+                              src="/img/tiktok.png"
+                              sx={{ borderRadius: "2px" }}
+                            />
+                          </Box>
+                          <Typography
+                            sx={{
+                              width: "75%",
+                              color: `${
+                                social === "tiktok" ? "white" : "black"
+                              }`,
+                              fontWeight: "800",
+                              fontSize: "1.5em",
+                            }}
+                          >
+                            Tiktok
+                          </Typography>
+                        </Box>
+                      </Paper>
+                      <Paper
+                        // onClick={() => setSocial("others")}
+                        sx={{
+                          padding: "15px 10px",
+                          cursor: "pointer",
+                          display: "flex",
+                          padding: "2px",
+                          background: `${
+                            social === "others"
+                              ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
+                              : "white"
+                          }`,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            border: "2px solid white",
+                            padding: "10px",
+                            width: "100%",
+                            borderRadius: "5px",
+                            display: "flex",
+                          }}
+                        >
+                          <Box sx={{ width: "20%" }}>
+                            <Avatar
+                              src="/img/others.png"
+                              sx={{ borderRadius: "2px" }}
+                            />
+                          </Box>
+                          <Typography
+                            onClick={() => setAddImage(true)}
+                            sx={{
+                              width: "75%",
+                              color: `${
+                                social === "others" ? "white" : "black"
+                              }`,
+                              fontWeight: "800",
+                              fontSize: "1.5em",
+                            }}
+                          >
+                            Add Custom
+                          </Typography>
+                        </Box>
+                      </Paper>
+                    </>
+                  ) : (
+                    <>
+                      <div>addImage</div>
+                      {image && (
+                        <>
+                          <Avatar
+                            src={image}
+                            alt="screendhot"
+                            sx={{
+                              width: "100px",
+                              height: "100px",
+                              borderRadius: "5px",
+                            }}
+                          />
+                          <div className="form-group" style={{ width: "100%" }}>
+                            <input
+                              type="text"
+                              name="log"
+                              className="input-text"
+                              placeholder="Log Name eg. Twitter"
+                              style={{ width: "100%" }}
+                              onChange={(e) => setCustomLog(e.target.value)}
+                              value={customLog}
+                            />
+                          </div>
+                        </>
+                      )}
+
+                      <button
+                        onClick={() => handleImageUpload()}
+                        className="btn-md  btn-block"
+                        style={{
+                          marginTop: "20px",
+                          border: "none",
+                          color: "white",
+                          fontWeight: "800",
+                          borderRadius: "10px",
+                          fontSize: "1.2em",
+                          background:
+                            "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
+                        }}
+                      >
+                        {loading ? (
+                          <CircularProgress size={20} sx={{ color: "white" }} />
+                        ) : (
+                          "Upload Log Image"
+                        )}
+                      </button>
+                    </>
+                  )}
+                  <input
+                    type="file"
+                    id="screenshot"
+                    style={{ display: "none" }}
+                    onChange={async (e) => {
+                      const file = e.target?.files;
+                      if (file) {
+                        try {
+                          setLoading(true);
+                          const { data } = await axios.post(
+                            "/api/cloudinaryupload/profile",
+                            file
+                          );
+                          setImage(data?.photosArray[0].url);
+                          setLoading(false);
+                        } catch (error) {
+                          setLoading(false);
+                          toast.error("Unable to upload", {
+                            position: "top-center",
+                            autoClose: 5000,
+                            hideProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                            transition: Bounce,
+                          });
+                        }
+                      }
+
+                      // setImage()
                     }}
-                  >
-                    <Box sx={{ width: "20%" }}>
-                      <Avatar
-                        src="/img/facebook.png"
-                        sx={{ borderRadius: "2px" }}
-                      />
-                    </Box>
-                    <Typography
-                      sx={{
-                        width: "75%",
-                        color: `${social === "facebook" ? "white" : "black"}`,
-                        fontWeight: "800",
-                        fontSize: "1.5em",
-                      }}
-                    >
-                      Facebook
-                    </Typography>
-                  </Box>
-                </Paper>
-                {/* facebook */}
-                <Paper
-                  onClick={() => setSocial("instagram")}
-                  sx={{
-                    padding: "15px 10px",
-                    cursor: "pointer",
-                    display: "flex",
-                    padding: "2px",
-                    background: `${
-                      social === "instagram"
-                        ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
-                        : "white"
-                    }`,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      border: "2px solid white",
-                      padding: "10px",
-                      width: "100%",
-                      borderRadius: "5px",
-                      display: "flex",
-                    }}
-                  >
-                    <Box sx={{ width: "20%" }}>
-                      <Avatar
-                        src="/img/instagram.png"
-                        sx={{ borderRadius: "2px" }}
-                      />
-                    </Box>
-                    <Typography
-                      sx={{
-                        width: "75%",
-                        color: `${social === "instagram" ? "white" : "black"}`,
-                        fontWeight: "800",
-                        fontSize: "1.5em",
-                      }}
-                    >
-                      Instagram
-                    </Typography>
-                  </Box>
-                </Paper>
-                {/* twittter */}
-                <Paper
-                  onClick={() => setSocial("twitter")}
-                  sx={{
-                    padding: "15px 10px",
-                    cursor: "pointer",
-                    display: "flex",
-                    padding: "2px",
-                    background: `${
-                      social === "twitter"
-                        ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
-                        : "white"
-                    }`,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      border: "2px solid white",
-                      padding: "10px",
-                      width: "100%",
-                      borderRadius: "5px",
-                      display: "flex",
-                    }}
-                  >
-                    <Box sx={{ width: "20%" }}>
-                      <Avatar
-                        src="/img/twitter.png"
-                        sx={{ borderRadius: "2px" }}
-                      />
-                    </Box>
-                    <Typography
-                      sx={{
-                        width: "75%",
-                        color: `${social === "twitter" ? "white" : "black"}`,
-                        fontWeight: "800",
-                        fontSize: "1.5em",
-                      }}
-                    >
-                      Twitter
-                    </Typography>
-                  </Box>
-                </Paper>
-                <Paper
-                  onClick={() => setSocial("gmail")}
-                  sx={{
-                    padding: "15px 10px",
-                    cursor: "pointer",
-                    display: "flex",
-                    padding: "2px",
-                    background: `${
-                      social === "gmail"
-                        ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
-                        : "white"
-                    }`,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      border: "2px solid white",
-                      padding: "10px",
-                      width: "100%",
-                      borderRadius: "5px",
-                      display: "flex",
-                    }}
-                  >
-                    <Box sx={{ width: "20%" }}>
-                      <Avatar
-                        src="/img/gmail.png"
-                        sx={{ borderRadius: "2px" }}
-                      />
-                    </Box>
-                    <Typography
-                      sx={{
-                        width: "75%",
-                        color: `${social === "gmail" ? "white" : "black"}`,
-                        fontWeight: "800",
-                        fontSize: "1.5em",
-                      }}
-                    >
-                      Gmail
-                    </Typography>
-                  </Box>
-                </Paper>
-                <Paper
-                  onClick={() => setSocial("tiktok")}
-                  sx={{
-                    padding: "15px 10px",
-                    cursor: "pointer",
-                    display: "flex",
-                    padding: "2px",
-                    background: `${
-                      social === "tiktok"
-                        ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
-                        : "white"
-                    }`,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      border: "2px solid white",
-                      padding: "10px",
-                      width: "100%",
-                      borderRadius: "5px",
-                      display: "flex",
-                    }}
-                  >
-                    <Box sx={{ width: "20%" }}>
-                      <Avatar
-                        src="/img/tiktok.png"
-                        sx={{ borderRadius: "2px" }}
-                      />
-                    </Box>
-                    <Typography
-                      sx={{
-                        width: "75%",
-                        color: `${social === "tiktok" ? "white" : "black"}`,
-                        fontWeight: "800",
-                        fontSize: "1.5em",
-                      }}
-                    >
-                      Tiktok
-                    </Typography>
-                  </Box>
-                </Paper>
-                <Paper
-                  // onClick={() => setSocial("others")}
-                  sx={{
-                    padding: "15px 10px",
-                    cursor: "pointer",
-                    display: "flex",
-                    padding: "2px",
-                    background: `${
-                      social === "others"
-                        ? "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)"
-                        : "white"
-                    }`,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      border: "2px solid white",
-                      padding: "10px",
-                      width: "100%",
-                      borderRadius: "5px",
-                      display: "flex",
-                    }}
-                  >
-                    <Box sx={{ width: "20%" }}>
-                      <Avatar
-                        src="/img/others.png"
-                        sx={{ borderRadius: "2px" }}
-                      />
-                    </Box>
-                    <Typography
-                      sx={{
-                        width: "75%",
-                        color: `${social === "others" ? "white" : "black"}`,
-                        fontWeight: "800",
-                        fontSize: "1.5em",
-                      }}
-                    >
-                      Add Custom
-                    </Typography>
-                  </Box>
-                </Paper>
+                  />
+                </>
               </Stack>
             )}
             {index === 1 && (

@@ -6,10 +6,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Button, Divider, Stack } from "@mui/material";
+import { Avatar, Button, Divider, Stack } from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
+import axios from "axios";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -23,11 +24,43 @@ const rows = [
   createData("Tiktok", 356, 16.0),
 ];
 
-export default function TableList({ title }) {
+console.log("activeRow", rows);
+
+export default function TableList({ title, key, category }) {
   const router = useRouter();
+  const [logs, setLogs] = React.useState([]);
+
+  // const [rows, setRows] = React.useState([]);
+
+  const handleCreateRows = (logs) => {
+    const array = logs.map((log) => {
+      createData(
+        log?.description + ":" + log?.image,
+        log?.price,
+        log?.logs.length
+      );
+    });
+    console.log("rows", array);
+    // setRows(rows);
+  };
+
+  React.useEffect(() => {
+    (async () => {
+      try {
+        //fetch logs based on category
+        const { data } = await axios.post("/api/logs/get-category-logs", {
+          category,
+        });
+        console.log(data);
+        setLogs(data?.logs);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
   return (
     <>
-      <div style={{ marginTop: "15px" }}>
+      <div key={key} style={{ marginTop: "15px" }}>
         <Stack
           direction="row"
           justifyContent="space-between"
@@ -57,37 +90,50 @@ export default function TableList({ title }) {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
-                <TableRow
-                  key={row.name}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    <Image
-                      src="/img/facebook.png"
-                      height={30}
-                      width={40}
-                      style={{ marginRight: "10px" }}
-                    />
-                    {row.name}
-                  </TableCell>
-
-                  <TableCell>{row.calories}</TableCell>
-                  <TableCell>10</TableCell>
-                  {/* <TableCell>{row.fat}</TableCell> */}
-
-                  <TableCell sx={{ textAlign: "end" }}>
-                    <Button
-                      variant="outlined"
-                      sx={{ background: "primary" }}
-                      startIcon={<LocalMallIcon />}
+              {logs.length > 0 &&
+                logs.map((log) => (
+                  <TableRow
+                    key={log?._id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      sx={{ display: "flex" }}
                     >
-                      Buy
-                    </Button>
-                  </TableCell>
-                  {/* <TableCell>{row.protein}</TableCell> */}
-                </TableRow>
-              ))}
+                      <Avatar
+                        src={
+                          log?.image ? log?.image : `/img/${log?.social}.png`
+                        }
+                        sx={{
+                          width: "50px",
+                          height: "50px",
+                          borderRadius: "1px",
+                          marginRight: "10px",
+                        }}
+                        // height={30}
+                        // width={40}
+                        // style={{ marginRight: "10px" }}
+                      />
+                      <div>{log?.description}</div>
+                    </TableCell>
+
+                    <TableCell>{log?.price}</TableCell>
+                    <TableCell>{log?.logs.length}</TableCell>
+                    {/* <TableCell>{row.fat}</TableCell> */}
+
+                    <TableCell sx={{ textAlign: "end" }}>
+                      <Button
+                        variant="outlined"
+                        sx={{ background: "primary" }}
+                        startIcon={<LocalMallIcon />}
+                      >
+                        Buy
+                      </Button>
+                    </TableCell>
+                    {/* <TableCell>{row.protein}</TableCell> */}
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

@@ -111,7 +111,9 @@ const Details = ({ category }) => {
                     >
                       <Box>
                         <Avatar
-                          src={`/img/${log?.social}.png`}
+                          src={
+                            log?.image ? log?.image : `/img/${log?.social}.png`
+                          }
                           sx={{ borderRadius: "2px", marginRight: "15px" }}
                         />
                       </Box>

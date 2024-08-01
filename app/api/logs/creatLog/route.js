@@ -43,6 +43,7 @@ export const POST = async (req, res) => {
       logs: body.logs,
       category: category._id,
       price: body?.price,
+      image: body?.image,
     });
     return new Response(JSON.stringify({ success: true, logs }), {
       status: 200,
