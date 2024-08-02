@@ -93,7 +93,7 @@ const RestaurantContextProvider = ({ children }) => {
   function formatMoney(number) {
     return number.toLocaleString("en-US", {
       style: "currency",
-      currency: "USD",
+      currency: "NGN",
     });
   }
 

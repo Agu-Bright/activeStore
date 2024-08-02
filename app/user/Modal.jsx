@@ -4,9 +4,10 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { borderRadius, color, minHeight } from "@mui/system";
-import { Avatar, Divider, Stack } from "@mui/material";
+import { Avatar, Divider, IconButton, Stack } from "@mui/material";
 import { RestaurantContext } from "@context/RestaurantContext";
-
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 const style = {
   position: "absolute",
   top: "25%",
@@ -22,7 +23,8 @@ const style = {
 };
 
 export default function BasicModal({ open, setOpen, handleClose }) {
-  const { activeLog } = React.useContext(RestaurantContext);
+  const { activeLog, formatMoney } = React.useContext(RestaurantContext);
+  const [count, setCount] = React.useState(1);
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -67,6 +69,40 @@ export default function BasicModal({ open, setOpen, handleClose }) {
           <Divider
             sx={{ color: "white", borderColor: "#878383", margin: "20px 0px" }}
           />
+          <Stack direction="row" justifyContent="space-between">
+            <Stack direction="row">
+              <IconButton sx={{ border: "1px solid gray", margin: "0px 10px" }}>
+                <RemoveIcon sx={{ color: "white" }} />
+              </IconButton>{" "}
+              <div
+                style={{
+                  border: "1px solid white",
+                  background: "blue",
+                  color: "white",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "20px",
+                }}
+              >
+                {count}
+              </div>
+              <IconButton sx={{ border: "1px solid gray", margin: "0px 10px" }}>
+                <AddIcon sx={{ color: "white" }} />
+              </IconButton>
+            </Stack>
+            <Box
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Typography sx={{ color: "white", textAlign: "center" }}>
+                {formatMoney(activeLog?.price)}
+              </Typography>
+            </Box>
+          </Stack>
         </Box>
       </Modal>
     </div>
