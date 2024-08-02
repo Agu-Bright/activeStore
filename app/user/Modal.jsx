@@ -10,7 +10,7 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 const style = {
   position: "absolute",
-  top: "25%",
+  top: "32%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 600,
@@ -76,13 +76,12 @@ export default function BasicModal({ open, setOpen, handleClose }) {
               </IconButton>{" "}
               <div
                 style={{
-                  border: "1px solid white",
-                  background: "blue",
+                  border: "0.1px solid gray",
                   color: "white",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  width: "20px",
+                  width: "30px",
                 }}
               >
                 {count}
@@ -103,6 +102,22 @@ export default function BasicModal({ open, setOpen, handleClose }) {
               </Typography>
             </Box>
           </Stack>
+          <button
+            style={{
+              border: "none",
+              color: "white",
+              fontWeight: "800",
+              borderRadius: "10px",
+              fontSize: "1.2em",
+              marginTop: "20px",
+              textAlign: "center",
+              background:
+                "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
+            }}
+            className="btn-md  btn-block"
+          >
+            Buy{" "}
+          </button>
         </Box>
       </Modal>
     </div>
