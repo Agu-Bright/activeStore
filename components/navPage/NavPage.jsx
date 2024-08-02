@@ -16,7 +16,7 @@ import BasicModal from "@app/user/Modal";
 import { ToastContainer } from "react-toastify";
 
 const NavPage = ({ children, buttonNav, topNav, title, type }) => {
-  const { active, setActive, handleOpen, open, setOpen } =
+  const { active, setActive, handleOpen, open, setOpen, handleClose } =
     useContext(RestaurantContext);
   const router = useRouter();
   const [chatVisible, setChatVisible] = useState(false);
@@ -56,7 +56,12 @@ const NavPage = ({ children, buttonNav, topNav, title, type }) => {
               >
                 <div>
                   {children}
-                  <BasicModal />
+                  <BasicModal
+                    handleOpen={handleOpen}
+                    open={open}
+                    setOpen={setOpen}
+                    handleClose={handleClose}
+                  />
                 </div>
               </div>
             </div>

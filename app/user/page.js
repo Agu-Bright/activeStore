@@ -109,82 +109,94 @@ export default function Home() {
 
           <Box
             sx={{
-              height: "30vh",
               border: "1px solid #e6dede",
+              borderRadius: { md: "40px", xs: "20px" },
               width: "100%",
               marginBottom: "20px",
+              // boxShadow: "1px 1px 2px gray",
+              padding: "5px",
+              overflow: "hidden",
             }}
-          ></Box>
-          <>
-            {categories.length > 0 &&
-              categories.map((category) => {
-                return (
-                  <TableList
-                    key={category?.id}
-                    category={category?.catType}
-                    title={
-                      <Topic title={category?.catType} src="/img/star.png" />
-                    }
-                  />
-                );
-              })}
-          </>
-          <>
-            {categories.length == 0 && (
-              <div
-                style={{
-                  width: "100%",
-                  height: "50vh",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginTop: "10px",
-                }}
-              >
+          >
+            <img src="/img/flier-1.png" alt="flier" style={{ width: "100%" }} />
+          </Box>
+          <div>
+            <>
+              {categories.length > 0 &&
+                categories.map((category) => {
+                  return (
+                    <TableList
+                      key={category?.id}
+                      category={category?.catType}
+                      title={
+                        <Topic title={category?.catType} src="/img/star.png" />
+                      }
+                    />
+                  );
+                })}
+            </>
+            <>
+              {categories.length == 0 && (
                 <div
                   style={{
+                    width: "100%",
+                    height: "50vh",
                     display: "flex",
-                    flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
+                    marginTop: "10px",
                   }}
                 >
-                  <Image src="/img/photo.png" width={200} height={200} />
-                  <Typography sx={{ textAlign: "center", fontWeight: "800" }}>
-                    No Log Uploaded yet
-                  </Typography>
-                  <a
-                    href="/dashboard/upload-logs"
-                    target="_blank"
+                  <div
                     style={{
-                      border: "none",
-                      color: "white",
-                      fontWeight: "800",
-                      borderRadius: "10px",
-                      fontSize: "1.2em",
-                      marginTop: "20px",
-                      textAlign: "center",
-                      background:
-                        "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
-                    }}
-                    className="btn-md  btn-block"
-                  >
-                    Manage Logs{" "}
-                  </a>
-                  <Typography
-                    style={{
-                      fontWeight: "300",
-                      fontSize: "0.8em",
-                      marginTop: "10px",
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
                   >
-                    <span style={{ fontWeight: "800" }}>N/B:</span> {""} This
-                    button is only visible my the admin
-                  </Typography>
+                    <Image src="/img/photo.png" width={200} height={200} />
+                    <Typography sx={{ textAlign: "center", fontWeight: "800" }}>
+                      No Log Uploaded yet
+                    </Typography>
+                    {session?.user?.role === "admin" && (
+                      <>
+                        <a
+                          href="/dashboard/upload-logs"
+                          target="_blank"
+                          style={{
+                            border: "none",
+                            color: "white",
+                            fontWeight: "800",
+                            borderRadius: "10px",
+                            fontSize: "1.2em",
+                            marginTop: "20px",
+                            textAlign: "center",
+                            background:
+                              "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
+                          }}
+                          className="btn-md  btn-block"
+                        >
+                          Manage Logs{" "}
+                        </a>
+                        <Typography
+                          style={{
+                            fontWeight: "300",
+                            fontSize: "0.8em",
+                            marginTop: "10px",
+                          }}
+                        >
+                          <span style={{ fontWeight: "800" }}>N/B:</span> {""}{" "}
+                          This button is only visible to the admin
+                        </Typography>
+                      </>
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
-          </>
+              )}
+            </>
+          </div>
+
           {/* <TableList
             title={<Topic title="Facebook" src="/img/facebook-1.png" />}
           />

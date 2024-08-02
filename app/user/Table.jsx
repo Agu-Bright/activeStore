@@ -11,6 +11,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import axios from "axios";
+import { RestaurantContext } from "@context/RestaurantContext";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -29,6 +30,8 @@ console.log("activeRow", rows);
 export default function TableList({ title, key, category }) {
   const router = useRouter();
   const [logs, setLogs] = React.useState([]);
+
+  const { open, setOpen } = React.useContext(RestaurantContext);
 
   // const [rows, setRows] = React.useState([]);
 
@@ -124,6 +127,10 @@ export default function TableList({ title, key, category }) {
 
                     <TableCell sx={{ textAlign: "end" }}>
                       <Button
+                        onClick={() => {
+                          console.log("hii");
+                          setOpen(true);
+                        }}
                         variant="outlined"
                         sx={{ background: "primary" }}
                         startIcon={<LocalMallIcon />}

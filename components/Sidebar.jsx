@@ -14,7 +14,6 @@ const Sidebar = () => {
   const pathname = usePathname();
   const { data: session } = useSession();
   const root = pathname.split("/")[1];
-  console.log(pathname.split("/"));
   return (
     <>
       <div className="dashboard-nav dashboard_row" style={{ zIndex: "999" }}>
@@ -85,7 +84,7 @@ const Sidebar = () => {
                 <i className="flaticon-male"></i> Restaurant Profile
               </Link>
             </li> */}
-            {session?.user?.role === "admin" && (
+            {session?.user?.role === "admin" && root === "dashboard" && (
               <li
                 className={
                   pathname === "/dashboard/payment-method" ? "active" : ""

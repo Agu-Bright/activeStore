@@ -26,7 +26,8 @@ const RestaurantContextProvider = ({ children }) => {
 
   const [open, setOpen] = useState(false);
   const [type, setType] = useState(false);
-  const handleOpen = () => setOpen(true);
+  const handleOpen = () => setOpen(false);
+  const handleClose = () => setOpen(false);
 
   const clearFilter = () => {
     setCuisine("");
@@ -153,6 +154,7 @@ const RestaurantContextProvider = ({ children }) => {
         open,
         setOpen,
         handleOpen,
+        handleClose,
         myWallet,
         setMyWallet,
         task,
