@@ -31,7 +31,8 @@ export default function TableList({ title, key, category }) {
   const router = useRouter();
   const [logs, setLogs] = React.useState([]);
 
-  const { open, setOpen } = React.useContext(RestaurantContext);
+  const { open, setOpen, activeLog, setActiveLog } =
+    React.useContext(RestaurantContext);
 
   // const [rows, setRows] = React.useState([]);
 
@@ -128,6 +129,7 @@ export default function TableList({ title, key, category }) {
                     <TableCell sx={{ textAlign: "end" }}>
                       <Button
                         onClick={() => {
+                          setActiveLog(log);
                           console.log("hii");
                           setOpen(true);
                         }}

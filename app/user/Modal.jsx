@@ -4,7 +4,8 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { borderRadius, color, minHeight } from "@mui/system";
-import { Avatar, Divider } from "@mui/material";
+import { Avatar, Divider, Stack } from "@mui/material";
+import { RestaurantContext } from "@context/RestaurantContext";
 
 const style = {
   position: "absolute",
@@ -21,6 +22,7 @@ const style = {
 };
 
 export default function BasicModal({ open, setOpen, handleClose }) {
+  const { activeLog } = React.useContext(RestaurantContext);
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -45,14 +47,26 @@ export default function BasicModal({ open, setOpen, handleClose }) {
           <Divider
             sx={{ color: "white", borderColor: "#878383", margin: "20px 0px" }}
           />
-          <Typography sx={{ color: "white" }}>Order Details</Typography>
-          <div>
-            <Avatar src="/img/facebook.png" />
-            <div>the description</div>
-          </div>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          <Typography sx={{ color: "white", fontSize: "1.5em" }}>
+            Order Details
           </Typography>
+          <Stack spacing={10} direction="row" alignItems="start">
+            <Avatar
+              src={`/img/${activeLog?.social}.png`}
+              alt="social"
+              sx={{ borderRadius: "1px", width: 56, height: 56 }}
+            />
+            <Stack direction="column">
+              <div style={{ color: "white" }}>{activeLog?.description}</div>
+              <Typography sx={{ color: "gray" }}>
+                The account format includes username, password, email and email
+                password
+              </Typography>
+            </Stack>
+          </Stack>
+          <Divider
+            sx={{ color: "white", borderColor: "#878383", margin: "20px 0px" }}
+          />
         </Box>
       </Modal>
     </div>
