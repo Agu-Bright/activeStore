@@ -91,7 +91,19 @@ const RestaurantContextProvider = ({ children }) => {
   }, [togggleWallet]);
 
   function formatMoney(number) {
-    return number.toLocaleString("en-US", {
+    if (number === undefined || number === null) {
+      console.error("Invalid value provided to formatMoney");
+      return "₦0.00"; // Return a default value or handle the error as needed
+    }
+
+    const numericValue = Number(number);
+
+    if (isNaN(numericValue)) {
+      console.error("Value provided to formatMoney is not a number");
+      return "₦0.00"; // Return a default value or handle the error as needed
+    }
+
+    return numericValue.toLocaleString("en-US", {
       style: "currency",
       currency: "NGN",
     });

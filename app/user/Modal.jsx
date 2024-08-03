@@ -8,12 +8,14 @@ import { Avatar, Divider, IconButton, Stack } from "@mui/material";
 import { RestaurantContext } from "@context/RestaurantContext";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import LocalMallIcon from "@mui/icons-material/LocalMall";
+
 const style = {
   position: "absolute",
-  top: "32%",
+  top: "37%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 600,
+  width: { md: 600, xs: 300 },
   minHeight: 300,
   bgcolor: "background.paper",
   border: "0.1px solid #dcd8d8",
@@ -25,6 +27,20 @@ const style = {
 export default function BasicModal({ open, setOpen, handleClose }) {
   const { activeLog, formatMoney } = React.useContext(RestaurantContext);
   const [count, setCount] = React.useState(1);
+
+  const handleIncrement = () => {
+    const maxLength = Number(activeLog?.logs.length);
+    if (count < maxLength) {
+      setCount((prev) => prev + 1);
+    }
+  };
+
+  const handleDecreament = () => {
+    const length = Number(activeLog?.logs.length);
+    if (count > 0) {
+      setCount((prev) => prev - 1);
+    }
+  };
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -59,19 +75,32 @@ export default function BasicModal({ open, setOpen, handleClose }) {
               sx={{ borderRadius: "1px", width: 56, height: 56 }}
             />
             <Stack direction="column">
-              <div style={{ color: "white" }}>{activeLog?.description}</div>
-              <Typography sx={{ color: "gray" }}>
-                The account format includes username, password, email and email
-                password
+              <Box
+                sx={{ color: "white", fontSize: { md: "1em", xs: "0.7em" } }}
+              >
+                {activeLog?.description}
+              </Box>
+              <Typography
+                sx={{ color: "white", fontSize: { md: "1em", xs: "0.7em" } }}
+              >
+                <span style={{ fontWeight: "700" }}>Stock:</span>{" "}
+                {activeLog?.logs?.length}
               </Typography>
             </Stack>
           </Stack>
+          <Typography sx={{ color: "gray" }}>
+            The account format includes username, password, email and email
+            password
+          </Typography>
           <Divider
             sx={{ color: "white", borderColor: "#878383", margin: "20px 0px" }}
           />
           <Stack direction="row" justifyContent="space-between">
             <Stack direction="row">
-              <IconButton sx={{ border: "1px solid gray", margin: "0px 10px" }}>
+              <IconButton
+                onClick={() => handleDecreament()}
+                sx={{ border: "1px solid gray", margin: "0px 10px" }}
+              >
                 <RemoveIcon sx={{ color: "white" }} />
               </IconButton>{" "}
               <div
@@ -86,7 +115,10 @@ export default function BasicModal({ open, setOpen, handleClose }) {
               >
                 {count}
               </div>
-              <IconButton sx={{ border: "1px solid gray", margin: "0px 10px" }}>
+              <IconButton
+                onClick={() => handleIncrement()}
+                sx={{ border: "1px solid gray", margin: "0px 10px" }}
+              >
                 <AddIcon sx={{ color: "white" }} />
               </IconButton>
             </Stack>
@@ -102,8 +134,9 @@ export default function BasicModal({ open, setOpen, handleClose }) {
               </Typography>
             </Box>
           </Stack>
-          <button
+          <Button
             style={{
+              display: "flex",
               border: "none",
               color: "white",
               fontWeight: "800",
@@ -116,8 +149,11 @@ export default function BasicModal({ open, setOpen, handleClose }) {
             }}
             className="btn-md  btn-block"
           >
-            Buy{" "}
-          </button>
+            <Typography sx={{ color: "white" }}>Buy </Typography>
+            <IconButton>
+              <LocalMallIcon sx={{ color: "white" }} />
+            </IconButton>
+          </Button>
         </Box>
       </Modal>
     </div>

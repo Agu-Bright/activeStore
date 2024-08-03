@@ -31,7 +31,7 @@ export default function TableList({ title, key, category }) {
   const router = useRouter();
   const [logs, setLogs] = React.useState([]);
 
-  const { open, setOpen, activeLog, setActiveLog } =
+  const { open, setOpen, activeLog, setActiveLog, formatMoney } =
     React.useContext(RestaurantContext);
 
   // const [rows, setRows] = React.useState([]);
@@ -122,7 +122,7 @@ export default function TableList({ title, key, category }) {
                       <div>{log?.description}</div>
                     </TableCell>
 
-                    <TableCell>{log?.price}</TableCell>
+                    <TableCell>{formatMoney(log?.price)}</TableCell>
                     <TableCell>{log?.logs.length}</TableCell>
                     {/* <TableCell>{row.fat}</TableCell> */}
 
