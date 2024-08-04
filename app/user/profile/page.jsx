@@ -14,12 +14,14 @@ import {
 import axios from "axios";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import BasicModal from "./UpdateModal";
+import { RestaurantContext } from "@context/RestaurantContext";
 
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const { myWallet, formatMoney } = useContext(RestaurantContext);
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -123,8 +125,8 @@ export default function Home() {
                     ></path>
                   </svg>
                   <div className="lh-100">
-                    <h6 className="mb-0 text-black lh-100">Total Spent</h6>
-                    <small>NGN 0.00</small>
+                    <h6 className="mb-0 text-black lh-100">Account Balance</h6>
+                    <small> {formatMoney(myWallet?.balance) || 0.0}</small>
                   </div>
                 </div>
 

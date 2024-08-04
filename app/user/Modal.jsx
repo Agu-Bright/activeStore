@@ -15,7 +15,7 @@ import { RestaurantContext } from "@context/RestaurantContext";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { Bounce } from "react-toastify"; // Import the Bounce transition if it's provided by your toast library
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";

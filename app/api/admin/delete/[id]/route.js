@@ -25,6 +25,20 @@ export const DELETE = async (req, { params }) => {
     await connectDB;
     const id = params.id;
 
+    const user = await User.findById(id);
+    if (!user) {
+      return Response.json(
+        { message: "No user with ID found" },
+        { status: 404 }
+      );
+    }
+    if (user.role === "admin") {
+      return Response.json(
+        { message: "Admin can't be deleted" },
+        { status: 401 }
+      );
+    }
+
     await User.findByIdAndDelete(id);
     await Wallet.deleteOne({ user: id });
     return Response.json({ success: true }, { status: 200 });

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import MUIDataTable from "mui-datatables";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -9,8 +9,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteModal from "./Modal";
+import { RestaurantContext } from "@context/RestaurantContext";
 
 const Table = () => {
+  const { formatDateToReadable, formatMoney } = useContext(RestaurantContext);
   const handleCopy = (address) => {
     // const referralCode = session?.user?.referalCode;
     if (address) {
@@ -48,10 +50,8 @@ const Table = () => {
   const [wallets, setWallets] = useState([]);
   const columns = [
     "Account Name",
-    "Phone Number",
+    "Email",
     "badge",
-    "walletAddress",
-    "network",
     "Account Balance",
     "Created At",
     "Actions",
@@ -110,20 +110,21 @@ const Table = () => {
             alt="avatar"
           />
 
-          <span style={{ marginLeft: "5px" }}>{order?.user?.accountName} </span>
+          <span style={{ marginLeft: "5px" }}>{order?.user?.username} </span>
         </div>,
 
-        order?.user?.phoneNumber,
-        order?.user?.badge,
+        order?.user?.email,
         <div
-          style={{ textDecoration: "underline" }}
-          onClick={() => handleCopy(order?.walletAddress)}
+          style={{
+            color: `${order?.user?.role === "admin" ? "red" : "reen"}`,
+            fontWeight: "800",
+          }}
         >
-          {order?.walletAddress}
+          {order?.user?.role}
         </div>,
-        order?.network,
-        order?.balance,
-        order?.createdAt,
+
+        formatMoney(order?.balance),
+        formatDateToReadable(order?.createdAt),
         <IconButton
           onClick={() => {
             setActive(order);

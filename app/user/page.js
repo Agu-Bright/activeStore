@@ -80,7 +80,7 @@ export default function Home() {
               </span>
               <span style={{}}>{session?.user?.username}</span> 😇
             </h2>
-            <h2 style={{ fontSize: "1em" }}>
+            <h2 style={{ fontSize: "1em", visibility: "hidden" }}>
               <span style={{ fontWeight: "800", paddingRight: "10px" }}>
                 Balance:
               </span>
@@ -103,7 +103,7 @@ export default function Home() {
             Buy social accounts and channels
           </h1>
           <h6 style={{ textAlign: "center" }}>
-            Leading marketplace to buy established Tiktok accounts, Youtube
+            Leading marketplace to buy established Facebook accounts, Youtube
             channels, Theme pages etc.
           </h6>
 

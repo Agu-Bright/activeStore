@@ -10,6 +10,8 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import GavelIcon from "@mui/icons-material/Gavel";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import LogoutIcon from "@mui/icons-material/Logout";
+import PersonIcon from "@mui/icons-material/Person";
+
 const Sidebar = () => {
   const pathname = usePathname();
   const { data: session } = useSession();
@@ -68,10 +70,23 @@ const Sidebar = () => {
                 </Link>
               </li>
 
-              <li className={`${pathname === "/user/orders" ? "active" : ""}`}>
+              <li
+                className={`${
+                  pathname === "/dashboard/upload-logs" ? "active" : ""
+                }`}
+              >
                 <Link href="/dashboard/upload-logs" style={{ display: "flex" }}>
                   <HomeRepairServiceIcon sx={{ marginRight: "10px" }} />{" "}
                   <div>Manage Logs</div>
+                </Link>
+              </li>
+              <li
+                className={`${
+                  pathname === "/dashboard/upload-logs" ? "active" : ""
+                }`}
+              >
+                <Link href="/dashboard/users" style={{ display: "flex" }}>
+                  <PersonIcon sx={{ marginRight: "10px" }} /> <div>users</div>
                 </Link>
               </li>
             </ul>
