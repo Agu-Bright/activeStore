@@ -27,7 +27,10 @@ const RestaurantContextProvider = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [type, setType] = useState(false);
   const handleOpen = () => setOpen(false);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setActiveLog("");
+    setOpen(false);
+  };
   const [activeLog, setActiveLog] = useState("");
 
   const clearFilter = () => {
