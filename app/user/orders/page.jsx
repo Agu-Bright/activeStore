@@ -170,9 +170,9 @@ export default function Home() {
                             marginRight: "15px",
                           }}
                         >
-                          facebook
+                          {item?.orderLog?.social}
                         </Typography>
-                        <Typography>hii</Typography>
+                        <Typography>{item?.orderLog?.description}</Typography>
                       </Box>
                       <Box
                         sx={{
@@ -181,8 +181,8 @@ export default function Home() {
                         }}
                       >
                         <Typography sx={{ marginRight: "10px" }}>
-                          <span style={{ fontWeight: "800" }}>Stock:</span>
-                          <span>10</span>
+                          <span style={{ fontWeight: "800" }}>Logs:</span>
+                          <span>{item?.logs?.length}</span>
                         </Typography>
                         <IconButton>
                           <DownloadIcon />
