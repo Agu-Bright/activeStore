@@ -69,7 +69,7 @@ const page = () => {
                   data-aos="fade-up"
                   data-aos-delay="200"
                 >
-                  <a href="#about" class="btn-get-started">
+                  <a href="/user/login" class="btn-get-started">
                     Get Started <i class="bi bi-arrow-right"></i>
                   </a>
                   <a
