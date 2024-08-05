@@ -6,7 +6,6 @@ import {
   CircularProgress,
   Stack,
   Typography,
-  Grid,
   Paper,
   IconButton,
   Avatar,
@@ -21,11 +20,57 @@ import { Bounce } from "react-toastify"; // Import the Bounce transition if it's
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import DownloadIcon from "@mui/icons-material/Download";
+import { writeFile, utils } from "xlsx";
+import { saveAs } from "file-saver";
+
+// const array = [
+//   { log: "@username,password,email,emailpassword" },
+//   { log: "@username2,password2,email2,emailpassword2" },
+//   { log: "@username3,password3,email3,emailpassword3" },
+// ];
 
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [orders, setOrders] = useState([]);
+
+  const downloadExcel = (_logs) => {
+    // Convert array to sheet format
+    console.log(_logs);
+    const logArray = _logs.map((item) => {
+      return { log: item?.log };
+    });
+    console.log("LogArray", logArray);
+    const ws = utils.json_to_sheet(
+      logArray.map((item) => {
+        const [username, password, email, emailPassword] = item.log.split(",");
+        return { username, password, email, emailPassword };
+      })
+    );
+
+    // Create a new workbook
+    const wb = utils.book_new();
+    utils.book_append_sheet(wb, ws, "Logs");
+
+    // Generate Excel file
+    const wbout = writeFile(wb, "Logs.xlsx", {
+      bookType: "xlsx",
+      type: "binary",
+    });
+
+    // Save Excel file
+    saveAs(
+      new Blob([s2ab(wbout)], { type: "application/octet-stream" }),
+      "Logs.xlsx"
+    );
+  };
+
+  const s2ab = (s) => {
+    const buf = new ArrayBuffer(s?.length); //convert s to arrayBuffer
+    const view = new Uint8Array(buf); //create uint8array as viewer
+    for (let i = 0; i < s?.length; i++) view[i] = s?.charCodeAt(i) & 0xff; //convert to octet
+    return buf;
+  };
 
   useEffect(() => {
     (async () => {
@@ -184,7 +229,7 @@ export default function Home() {
                           <span style={{ fontWeight: "800" }}>Logs:</span>
                           <span>{item?.logs?.length}</span>
                         </Typography>
-                        <IconButton>
+                        <IconButton onClick={() => downloadExcel(item.logs)}>
                           <DownloadIcon />
                         </IconButton>
                       </Box>

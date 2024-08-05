@@ -131,6 +131,7 @@ export default function Home() {
                       title={
                         <Topic title={category?.catType} src="/img/star.png" />
                       }
+                      
                     />
                   );
                 })}

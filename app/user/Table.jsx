@@ -71,10 +71,9 @@ export default function TableList({ title, key, category }) {
           sx={{ marginBottom: "10px" }}
         >
           <h4 style={{ fontWeight: "800" }}>{title}</h4>
-
           <div
             style={{ cursor: "pointer" }}
-            onClick={() => router.push(`/user/products?cat=${title}`)}
+            onClick={() => router.push(`/user/products?cat=${category}`)}
           >
             <span style={{ fontWeight: "800", marginRight: "10px" }}>
               {" "}
