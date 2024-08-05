@@ -58,11 +58,11 @@ const page = () => {
             <div className="row gy-4">
               <div className="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
                 <h1 data-aos="fade-up">
-                  We offer modern solutions for growing your business
+                  Discover unique social account in active store{" "}
                 </h1>
                 <p data-aos="fade-up" data-aos-delay="100">
-                  We are team of talented designers making websites with
-                  Bootstrap
+                  Boost your online presence by browsing, authenticating, and
+                  obtaining genuine accounts on active store.
                 </p>
                 <div
                   className="d-flex flex-column flex-md-row"
