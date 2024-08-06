@@ -41,8 +41,8 @@ export const authOptions = {
     async session({ session }) {
       //get user data and set it to the session storage
       const sessionUser = await User.findOne({ email: session.user.email });
-      session.user.id = sessionUser._id.toString();
-      session.user.role = sessionUser.role;
+      session.user.id = sessionUser?._id.toString();
+      session.user.role = sessionUser?.role;
       return session;
     },
     async signIn({ profile }) {

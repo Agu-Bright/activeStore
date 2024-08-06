@@ -36,16 +36,15 @@ const page = () => {
                 <div className="details">
                   {/* <!-- Logo --> */}
                   <a href="/" style={{ fontWeight: "900", fontSize: "1.5em" }}>
-                    {/* <img
-                    src="img/logos/white-logo.png"
-                    className="cm-logo"
-                    alt="black-logo"
-                  /> */}
-                    Executive Taskbox office {""}
-                    <span style={{ color: "orange" }}>Dashboard</span>
+                    Active Store{" "}
                   </a>
                   {/* <!-- Name --> */}
-                  <h3>Hello Welcome, lets get started</h3>
+                  <h2 style={{ fontWeight: "800", color: "#8075ff" }}>
+                    Good To see you!!
+                  </h2>
+                  <h3 style={{ fontSize: "0.8em" }}>
+                    Welcome back, let's get started{" "}
+                  </h3>
 
                   {/* <!-- Form start --> */}
                   <Formik
@@ -198,7 +197,7 @@ const page = () => {
         </div>
         <ToastContainer />
         <p style={{ color: "white", zIndex: "999", marginTop: "30px" }}>
-          Copyright @2024 Com Score. All Rights Reserved
+          Copyright @2024 Active Store.
         </p>
       </div>
     </>
