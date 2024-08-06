@@ -187,7 +187,7 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
                 <Link
                   style={{ fontWeight: "800" }}
                   className="navbar-brand logo"
-                  href="/dashboard"
+                  href="/user"
                 >
                   Active Store{" "}
                 </Link>
