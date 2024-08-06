@@ -104,7 +104,7 @@ export default function Home() {
           </h1>
           <h6 style={{ textAlign: "center" }}>
             Leading marketplace to buy established Facebook accounts, Youtube
-            channels, Theme pages etc.
+            Followers, Theme pages etc.
           </h6>
 
           <Box
@@ -131,7 +131,6 @@ export default function Home() {
                       title={
                         <Topic title={category?.catType} src="/img/star.png" />
                       }
-                      
                     />
                   );
                 })}
