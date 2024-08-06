@@ -23,7 +23,7 @@ const Sidebar = () => {
           {root === "user" && (
             <ul style={{ marginTop: "10px" }}>
               <li className={`${pathname === "/user" ? "active" : ""}`}>
-                <Link href="/user" style={{ display:"flex"}}>
+                <Link href="/user" style={{ display: "flex" }}>
                   <HomeIcon sx={{ marginRight: "10px" }} /> <div>Home</div>
                 </Link>
               </li>

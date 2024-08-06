@@ -207,13 +207,13 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
                   className="collapse navbar-collapse"
                   id="navbarSupportedContent"
                 ></div>
-                <div>
+                <Box sx={{ display: { sm: "block", md: "block", xs: "none" } }}>
                   <span style={{ paddingRight: "10px", fontWeight: "800" }}>
                     Balance:
                   </span>
 
                   {formatMoney(myWallet?.balance) || 0.0}
-                </div>
+                </Box>
               </nav>
             </div>
           </header>

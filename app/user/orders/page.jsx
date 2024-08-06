@@ -131,7 +131,7 @@ export default function Home() {
             style={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent: "start",
               flexDirection: "column",
               height: "80vh",
             }}

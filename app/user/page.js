@@ -89,23 +89,25 @@ export default function Home() {
               </span>
             </h2>
           </Stack>
-          <h1
-            style={{
+          <Typography
+            sx={{
               textAlign: "center",
               fontWeight: "800",
-              fontSize: "3em",
+              fontSize: { md: "3em", xs: "1.6em" },
               background:
                 "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
           >
-            Buy social accounts and channels
-          </h1>
-          <h6 style={{ textAlign: "center" }}>
+            Buy social accounts and Followers
+          </Typography>
+          <Typography
+            sx={{ textAlign: "center", fontSize: { md: "1em", xs: "0.8em" } }}
+          >
             Leading marketplace to buy established Facebook accounts, Youtube
             Followers, Theme pages etc.
-          </h6>
+          </Typography>
 
           <Box
             sx={{

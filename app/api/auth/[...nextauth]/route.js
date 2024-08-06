@@ -31,7 +31,7 @@ export const authOptions = {
         );
         console.log("invalid credentials");
         if (!isPasswordCorrect) {
-          throw new Error("Invalid username or Password", 401);
+          throw new Error("Invalid Email or Password", 401);
         }
         return result;
       },
