@@ -3,6 +3,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import {
   Avatar,
   Box,
+  Divider,
   IconButton,
   Paper,
   Stack,
@@ -11,20 +12,21 @@ import {
 import axios from "axios";
 import Image from "next/image";
 import { RestaurantContext } from "@context/RestaurantContext";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditIcon from "./EditIcon";
 
-const Details = ({ category }) => {
+const Details = ({ category, catId }) => {
   const [logs, setLogs] = useState("");
   const { setOpen, setType, setCatType, toggle } =
     useContext(RestaurantContext);
   useEffect(() => {
-    //fetch logs for this category
+    //fetch logs for this , catId
     (async () => {
       try {
         const { data } = await axios.post("/api/logs/get-category-logs", {
           category,
         });
         setLogs(data?.logs);
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -33,6 +35,23 @@ const Details = ({ category }) => {
   return (
     <AccordionDetails>
       <Stack direction={{ xs: "column" }}>
+        <Stack
+          sx={{ width: "100%" }}
+          justifyContent="space-between"
+          direction="row"
+        >
+          <div></div>{" "}
+          <IconButton
+            onClick={() => {
+              setType("delete-category");
+              setCatType(catId);
+              setOpen(true);
+            }}
+          >
+            <DeleteForeverIcon sx={{ color: "red" }} />
+          </IconButton>
+        </Stack>
+        <Divider />
         {logs && logs.length === 0 && (
           <div
             style={{
@@ -142,6 +161,7 @@ const Details = ({ category }) => {
                         <span style={{ fontWeight: "800" }}>Price:</span>
                         <span>₦{log?.price}</span>
                       </Typography>
+                      <EditIcon _logId={log?._id} />
                     </Box>
                   </Stack>
                 </Box>

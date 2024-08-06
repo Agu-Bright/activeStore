@@ -50,7 +50,7 @@ export default function BasicModal({
   setState2,
   type,
 }) {
-  const { formatMoney } = React.useContext(RestaurantContext);
+  // const { formatMoney } = React.useContext(RestaurantContext);
   const handleApprove = async (_id) => {
     try {
       const { data } = await axios.post("/api/deposit/update-deposit", {
@@ -109,7 +109,8 @@ export default function BasicModal({
 
   //=======================================create category=================================//
   const [category, setCategory] = React.useState("");
-  const { setToggle, catType } = React.useContext(RestaurantContext);
+  const { setToggle, catType, setCatType, formatMoney, logId } =
+    React.useContext(RestaurantContext);
 
   const handleCreateCategory = async () => {
     if (!category) {
@@ -162,6 +163,57 @@ export default function BasicModal({
   const [image, setImage] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [customLog, setCustomLog] = React.useState("");
+
+  const handleRemoveLog = (index) => {
+    console.log("hi");
+    setLogs((prev) => {
+      const data = prev.filter((_, i) => i !== index);
+      console.log(data);
+      return data;
+    });
+  };
+
+  //=======================================delete category=================================//
+  const [deleteIndex, setDeleteIndex] = React.useState(1);
+  const [deleting, setDeleting] = React.useState(false);
+  const handleDeleteCat = async (_catType) => {
+    console.log("_catType");
+    try {
+      setDeleting(true);
+      await axios.post("/api/logs/delete-category", {
+        catId: _catType,
+      });
+      handleClose();
+      setCatType("");
+      setDeleting(false);
+      setToggle((prev) => !prev);
+      toast.error("Deleted", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    } catch (error) {
+      setDeleting(false);
+
+      toast.error(error?.response?.data?.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
 
   const handleImageUpload = () => {
     const el = document.getElementById("screenshot");
@@ -222,7 +274,43 @@ export default function BasicModal({
       });
     }
   };
+  //=======================================delete Log=================================//
 
+  const handleDeleteLog = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post("/api/log/delete-log", {
+        logId: logId,
+      });
+      console.log(data);
+      setLoading(false);
+      toast.success("Deleted", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      handleClose();
+    } catch (error) {
+      setLoading(false);
+      toast.error(error?.response?.data?.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
   if (type === "createCategory") {
     return (
       <div>
@@ -662,10 +750,21 @@ export default function BasicModal({
             {index === 2 && (
               <div>
                 <div>
+                  <span style={{ fontWeight: "800" }}>Uploaded Logs:</span>
+                  {logs?.length}
+                </div>
+                <div
+                  style={{
+                    border: "0.1px solid gray",
+                    maxHeight: "200px",
+                    overflow: "scroll",
+                  }}
+                >
                   {logs &&
                     logs.length > 0 &&
-                    logs.map((log, _index) => (
+                    logs.map((log, index) => (
                       <div
+                        key={index}
                         style={{
                           position: "relative",
                           border: "0.1px solid gray",
@@ -675,6 +774,7 @@ export default function BasicModal({
                         }}
                       >
                         <IconButton
+                          onClick={() => handleRemoveLog(index)}
                           sx={{
                             position: "absolute",
                             top: 0,
@@ -808,6 +908,109 @@ export default function BasicModal({
                   />
                 </Button>
               )}
+            </Stack>
+          </Box>
+        </Modal>
+      </div>
+    );
+  }
+  if (type === "delete-category") {
+    return (
+      <div>
+        {/* <Button onClick={handleOpen}>Open modal</Button> */}
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            {deleteIndex === 1 && (
+              <>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Delete Category{" "}
+                </Typography>
+                <Typography
+                  id="modal-modal-description"
+                  sx={{ mt: 1, fontWeight: "700" }}
+                >
+                  Are you sure you want to Delete this category?
+                </Typography>
+                <Typography
+                  id="modal-modal-description"
+                  sx={{ mt: 1, fontWeight: "300" }}
+                >
+                  Deleting this category will clear all the logs under this
+                  category and user interactions with them{" "}
+                </Typography>
+                <Stack justifyContent="space-between" direction="row">
+                  <Button sx={{ color: "red" }} onClick={() => handleClose()}>
+                    Cancel
+                  </Button>
+                  <Button onClick={() => setDeleteIndex(2)}>Delete</Button>
+                </Stack>
+              </>
+            )}
+            {deleteIndex === 2 && (
+              <>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Delete Category{" "}
+                </Typography>
+                <Typography
+                  id="modal-modal-description"
+                  sx={{ mt: 1, fontWeight: "700" }}
+                >
+                  You really want to do this Boss !!{" "}
+                </Typography>
+                <Typography
+                  id="modal-modal-description"
+                  sx={{ mt: 1, fontWeight: "300" }}
+                >
+                  😲
+                </Typography>
+                <Stack justifyContent="space-between" direction="row">
+                  <Button sx={{ color: "red" }} onClick={() => handleClose()}>
+                    Cancel
+                  </Button>
+                  <Button onClick={() => handleDeleteCat(catType)}>
+                    Delete
+                  </Button>
+                </Stack>
+              </>
+            )}
+          </Box>
+        </Modal>
+      </div>
+    );
+  }
+  if (type === "delete-log") {
+    return (
+      <div>
+        {/* <Button onClick={handleOpen}>Open modal</Button> */}
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Delete Log{" "}
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+              Are you sure you want to delete this log
+            </Typography>
+            <Stack justifyContent="space-between" direction="row">
+              <Button sx={{ color: "red" }} onClick={() => handleClose()}>
+                Cancel
+              </Button>
+              <Button onClick={() => handleDeleteLog()}>
+                {loading ? (
+                  <CircularProgress sx={{ color: "blue" }} size={20} />
+                ) : (
+                  "Delete"
+                )}
+              </Button>
             </Stack>
           </Box>
         </Modal>

@@ -22,7 +22,7 @@ export default function LogsUpload({ categories }) {
               {category?.catType}{" "}
             </AccordionSummary>
             <Divider />
-            <Details category={category?.catType} />
+            <Details category={category?.catType} catId={category?._id} />
           </Accordion>
         );
       })}

@@ -27,25 +27,10 @@ export const POST = async (req, res) => {
   }
   try {
     await connectDB;
-    const body = await req.json();
+    const { logId } = await req.json();
+    await Log.findByIdAndDelete(logId);
 
-    const category = await Category.findOne({ catType: body.catType });
-    if (!category) {
-      return new Response(
-        JSON.stringify({ success: false, message: "Category Doesn't Exist" }),
-        { status: 500 }
-      );
-    }
-    console.log("category", category);
-    const logs = await Log.create({
-      social: body.social,
-      description: body.description,
-      logs: body.logs,
-      category: category._id,
-      price: body?.price,
-      image: body?.image,
-    });
-    return new Response(JSON.stringify({ success: true, logs }), {
+    return new Response(JSON.stringify({ success: true }), {
       status: 200,
     });
   } catch (error) {
