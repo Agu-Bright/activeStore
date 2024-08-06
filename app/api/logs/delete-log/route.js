@@ -34,6 +34,7 @@ export const POST = async (req, res) => {
       status: 200,
     });
   } catch (error) {
+    console.log(error);
     if ((error.code = 11000 && error.keyPattern && error.keyValue)) {
       return new Response(
         JSON.stringify({ success: false, message: "User already exist" }),

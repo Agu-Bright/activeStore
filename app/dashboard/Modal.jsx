@@ -279,10 +279,9 @@ export default function BasicModal({
   const handleDeleteLog = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.post("/api/log/delete-log", {
+      const { data } = await axios.post("/api/logs/delete-log", {
         logId: logId,
       });
-      console.log(data);
       setLoading(false);
       toast.success("Deleted", {
         position: "top-center",
@@ -296,6 +295,7 @@ export default function BasicModal({
         transition: Bounce,
       });
       handleClose();
+      setToggle((prev) => !prev);
     } catch (error) {
       setLoading(false);
       toast.error(error?.response?.data?.message, {
@@ -1016,6 +1016,36 @@ export default function BasicModal({
         </Modal>
       </div>
     );
+  }
+  if (type === "add-log") {
+    <div>
+      {/* <Button onClick={handleOpen}>Open modal</Button> */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Add Logs
+          </Typography>
+
+          <Stack justifyContent="space-between" direction="row">
+            <Button sx={{ color: "red" }} onClick={() => handleClose()}>
+              Cancel
+            </Button>
+            <Button onClick={() => handleDeleteLog()}>
+              {loading ? (
+                <CircularProgress sx={{ color: "blue" }} size={20} />
+              ) : (
+                "Delete"
+              )}
+            </Button>
+          </Stack>
+        </Box>
+      </Modal>
+    </div>;
   } else
     return (
       <div>
