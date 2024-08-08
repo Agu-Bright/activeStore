@@ -15,32 +15,32 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const query = useSearchParams();
-  console.log("query", query);
-  const cat = query.get("cat");
-  console.log("cat", cat);
-  const [logs, setLogs] = useState([]);
+  // const query = useSearchParams();
+  // console.log("query", query);
+  // const cat = query.get("cat");
+  // console.log("cat", cat);
+  // const [logs, setLogs] = useState([]);
 
-  useEffect(() => {
-    cat &&
-      (async () => {
-        try {
-          //fetch logs based on category
-          const { data } = await axios.post("/api/logs/get-category-logs", {
-            category: cat,
-          });
-          console.log(data);
-          setLogs(data?.logs);
-        } catch (error) {
-          console.log(error);
-        }
-      })();
-  }, [cat]);
+  // useEffect(() => {
+  //   cat &&
+  //     (async () => {
+  //       try {
+  //         //fetch logs based on category
+  //         const { data } = await axios.post("/api/logs/get-category-logs", {
+  //           category: cat,
+  //         });
+  //         console.log(data);
+  //         setLogs(data?.logs);
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //     })();
+  // }, [cat]);
 
   if (status === "loading") {
     return (
