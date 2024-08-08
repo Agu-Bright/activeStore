@@ -22,7 +22,7 @@ const InfoCards = ({ summary }) => {
             <div className="ui-item bg-success">
               <div className="left">
                 {session?.user?.role === "sub-admin" && <p>Deposits</p>}
-                {session?.user?.role === "admin" && <p>Deposits</p>}
+                {session?.user?.role === "admin" && <p>Orders</p>}
                 {session?.user?.role === "admin" && (
                   <h4>{summary?.restaurantRequests || "$10000"}</h4>
                 )}
@@ -44,7 +44,7 @@ const InfoCards = ({ summary }) => {
                   <h4>{summary?.totalRestaurants || "$5000"}</h4>
                 )}
                 {session?.user?.role === "sub-admin" && (
-                  <h4>{summary?.todaysReservations || "$50000"}</h4>
+                  <h4>{summary?.todaysReservations || "$5000"}</h4>
                 )}
                 {/* <p>Listing Views</p> */}
               </div>

@@ -105,23 +105,27 @@ const page = () => {
                 data-aos-delay="200"
               >
                 <div className="content">
-                  <h3>Who We Are</h3>
+                  <h3>About Active Store</h3>
                   <h2>
-                    Expedita voluptas omnis cupiditate totam eveniet nobis sint
-                    iste. Dolores est repellat corrupti reprehenderit.
+                    At Activestore, we specialize in providing a diverse array
+                    of accounts suited for multiple purposes, including
+                    marketing, brand promotion, newsletters, and more.
                   </h2>
                   <p>
-                    Quisquam vel ut sint cum eos hic dolores aperiam. Sed
-                    deserunt et. Inventore et et dolor consequatur itaque ut
-                    voluptate sed et. Magnam nam ipsum tenetur suscipit
-                    voluptatum nam et est corrupti.
+                    We sell all types of social media accounts such as Facebook,
+                    Instagram, Twitter, TikTok, Foreign Numbers.
+                  </p>
+                  <p>
+                    We boost followers, We create website and mobile apps too
+                    VPN and tools for work, Professionals photo and video
+                    editing
                   </p>
                   <div className="text-center text-lg-start">
                     <a
-                      href="#"
+                      href="/user"
                       className="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center"
                     >
-                      <span>Read More</span>
+                      <span>Purchase now</span>
                       <i className="bi bi-arrow-right"></i>
                     </a>
                   </div>
@@ -229,7 +233,7 @@ const page = () => {
           <div className="container section-title" data-aos="fade-up">
             <h2>Features</h2>
             <p>
-              Our Advacedd Features
+              Our key Features
               <br />
             </p>
           </div>
@@ -254,7 +258,7 @@ const page = () => {
                   >
                     <div className="feature-box d-flex align-items-center">
                       <i className="bi bi-check"></i>
-                      <h3>Eos aspernatur rem</h3>
+                      <h3>Facebook Accounts</h3>
                     </div>
                   </div>
                   {/* <!-- End Feature Item --> */}
@@ -266,7 +270,7 @@ const page = () => {
                   >
                     <div className="feature-box d-flex align-items-center">
                       <i className="bi bi-check"></i>
-                      <h3>Facilis neque ipsa</h3>
+                      <h3>Instagram Accounts</h3>
                     </div>
                   </div>
                   {/* <!-- End Feature Item --> */}
@@ -278,7 +282,7 @@ const page = () => {
                   >
                     <div className="feature-box d-flex align-items-center">
                       <i className="bi bi-check"></i>
-                      <h3>Volup amet volupt</h3>
+                      <h3>Twitter Accounts</h3>
                     </div>
                   </div>
                   {/* <!-- End Feature Item --> */}
@@ -290,7 +294,7 @@ const page = () => {
                   >
                     <div className="feature-box d-flex align-items-center">
                       <i className="bi bi-check"></i>
-                      <h3>Rerum omnis sint</h3>
+                      <h3>TikTok Accounts</h3>
                     </div>
                   </div>
                   {/* <!-- End Feature Item --> */}
@@ -302,7 +306,7 @@ const page = () => {
                   >
                     <div className="feature-box d-flex align-items-center">
                       <i className="bi bi-check"></i>
-                      <h3>Alias possimus</h3>
+                      <h3>Foreign Numbers</h3>
                     </div>
                   </div>
                   {/* <!-- End Feature Item --> */}
@@ -314,7 +318,27 @@ const page = () => {
                   >
                     <div className="feature-box d-flex align-items-center">
                       <i className="bi bi-check"></i>
-                      <h3>Repellendus molli</h3>
+                      <h3>We boost followers</h3>
+                    </div>
+                  </div>
+                  <div
+                    className="col-md-6"
+                    data-aos="fade-up"
+                    data-aos-delay="700"
+                  >
+                    <div className="feature-box d-flex align-items-center">
+                      <i className="bi bi-check"></i>
+                      <h3>We create website and mobile apps</h3>
+                    </div>
+                  </div>
+                  <div
+                    className="col-md-6"
+                    data-aos="fade-up"
+                    data-aos-delay="700"
+                  >
+                    <div className="feature-box d-flex align-items-center">
+                      <i className="bi bi-check"></i>
+                      <h3>VPN and toool for work</h3>
                     </div>
                   </div>
                   {/* <!-- End Feature Item --> */}
@@ -345,10 +369,10 @@ const page = () => {
                   <div className="col-md-6 icon-box">
                     <i className="bi bi-award"></i>
                     <div>
-                      <h4>Corporis voluptates sit</h4>
+                      <h4>Explore</h4>
                       <p>
-                        Consequuntur sunt aut quasi enim aliquam quae harum
-                        pariatur laboris nisi ut aliquip
+                        Dive into our store and discover a world of unique
+                        products.
                       </p>
                     </div>
                   </div>
@@ -357,10 +381,11 @@ const page = () => {
                   <div className="col-md-6 icon-box">
                     <i className="bi bi-card-checklist"></i>
                     <div>
-                      <h4>Ullamco laboris nisi</h4>
+                      <h4>Connect</h4>
                       <p>
-                        Excepteur sint occaecat cupidatat non proident, sunt in
-                        culpa qui officia deserunt
+                        Communicate directly with sellers to ask questions, or
+                        discuss customization options. Our platform fosters a
+                        sense of connection between buyers and sellers.
                       </p>
                     </div>
                   </div>
@@ -369,10 +394,12 @@ const page = () => {
                   <div className="col-md-6 icon-box">
                     <i className="bi bi-dribbble"></i>
                     <div>
-                      <h4>Labore consequatur</h4>
+                      <h4>Secure Checkout</h4>
                       <p>
-                        Aut suscipit aut cum nemo deleniti aut omnis. Doloribus
-                        ut maiores omnis facere
+                        Once you’ve found your perfect item, proceed to our
+                        secure checkout process. Rest easy knowing that your
+                        payment is protected, and your purchase is in good
+                        hands.
                       </p>
                     </div>
                   </div>
@@ -381,16 +408,17 @@ const page = () => {
                   <div className="col-md-6 icon-box">
                     <i className="bi bi-filter-circle"></i>
                     <div>
-                      <h4>Beatae veritatis</h4>
+                      <h4>Enjoy</h4>
                       <p>
-                        Expedita veritatis consequuntur nihil tempore laudantium
-                        vitae denat pacta
+                        Sit back and relax as your chosen item makes its way to
+                        you. Join a community of like-minded individuals who
+                        appreciate the value of genuine and authentic product.
                       </p>
                     </div>
                   </div>
                   {/* <!-- End Feature Item --> */}
 
-                  <div className="col-md-6 icon-box">
+                  {/* <div className="col-md-6 icon-box">
                     <i className="bi bi-lightning-charge"></i>
                     <div>
                       <h4>Molestiae dolor</h4>
@@ -399,10 +427,10 @@ const page = () => {
                         tensa raptor marte
                       </p>
                     </div>
-                  </div>
+                  </div> */}
                   {/* <!-- End Feature Item --> */}
 
-                  <div className="col-md-6 icon-box">
+                  {/* <div className="col-md-6 icon-box">
                     <i className="bi bi-patch-check"></i>
                     <div>
                       <h4>Explicabo consectetur</h4>
@@ -411,7 +439,7 @@ const page = () => {
                         quasi ab aut inventore
                       </p>
                     </div>
-                  </div>
+                  </div> */}
                   {/* <!-- End Feature Item --> */}
                 </div>
               </div>
