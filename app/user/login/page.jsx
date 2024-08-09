@@ -91,7 +91,8 @@ const page = () => {
                         });
                         if (status.ok) {
                           console.log("routign");
-                          router.push("/user");
+                          location.reload();
+                          // router.push("/");
                           // setSubmitting(false);
                         }
                         if (!status.ok) {
