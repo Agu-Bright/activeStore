@@ -124,8 +124,9 @@ const Details = ({ category, catId }) => {
                       sx={{
                         width: "70%",
                         display: "flex",
-                        alignItems: "center",
+                        alignItems: { md: "center", xs: "start" },
                         justifyContent: "start",
+                        flexDirection: { md: "row", xs: "column" },
                       }}
                     >
                       <Box>
@@ -139,18 +140,26 @@ const Details = ({ category, catId }) => {
                       <Typography
                         sx={{
                           fontWeight: "800",
-                          fontSize: "1.5em",
+                          fontSize: { md: "1.5em", xs: "1em" },
                           marginRight: "15px",
+                          textAlign: { md: "center", xs: "start" },
                         }}
                       >
                         {log?.social}
                       </Typography>
-                      <Typography>{log?.description}</Typography>
+                      <Typography
+                        sx={{
+                          textAlign: { md: "center", xs: "start" },
+                          fontSize: { md: "1.5em", xs: "0.8em" },
+                        }}
+                      >
+                        {log?.description}
+                      </Typography>
                     </Box>
                     <Box
                       sx={{
                         display: "flex",
-                        alignItems: "center",
+                        alignItems: { md: "center", xs: "start" },
                       }}
                     >
                       <Typography sx={{ marginRight: "10px" }}>
