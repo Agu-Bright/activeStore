@@ -60,7 +60,7 @@ export default function BasicModal({ open, setOpen, handleClose }) {
 
   const handleBuy = () => {
     if (count === 0) {
-      toast.error("Order Count must be greater than one", {
+      toast.error("Invalid order count", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: true,
