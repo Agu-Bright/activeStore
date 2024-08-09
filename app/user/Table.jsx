@@ -6,7 +6,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Avatar, Button, Divider, Stack } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Divider,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
@@ -30,6 +37,7 @@ console.log("activeRow", rows);
 export default function TableList({ title, key, category }) {
   const router = useRouter();
   const [logs, setLogs] = React.useState([]);
+  const isMobile = useMediaQuery("(max-width:600px)");
 
   const { open, setOpen, activeLog, setActiveLog, formatMoney } =
     React.useContext(RestaurantContext);
@@ -70,7 +78,7 @@ export default function TableList({ title, key, category }) {
           justifyContent="space-between"
           sx={{ marginBottom: "10px" }}
         >
-          <h4 style={{ fontWeight: "800" }}>{title}</h4>
+          <Typography sx={{ fontWeight: "800" }}>{title}</Typography>
           <div
             style={{ cursor: "pointer" }}
             onClick={() => router.push(`/user/products?cat=${category}`)}
@@ -83,7 +91,7 @@ export default function TableList({ title, key, category }) {
           </div>
         </Stack>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: "0px" }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Item</TableCell>
@@ -102,7 +110,11 @@ export default function TableList({ title, key, category }) {
                     <TableCell
                       component="th"
                       scope="row"
-                      sx={{ display: "flex" }}
+                      sx={{
+                        display: "flex",
+                        flexDirection: isMobile ? "column" : "row",
+                        alignItems: "center",
+                      }}
                     >
                       <Avatar
                         src={
@@ -112,7 +124,8 @@ export default function TableList({ title, key, category }) {
                           width: "50px",
                           height: "50px",
                           borderRadius: "1px",
-                          marginRight: "10px",
+                          marginRight: isMobile ? "0" : "10px",
+                          marginBottom: isMobile ? "10px" : "0",
                         }}
                         // height={30}
                         // width={40}
@@ -125,7 +138,7 @@ export default function TableList({ title, key, category }) {
                     <TableCell>{log?.logs.length}</TableCell>
                     {/* <TableCell>{row.fat}</TableCell> */}
 
-                    <TableCell sx={{ textAlign: "end" }}>
+                    <TableCell sx={{ textAlign: isMobile ? "start" : "end" }}>
                       <Button
                         onClick={() => {
                           setActiveLog(log);
