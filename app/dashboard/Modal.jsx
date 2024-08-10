@@ -133,6 +133,7 @@ export default function BasicModal({
       });
       setToggle((prev) => !prev);
       handleClose();
+      setCategory("");
     } catch (error) {
       toast.error(error?.response?.data?.message, {
         position: "top-center",

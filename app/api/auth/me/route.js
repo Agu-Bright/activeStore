@@ -24,9 +24,7 @@ export const GET = async (req, res) => {
   }
   try {
     await connectDB;
-    const user = await User.findById(session?.user?.id)
-      .populate("assignedTasks")
-      .populate("completed");
+    const user = await User.findById(session?.user?.id);
     return Response.json({ message: "success", user }, { status: 200 });
   } catch (error) {
     console.log(error);
