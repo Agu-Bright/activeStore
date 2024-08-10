@@ -222,6 +222,50 @@ export default function BasicModal({
     }
   };
 
+  const [csvContent, setCsvContent] = React.useState(null);
+  csvContent && console.log(csvContent);
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+
+    // Check if the file is a CSV file
+    if (file && file.type === "text/csv") {
+      const reader = new FileReader();
+
+      // Event listener to handle the file content once read
+      reader.onload = (e) => {
+        const content = e.target.result;
+
+        let lines = content.split("\n"); // Split content into lines
+        lines = lines.map((line) => line.replace("\r", "")); // Remove \r from each line
+        let dataLines = lines.slice(1).filter((line) => line.trim() !== ""); // Remove header and filter out empty lines
+        dataLines = dataLines.map((item) => {
+          return {
+            log: item,
+          };
+        });
+        setLogs((prev) => {
+          return [...prev, ...dataLines];
+        });
+        console.log("mainContent", dataLines);
+      };
+
+      reader.readAsText(file); // Read the file as text
+    } else {
+      toast.error("File upload must be a CSV", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
+
   React.useEffect(() => {
     if (!open) {
       setIndex(0);
@@ -755,7 +799,9 @@ export default function BasicModal({
                 </div>
                 <div
                   style={{
-                    border: "0.1px solid gray",
+                    border: `${
+                      logs && logs.length > 0 ? "0.1px solid gray" : "none"
+                    }`,
                     maxHeight: "200px",
                     overflow: "scroll",
                   }}
@@ -793,9 +839,29 @@ export default function BasicModal({
                   style={{
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: "center",
+                    alignItems: "start",
                   }}
                 >
+                  <button
+                    style={{ border: "none" }}
+                    onClick={() => {
+                      const el = document.getElementById("csvfile");
+                      if (el) {
+                        el.click();
+                      }
+                    }}
+                  >
+                    Add Csv file
+                  </button>
+
+                  <input
+                    type="file"
+                    id="csvfile"
+                    style={{ display: "none" }}
+                    onChange={handleFileUpload}
+                  />
+
+                  <div>------------------OR--------------------</div>
                   <div className="form-group" style={{ width: "100%" }}>
                     <input
                       type="text"
