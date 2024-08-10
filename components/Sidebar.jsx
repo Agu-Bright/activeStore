@@ -11,6 +11,7 @@ import GavelIcon from "@mui/icons-material/Gavel";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -126,6 +127,28 @@ const Sidebar = () => {
               </Link>
             </li>
           </ul>
+          {session?.user?.role === "admin" && (
+            <ul style={{ marginTop: "25px", border: "none" }}>
+              <li>
+                <Link
+                  href={`${root === "dashboard" ? "/dashboard" : "/user"}`}
+                  style={{
+                    display: "flex",
+                    border: "1px solid white",
+                    width: "90%",
+                    borderRadius: "10px",
+                  }}
+                >
+                  <DashboardIcon
+                    sx={{ marginRight: "10px", color: "#8075ff" }}
+                  />{" "}
+                  <div style={{ color: "white" }}>
+                    {root === "dashboard" ? "User Section" : "Dashboard"}
+                  </div>
+                </Link>
+              </li>
+            </ul>
+          )}
         </div>
       </div>
     </>
