@@ -21,6 +21,7 @@ import { RestaurantContext } from "@context/RestaurantContext";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import TopNav from "./topNav/TopNav";
+import ViewWeekIcon from "@mui/icons-material/ViewWeek";
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     right: -3,
@@ -191,9 +192,10 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
                 >
                   Active Store{" "}
                 </Link>
-                <button
+                <IconButton
+                  // style={{ border: "1px solid black" }}
                   onClick={() => setSideBar(true)}
-                  className="navbar-toggler"
+                  // className="navbar-toggler"
                   type="button"
                   data-toggle="collapse"
                   data-target="#navbarSupportedContent"
@@ -201,8 +203,9 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
                   aria-expanded="false"
                   aria-label="Toggle navigation"
                 >
-                  <span className="fa fa-bars"></span>
-                </button>
+                  {/* <span className="fa fa-bars"></span> */}
+                  <ViewWeekIcon />
+                </IconButton>
                 <div
                   className="collapse navbar-collapse"
                   id="navbarSupportedContent"
