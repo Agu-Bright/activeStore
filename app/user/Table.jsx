@@ -42,20 +42,6 @@ export default function TableList({ title, key, category }) {
   const { open, setOpen, activeLog, setActiveLog, formatMoney } =
     React.useContext(RestaurantContext);
 
-  // const [rows, setRows] = React.useState([]);
-
-  const handleCreateRows = (logs) => {
-    const array = logs.map((log) => {
-      createData(
-        log?.description + ":" + log?.image,
-        log?.price,
-        log?.logs.length
-      );
-    });
-    console.log("rows", array);
-    // setRows(rows);
-  };
-
   React.useEffect(() => {
     (async () => {
       try {
@@ -63,8 +49,7 @@ export default function TableList({ title, key, category }) {
         const { data } = await axios.post("/api/logs/get-category-logs", {
           category,
         });
-        console.log(data);
-        setLogs(data?.logs);
+        setLogs(data?.logs.slice(0, 5));
       } catch (error) {
         console.log(error);
       }
