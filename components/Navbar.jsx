@@ -22,6 +22,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import TopNav from "./topNav/TopNav";
 import ViewWeekIcon from "@mui/icons-material/ViewWeek";
+import Image from "next/image";
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     right: -3,
@@ -190,7 +191,13 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
                   className="navbar-brand logo"
                   href="/user"
                 >
-                  Active Store{" "}
+                  <Image
+                    src="/img/logo.png"
+                    width={50}
+                    height={50}
+                    alt="logo"
+                  />
+                  <Typography>Active Store </Typography>
                 </Link>
                 <IconButton
                   // style={{ border: "1px solid black" }}
@@ -204,7 +211,7 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
                   aria-label="Toggle navigation"
                 >
                   {/* <span className="fa fa-bars"></span> */}
-                  <ViewWeekIcon />
+                  <ViewWeekIcon sx={{ display: { md: "none", xs: "block" } }} />
                 </IconButton>
                 <div
                   className="collapse navbar-collapse"
