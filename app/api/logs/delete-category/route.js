@@ -29,8 +29,8 @@ export const POST = async (req, res) => {
     await connectDB;
     const { catId } = await req.json();
 
-    await Log.deleteMany({ category: catId });
     await Category.findByIdAndDelete(catId);
+    await Log.deleteMany({ category: catId });
 
     return new Response(JSON.stringify({ success: true }), {
       status: 200,
