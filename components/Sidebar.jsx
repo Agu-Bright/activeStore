@@ -131,7 +131,7 @@ const Sidebar = () => {
             <ul style={{ marginTop: "25px", border: "none" }}>
               <li>
                 <Link
-                  href={`${root === "dashboard" ? "/dashboard" : "/user"}`}
+                  href={`${root === "dashboard" ? "/user" : "/dashboard"}`}
                   style={{
                     display: "flex",
                     border: "1px solid white",
