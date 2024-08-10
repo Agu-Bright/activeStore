@@ -187,7 +187,12 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
             <div className="container-fluid">
               <nav className="navbar navbar-expand-lg navbar-light">
                 <Link
-                  style={{ fontWeight: "800" }}
+                  style={{
+                    fontWeight: "800",
+                    display: "flex",
+                    alignItems: "center",
+                    flexDirection: "row",
+                  }}
                   className="navbar-brand logo"
                   href="/user"
                 >
