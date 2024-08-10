@@ -464,7 +464,7 @@ const page = () => {
       <footer id="footer" className="footer">
         <div className="container copyright text-center mt-4">
           <p>
-            @<span>Copyright</span>{" "}
+            © <span>Copyright</span>{" "}
             <strong className="px-1 sitename">Active Store</strong>{" "}
             <span>All Rights Reserved</span>
           </p>
