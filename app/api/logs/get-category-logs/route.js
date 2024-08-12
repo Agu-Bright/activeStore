@@ -7,24 +7,22 @@ import Log from "@models/log";
 import Category from "@models/Category";
 
 export const POST = async (req, res) => {
-  //   const session = await getServerSession(
-  //     req,
-  //     {
-  //       ...NextResponse,
-  //       getHeader: (name) => NextResponse.headers?.get(name),
-  //       setHeader: (name, value) => NextResponse.headers?.set(name, value),
-  //     },
-  //     authOptions
-  //   );
-  //   if (!session) {
-  //     return Response.json(
-  //       { message: "You must be logged in." },
-  //       { status: 401 }
-  //     );
-  //   }
-  //   if (session?.user?.role !== "admin") {
-  //     return Response.json({ message: "Unauthorized Route" }, { status: 401 });
-  //   }
+  const session = await getServerSession(
+    req,
+    {
+      ...NextResponse,
+      getHeader: (name) => NextResponse.headers?.get(name),
+      setHeader: (name, value) => NextResponse.headers?.set(name, value),
+    },
+    authOptions
+  );
+  if (!session) {
+    return Response.json(
+      { message: "You must be logged in." },
+      { status: 401 }
+    );
+  }
+
   try {
     await connectDB;
     const body = await req.json();
