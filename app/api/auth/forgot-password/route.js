@@ -116,7 +116,7 @@ export const POST = async (req) => {
         <body>
           <div class="container">
             <div class="header">
-            <p>TASKBOXOFFICE</p>
+            <p>ActiveStore</p>
               <h1>Password Reset</h1>
             </div>
            
