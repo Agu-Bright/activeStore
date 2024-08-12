@@ -36,7 +36,7 @@ export const POST = async (req, res) => {
       email: body?.email,
     });
 
-    // await sendMail("welcome", user.accountName, user.email);
+    await sendMail("welcome", user.username, user.email);
     //create wallet for this user
     const _wallet = await Wallet.create({
       user: user._id,

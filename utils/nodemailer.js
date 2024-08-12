@@ -101,7 +101,7 @@ const handleTypeSelect = (type, name, restaurant, resId) => {
   <body>
     <div class="container">
       <div class="header">
-        <h1 class="title">Taskbox Office</h1>
+        <h1 class="title">ActiveStore</h1>
         <h1>Welcome Message</h1>
       </div>
      
@@ -109,13 +109,13 @@ const handleTypeSelect = (type, name, restaurant, resId) => {
       <h4>Dear ${name}</h4>
         <p>
   
-        Welcome to Taskboxoffice! We're thrilled to have you on board.
+        Welcome to ActiveStore! We're thrilled to have you on board.
         
-        At Taskboxoffice, we are committed to providing you with the best experience possible. Whether you're here to explore our services, or resources, we're here to support you every step of the way.
+        At ActiveStore, we are committed to providing you with the best experience possible. Whether you're here to explore our services, or resources, we're here to support you every step of the way.
         
         Feel free to reach out to us anytime if you have questions, feedback, or need assistance. Our team is always here to help.
         
-        Once again, welcome to Taskboxoffice!</p>
+        Once again, welcome to ActiveStore!</p>
       </div>
       <div class="footer">
         <p>Thank you for choosing our service!</p>
