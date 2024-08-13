@@ -21,13 +21,10 @@ const InfoCards = ({ summary }) => {
           <div className="col-lg-3 col-md-3 col-sm-6">
             <div className="ui-item bg-success">
               <div className="left">
-                {session?.user?.role === "sub-admin" && <p>Deposits</p>}
                 {session?.user?.role === "admin" && <p>Orders</p>}
+
                 {session?.user?.role === "admin" && (
-                  <h4>{summary?.restaurantRequests || "$10000"}</h4>
-                )}
-                {session?.user?.role === "sub-admin" && (
-                  <h4>{summary?.totalReservations || "$10000"}</h4>
+                  <h4>{summary?.totalReservations || "0"}</h4>
                 )}
               </div>
               {/* <div className="right">
@@ -38,13 +35,12 @@ const InfoCards = ({ summary }) => {
           <div className="col-lg-3 col-md-3 col-sm-6">
             <div className="ui-item bg-warning">
               <div className="left">
-                {session?.user?.role === "sub-admin" && <p>Pending Deposits</p>}
                 {session?.user?.role === "admin" && <p> Pending Deposits</p>}
                 {session?.user?.role === "admin" && (
-                  <h4>{summary?.totalRestaurants || "$5000"}</h4>
+                  <h4>{summary?.totalRestaurants || "0"}</h4>
                 )}
                 {session?.user?.role === "sub-admin" && (
-                  <h4>{summary?.todaysReservations || "$5000"}</h4>
+                  <h4>{summary?.todaysReservations || "0"}</h4>
                 )}
                 {/* <p>Listing Views</p> */}
               </div>
@@ -88,23 +84,6 @@ const InfoCards = ({ summary }) => {
               </div>
             </div>
           )}
-          {session?.user?.role === "admin" && (
-            <div className="col-lg-3 col-md-3 col-sm-6">
-              <div className="ui-item bg-dark">
-                <div className="left">
-                  {session?.user?.role === "admin" && <p>Customer Service</p>}
-                  {session?.user?.role === "admin" && (
-                    <h4>{summary?.totalUsers || "14"}</h4>
-                  )}
-
-                  {/* <p>Bookmarked</p> */}
-                </div>
-                <div className="right">
-                  <i className="fa fa-heart-o"></i>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </Stack>
       <Box
@@ -128,13 +107,9 @@ const InfoCards = ({ summary }) => {
             >
               <div className="ui-item bg-success">
                 <div className="left">
-                  {session?.user?.role === "sub-admin" && <p>Deposits</p>}
                   {session?.user?.role === "admin" && <p>Deposits</p>}
                   {session?.user?.role === "admin" && (
-                    <h4>{summary?.restaurantRequests || "$10000"}</h4>
-                  )}
-                  {session?.user?.role === "sub-admin" && (
-                    <h4>{summary?.totalReservations || "$10000"}</h4>
+                    <h4>{summary?.restaurantRequests || "NGN 0"}</h4>
                   )}
                 </div>
                 <div className="right">
@@ -150,15 +125,12 @@ const InfoCards = ({ summary }) => {
             >
               <div className="ui-item bg-warning">
                 <div className="left">
-                  {session?.user?.role === "sub-admin" && (
-                    <p>Pending Deposits</p>
-                  )}
                   {session?.user?.role === "admin" && <p> Pending Deposits</p>}
                   {session?.user?.role === "admin" && (
-                    <h4>{summary?.totalRestaurants || "$5000"}</h4>
+                    <h4>{summary?.totalRestaurants || "0"}</h4>
                   )}
                   {session?.user?.role === "sub-admin" && (
-                    <h4>{summary?.todaysReservations || "$50000"}</h4>
+                    <h4>{summary?.todaysReservations || "0"}</h4>
                   )}
                   {/* <p>Listing Views</p> */}
                 </div>
@@ -173,13 +145,9 @@ const InfoCards = ({ summary }) => {
               <div className="col-lg-3 col-md-3 col-sm-6">
                 <div className="ui-item bg-active">
                   <div className="left">
-                    {session?.user?.role === "admin" && <p>Task Reset</p>}
-                    {session?.user?.role === "sub-admin" && <p>Task Reset</p>}
+                    {session?.user?.role === "admin" && <p>Empty Logs</p>}
                     {session?.user?.role === "admin" && (
-                      <h4>{summary?.totalSubsc || "15"}</h4>
-                    )}
-                    {session?.user?.role === "sub-admin" && (
-                      <h4>{summary?.revCount || "15"}</h4>
+                      <h4>{summary?.totalSubsc || "0"}</h4>
                     )}
                   </div>
                   <div className="right">
