@@ -159,6 +159,7 @@ export default function BasicModal({
   const [price, setPrice] = React.useState("");
   const [logs, setLogs] = React.useState([]);
   const [uploading, setUploading] = React.useState(false);
+  const [curentLogs, setCurrentLogs] = React.useState([]);
 
   const [adddImage, setAddImage] = React.useState(false);
   const [image, setImage] = React.useState("");
@@ -166,7 +167,6 @@ export default function BasicModal({
   const [customLog, setCustomLog] = React.useState("");
 
   const handleRemoveLog = (index) => {
-    console.log("hi");
     setLogs((prev) => {
       const data = prev.filter((_, i) => i !== index);
       console.log(data);
@@ -245,10 +245,15 @@ export default function BasicModal({
             log: item,
           };
         });
-        setLogs((prev) => {
-          return [...prev, ...dataLines];
-        });
-        console.log("mainContent", dataLines);
+        if (type === "add-log") {
+          setCurrentLogs((prev) => {
+            return [...prev, ...dataLines];
+          });
+        } else {
+          setLogs((prev) => {
+            return [...prev, ...dataLines];
+          });
+        }
       };
 
       reader.readAsText(file); // Read the file as text
@@ -343,6 +348,62 @@ export default function BasicModal({
       setToggle((prev) => !prev);
     } catch (error) {
       setLoading(false);
+      toast.error(error?.response?.data?.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
+  React.useEffect(() => {
+    if (type === "add-log") {
+      (async () => {
+        try {
+          setLoading(true);
+          const { data } = await axios.get(`/api/logs/admin/log/${logId}`);
+          setCurrentLogs(data?.logs);
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+          console.log(error);
+        }
+      })();
+    }
+  }, [type, logId]);
+
+  const handleRemoveCurrentLog = (index) => {
+    setCurrentLogs((prev) => {
+      const data = prev.filter((_, i) => i !== index);
+      return data;
+    });
+  };
+  const [adding, setAdding] = React.useState(false);
+  const handleUpdateLog = async () => {
+    try {
+      setAdding(true);
+      await axios.post(`/api/logs/updatelog/${logId}`, { logs: curentLogs });
+      toast.success("Update Successful", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      setAdding(false);
+      handleClose();
+      setToggle((prev) => !prev);
+    } catch (error) {
+      setAdding(false);
       toast.error(error?.response?.data?.message, {
         position: "top-center",
         autoClose: 5000,
@@ -1085,34 +1146,163 @@ export default function BasicModal({
     );
   }
   if (type === "add-log") {
-    <div>
-      {/* <Button onClick={handleOpen}>Open modal</Button> */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Add Logs
-          </Typography>
+    return (
+      <div>
+        {/* <Button onClick={handleOpen}>Open modal</Button> */}
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Add Logs
+            </Typography>
+            <div>
+              <div>
+                <span style={{ fontWeight: "800" }}>Uploaded Logs:</span>
+                {curentLogs?.length}
+              </div>
+              <div
+                style={{
+                  border: `${
+                    logs && logs.length > 0 ? "0.1px solid gray" : "none"
+                  }`,
+                  maxHeight: "200px",
+                  overflow: "scroll",
+                }}
+              >
+                {loading && (
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <CircularProgress sx={{ color: "blue" }} size={20} />
+                  </div>
+                )}
+                {curentLogs &&
+                  !loading &&
+                  curentLogs.length > 0 &&
+                  curentLogs.map((log, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        position: "relative",
+                        border: "0.1px solid gray",
+                        margin: "10px",
+                        borderRadius: "5px",
+                        padding: "5px",
+                      }}
+                    >
+                      <IconButton
+                        onClick={() => handleRemoveCurrentLog(index)}
+                        sx={{
+                          position: "absolute",
+                          top: 0,
+                          right: 0,
+                        }}
+                      >
+                        <CancelIcon sx={{ color: "red" }} />
+                      </IconButton>
+                      <div>
+                        details: <span>{log.log}</span>{" "}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "start",
+                }}
+              >
+                <button
+                  style={{ border: "none" }}
+                  onClick={() => {
+                    const el = document.getElementById("csvfile");
+                    if (el) {
+                      el.click();
+                    }
+                  }}
+                >
+                  Add Csv file
+                </button>
 
-          <Stack justifyContent="space-between" direction="row">
-            <Button sx={{ color: "red" }} onClick={() => handleClose()}>
-              Cancel
-            </Button>
-            <Button onClick={() => handleDeleteLog()}>
-              {loading ? (
-                <CircularProgress sx={{ color: "blue" }} size={20} />
-              ) : (
-                "Delete"
-              )}
-            </Button>
-          </Stack>
-        </Box>
-      </Modal>
-    </div>;
+                <input
+                  type="file"
+                  id="csvfile"
+                  style={{ display: "none" }}
+                  onChange={handleFileUpload}
+                />
+
+                <div>------------------OR--------------------</div>
+                <div className="form-group" style={{ width: "100%" }}>
+                  <input
+                    type="text"
+                    name="log"
+                    className="input-text"
+                    placeholder="@username,password,email,password..."
+                    style={{ width: "100%", marginTop: "5px" }}
+                    onChange={(e) => setLog(e.target.value)}
+                    value={log}
+                  />
+                </div>
+                {log && (
+                  <button
+                    onClick={() => {
+                      setCurrentLogs((prev) => {
+                        return [...prev, { log: log }];
+                      });
+                      setLog("");
+                      toast.success("Success, You can add more", {
+                        position: "top-center",
+                        autoClose: 5000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        transition: Bounce,
+                      });
+                    }}
+                    style={{
+                      width: "20%",
+                      border: "none",
+                      borderRadius: "5px",
+                      background: "rgba(128,117,255,1) 0%",
+                      color: "white",
+                      cursor: "pointer",
+                      padding: "10px 0px",
+                    }}
+                  >
+                    Add
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <Stack justifyContent="space-between" direction="row">
+              <Button sx={{ color: "red" }} onClick={() => handleClose()}>
+                Cancel
+              </Button>
+              <Button onClick={() => handleUpdateLog()}>
+                {adding ? (
+                  <CircularProgress sx={{ color: "blue" }} size={20} />
+                ) : (
+                  "Update"
+                )}
+              </Button>
+            </Stack>
+          </Box>
+        </Modal>
+      </div>
+    );
   } else
     return (
       <div>

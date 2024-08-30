@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { RestaurantContext } from "@context/RestaurantContext";
 
-const options = ["Delete Logs"];
+const options = ["Delete Logs", "Add Logs"];
 
 const ITEM_HEIGHT = 48;
 
