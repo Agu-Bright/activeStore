@@ -199,7 +199,7 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
                   <Image
                     src="/img/logo.png"
                     width={50}
-                    height={50}
+                    height={40}
                     alt="logo"
                   />
                   <Typography>Active Store </Typography>

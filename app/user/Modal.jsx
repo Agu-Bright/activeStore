@@ -20,6 +20,7 @@ import { Bounce } from "react-toastify"; // Import the Bounce transition if it's
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import FlutterButton from "@components/FlutterConfig";
 
 const style = {
   position: "absolute",
@@ -245,6 +246,7 @@ export default function BasicModal({ open, setOpen, handleClose }) {
                   <LocalMallIcon sx={{ color: "white" }} />
                 </IconButton>
               </Button>
+              {/* <FlutterButton /> */}
             </Box>
           )}
           {index === 2 && (
@@ -326,7 +328,7 @@ export default function BasicModal({ open, setOpen, handleClose }) {
               >
                 {!loading ? (
                   <Typography sx={{ color: "white" }}>
-                    Confirm Purchase{" "}
+                    Process order{" "}
                   </Typography>
                 ) : (
                   <CircularProgress sx={{ color: "white" }} size={20} />
