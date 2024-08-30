@@ -22,6 +22,10 @@ const orderModel = new mongoose.Schema({
     required: true,
     ref: "Log",
   },
+  status: String,
+  transactionId: String,
+  tx_ref: String,
+  amount: Number,
   createdAt: {
     type: Date,
     default: Date.now,

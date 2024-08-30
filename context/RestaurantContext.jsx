@@ -26,6 +26,7 @@ const RestaurantContextProvider = ({ children }) => {
   const [logId, setLogId] = useState("");
 
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [type, setType] = useState(false);
   const handleOpen = () => setOpen(false);
   const handleClose = () => {
@@ -191,6 +192,8 @@ const RestaurantContextProvider = ({ children }) => {
         setActiveLog,
         logId,
         setLogId,
+        loading,
+        setLoading,
       }}
     >
       {children}
