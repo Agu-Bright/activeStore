@@ -18,6 +18,7 @@ import {
   Avatar,
   useMediaQuery,
   Button,
+  Divider,
 } from "@mui/material";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -80,59 +81,114 @@ const Product = () => {
       <NavPage>
         <div>
           <Typography>{cat}</Typography>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: "0px" }} aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Item</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Stock</TableCell>
-                  <TableCell sx={{ textAlign: "end" }}>Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {logs.length > 0 &&
-                  logs.map((log) => (
-                    <TableRow
-                      key={log?._id}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+          <>
+            {logs.length > 0 &&
+              logs.map((log) => (
+                <Box
+                  sx={{
+                    marginTop: "10px",
+                    marginBottom: "5px",
+                    padding: "15px 10px",
+                    border: "0.2px solid #dcd7d7",
+                    borderRadius: "5px",
+                  }}
+                >
+                  <Stack
+                    flexDirection={{ md: "row", xs: "column" }}
+                    justifyContent="space-between"
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: { md: "center", xs: "start" },
+                        justifyContent: "start",
+                        width: { md: "70%", xs: "100%" },
+                      }}
                     >
-                      <TableCell
-                        component="th"
-                        scope="row"
+                      <Avatar
+                        src={
+                          log?.image ? log?.image : `/img/${log?.social}.png`
+                        }
+                        sx={{
+                          width: "50px",
+                          height: "50px",
+                          borderRadius: "1px",
+                          marginRight: isMobile ? "0" : "10px",
+                          marginBottom: isMobile ? "10px" : "0",
+                        }}
+                      />
+                      <Typography>{log?.description}</Typography>
+                    </Box>
+                    <Divider
+                      sx={{
+                        display: { md: "none", xs: "block" },
+                        margin: "15px 0px",
+                      }}
+                    />
+                    <Stack
+                      direction="row"
+                      justifyContent="space-between"
+                      sx={{ width: { md: "30%", xs: "100%" } }}
+                    >
+                      <Stack
+                        direction="row"
                         sx={{
                           display: "flex",
-                          flexDirection: isMobile ? "column" : "row",
                           alignItems: "center",
+                          justifyContent: "center",
                         }}
                       >
-                        <Avatar
-                          src={
-                            log?.image ? log?.image : `/img/${log?.social}.png`
-                          }
+                        <Box
                           sx={{
-                            width: "50px",
                             height: "50px",
-                            borderRadius: "1px",
-                            marginRight: isMobile ? "0" : "10px",
-                            marginBottom: isMobile ? "10px" : "0",
+                            padding: "0px 20px",
+                            marginRight: "10px",
+                            borderRadius: "7px",
+                            background: "#d6e8ff",
                           }}
-                          // height={30}
-                          // width={40}
-                          // style={{ marginRight: "10px" }}
-                        />
-                        <div>{log?.description}</div>
-                      </TableCell>
+                        >
+                          <Typography
+                            sx={{ textAlign: "center", color: "black" }}
+                          >
+                            Stock
+                          </Typography>
+                          <Typography
+                            sx={{ textAlign: "center", color: "black" }}
+                          >
+                            {log?.logs.length}
+                          </Typography>
+                        </Box>
+                        <Box
+                          sx={{
+                            height: "50px",
+                            padding: "0px 20px",
+                            borderRadius: "7px",
+                            background: "#d6e8ff",
+                          }}
+                        >
+                          <Typography
+                            sx={{ textAlign: "center", color: "black" }}
+                          >
+                            Price
+                          </Typography>
+                          <Typography
+                            sx={{ textAlign: "center", color: "black" }}
+                          >
+                            {formatMoney(log?.price)}{" "}
+                          </Typography>
+                        </Box>
+                      </Stack>
 
-                      <TableCell>{formatMoney(log?.price)}</TableCell>
-                      <TableCell>{log?.logs.length}</TableCell>
-                      {/* <TableCell>{row.fat}</TableCell> */}
-
-                      <TableCell sx={{ textAlign: isMobile ? "start" : "end" }}>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
                         <Button
                           onClick={() => {
                             setActiveLog(log);
-                            console.log("hii");
                             setOpen(true);
                           }}
                           variant="outlined"
@@ -141,13 +197,12 @@ const Product = () => {
                         >
                           Buy
                         </Button>
-                      </TableCell>
-                      {/* <TableCell>{row.protein}</TableCell> */}
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                      </Box>
+                    </Stack>
+                  </Stack>
+                </Box>
+              ))}
+          </>
         </div>
       </NavPage>
     );
