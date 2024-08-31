@@ -76,7 +76,7 @@ const RestaurantContextProvider = ({ children }) => {
         console.log(error);
       }
     })();
-  }, [togggleWallet]);
+  }, [togggleWallet, state]);
 
   useEffect(() => {
     const today = new Date();

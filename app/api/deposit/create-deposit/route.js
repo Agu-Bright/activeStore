@@ -25,7 +25,7 @@ export const POST = async (req, res) => {
   try {
     await connectDB;
     const body = await req.json();
-    if (!body || !body.amount || !body.method)
+    if (!body || !body.amount)
       return new Response(
         JSON.stringify({
           success: false,
@@ -50,9 +50,12 @@ export const POST = async (req, res) => {
       user: session?.user.id,
       wallet: wallet.user,
       method: body.method,
-      amount: body.amount,
-      screenShot: body?.screenShot,
+      amount: Number(body.amount),
+      status: "success",
     });
+    wallet.balance = wallet.balance + Number(deposit.amount);
+    await wallet.save();
+
     return new Response(JSON.stringify({ success: true, deposit }), {
       status: 200,
     });

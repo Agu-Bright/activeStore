@@ -15,11 +15,13 @@ import {
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./style.css";
 import { toast } from "react-toastify";
 import { Bounce } from "react-toastify"; // Import the Bounce transition if it's provided by your toast library
 import "react-toastify/dist/ReactToastify.css";
+import FlutterButton from "@components/FlutterConfig";
+import { RestaurantContext } from "@context/RestaurantContext";
 function formatDateString(dateString) {
   // Create a new Date object from the input date string
   const date = new Date(dateString);
@@ -55,14 +57,13 @@ export default function Home() {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [deposits, setDeposits] = useState("");
   const [image, setImage] = useState("");
+  const { state, setState } = useContext(RestaurantContext);
   const handleScreenshot = () => {
     const el = document.getElementById("screenshot");
     if (el) {
       el.click();
     }
   };
-
-  const [state, setState] = useState(true);
 
   const handleSubmit = async () => {
     if (!amount && !paymentMethod) {
@@ -155,7 +156,7 @@ export default function Home() {
       try {
         const { data } = await axios.get("/api/deposit/get-my-deposits");
         console.log(data);
-        setDeposits(data?.deposits);
+        setDeposits(data?.deposits.reverse());
       } catch (error) {
         toast.error(error?.response?.data?.message, {
           position: "top-center",
@@ -230,7 +231,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                {amount && (
+                {/* {amount && (
                   <div class="card">
                     <div class="card-body">
                       <h6 class="mb-1 mt-1">Select Payment Gateway</h6>
@@ -251,9 +252,9 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                )}
+                )} */}
 
-                <div style={{ marginTop: "10px" }}>
+                {/* <div style={{ marginTop: "10px" }}>
                   {uploading ? (
                     <div
                       style={{
@@ -283,9 +284,9 @@ export default function Home() {
                       )}
                     </>
                   )}
-                </div>
+                </div> */}
               </form>
-              {paymentMethod === "manual" && !uploading && !image && (
+              {/* {paymentMethod === "manual" && !uploading && !image && (
                 <button
                   onClick={() => handleScreenshot()}
                   className="btn-md  btn-block"
@@ -346,9 +347,10 @@ export default function Home() {
                     "Continue"
                   )}
                 </button>
-              )}
+              )} */}
+              {amount && <FlutterButton amount={amount} session={session} />}{" "}
             </div>
-
+            {/* 
             <input
               type="file"
               id="screenshot"
@@ -382,7 +384,7 @@ export default function Home() {
 
                 // setImage()
               }}
-            />
+            /> */}
 
             <Divider sx={{ margin: "20px 0px" }} />
 

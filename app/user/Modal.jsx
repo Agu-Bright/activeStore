@@ -43,6 +43,7 @@ export default function BasicModal({ open, setOpen, handleClose }) {
   const { data: session } = useSession();
   const [count, setCount] = React.useState(1);
   const [index, setIndex] = React.useState(1);
+  const [processing, setProcessing] = React.useState(false);
   const router = useRouter();
   React.useEffect(() => {
     setIndex(1);
@@ -80,43 +81,43 @@ export default function BasicModal({ open, setOpen, handleClose }) {
     setIndex(2);
   };
 
-  // const handleOrder = async () => {
-  //   try {
-  //     setLoading(true);
-  //     await axios.post("/api/logs/order-log", {
-  //       number: count,
-  //       log: activeLog?._id,
-  //     });
-  //     toast.success("Purchase successful", {
-  //       position: "top-center",
-  //       autoClose: 5000,
-  //       hideProgressBar: true,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "light",
-  //       transition: Bounce,
-  //     });
-  //     setLoading(false);
-  //     handleClose();
-  //     router.push("/user/orders");
-  //   } catch (error) {
-  //     setLoading(false);
+  const handleOrder = async () => {
+    try {
+      setProcessing(true);
+      await axios.post("/api/logs/order-log", {
+        number: count,
+        log: activeLog?._id,
+      });
+      toast.success("Purchase successful", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      setProcessing(false);
+      handleClose();
+      router.push("/user/orders");
+    } catch (error) {
+      setProcessing(false);
 
-  //     toast.error(error?.response?.data?.message, {
-  //       position: "top-center",
-  //       autoClose: 5000,
-  //       hideProgressBar: true,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "light",
-  //       transition: Bounce,
-  //     });
-  //   }
-  // };
+      toast.error(error?.response?.data?.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
   return (
     <div>
       {/* <Button onClick={handleOpen}>Open modal</Button> */}
@@ -329,40 +330,40 @@ export default function BasicModal({ open, setOpen, handleClose }) {
                       margin: "20px 0px",
                     }}
                   />
-                  <FlutterButton
+                  {/* <FlutterButton
                     session={session}
                     amount={Number(activeLog?.price * count)}
                     activeLog={activeLog}
                     count={count}
-                  />
+                  /> */}
 
-                  {/* <Button
-                onClick={() => handleOrder()}
-                style={{
-                  display: "flex",
-                  border: "none",
-                  color: "white",
-                  fontWeight: "800",
-                  borderRadius: "10px",
-                  fontSize: "1.2em",
-                  marginTop: "20px",
-                  textAlign: "center",
-                  background:
-                    "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
-                }}
-                className="btn-md btn-block"
-              >
-                {!loading ? (
-                  <Typography sx={{ color: "white" }}>
-                    Process order{" "}
-                  </Typography>
-                ) : (
-                  <CircularProgress sx={{ color: "white" }} size={20} />
-                )}
-                <IconButton>
-                  <LocalMallIcon sx={{ color: "white" }} />
-                </IconButton>
-              </Button> */}
+                  <Button
+                    onClick={() => handleOrder()}
+                    style={{
+                      display: "flex",
+                      border: "none",
+                      color: "white",
+                      fontWeight: "800",
+                      borderRadius: "10px",
+                      fontSize: "1.2em",
+                      marginTop: "20px",
+                      textAlign: "center",
+                      background:
+                        "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
+                    }}
+                    className="btn-md btn-block"
+                  >
+                    {!processing ? (
+                      <Typography sx={{ color: "white" }}>
+                        Process order{" "}
+                      </Typography>
+                    ) : (
+                      <CircularProgress sx={{ color: "white" }} size={20} />
+                    )}
+                    <IconButton>
+                      <LocalMallIcon sx={{ color: "white" }} />
+                    </IconButton>
+                  </Button>
                 </Box>
               )}
             </div>

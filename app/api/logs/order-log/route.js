@@ -45,17 +45,17 @@ export const POST = async (req, res) => {
       );
     }
     //check is user have enough balance
-    // const userWallet = await Wallet.findOne({ user: session?.user?.id });
-    // if (!userWallet) {
-    //   return Response.json({ message: `Invalid user waller` }, { status: 401 });
-    // }
-    // const logCost = Number(number) * Number(orderLog.price);
-    // if (userWallet.balance < logCost) {
-    //   return Response.json(
-    //     { message: `Insucfficient account balance to purchase this log` },
-    //     { status: 401 }
-    //   );
-    // }
+    const userWallet = await Wallet.findOne({ user: session?.user?.id });
+    if (!userWallet) {
+      return Response.json({ message: `Invalid user waller` }, { status: 401 });
+    }
+    const logCost = Number(number) * Number(orderLog.price);
+    if (userWallet.balance < logCost) {
+      return Response.json(
+        { message: `Insucfficient account balance to purchase this log` },
+        { status: 401 }
+      );
+    }
     //handle purchase ==> create Order
     const orderedLog = orderLog.logs.slice(-Number(number));
     orderLog.logs.splice(-Number(number));
@@ -67,8 +67,8 @@ export const POST = async (req, res) => {
       orderLog: orderLog?._id,
     });
     //remove balance from users account
-    // userWallet.balance = Number(userWallet.balance) - logCost;
-    // await userWallet.save();
+    userWallet.balance = Number(userWallet.balance) - logCost;
+    await userWallet.save();
 
     return new Response(JSON.stringify({ success: true, order }), {
       status: 200,
