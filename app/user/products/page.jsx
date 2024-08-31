@@ -27,6 +27,9 @@ import { Suspense, useContext, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { RestaurantContext } from "@context/RestaurantContext";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
+import { toast } from "react-toastify";
+import { Bounce } from "react-toastify"; // Import the Bounce transition if it's provided by your toast library
+import "react-toastify/dist/ReactToastify.css";
 
 const Product = () => {
   const { data: session, status } = useSession();
@@ -188,6 +191,20 @@ const Product = () => {
                       >
                         <Button
                           onClick={() => {
+                            if (log?.logs.length === 0) {
+                              toast.error("Empty Logs", {
+                                position: "top-center",
+                                autoClose: 5000,
+                                hideProgressBar: true,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "light",
+                                transition: Bounce,
+                              });
+                              return;
+                            }
                             setActiveLog(log);
                             setOpen(true);
                           }}

@@ -20,7 +20,9 @@ import { useRouter } from "next/navigation";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import axios from "axios";
 import { RestaurantContext } from "@context/RestaurantContext";
-
+import { toast } from "react-toastify";
+import { Bounce } from "react-toastify"; // Import the Bounce transition if it's provided by your toast library
+import "react-toastify/dist/ReactToastify.css";
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
@@ -172,6 +174,20 @@ export default function TableList({ title, key, category }) {
                     >
                       <Button
                         onClick={() => {
+                          if (log?.logs.length === 0) {
+                            toast.error("Empty Logs", {
+                              position: "top-center",
+                              autoClose: 5000,
+                              hideProgressBar: true,
+                              closeOnClick: true,
+                              pauseOnHover: true,
+                              draggable: true,
+                              progress: undefined,
+                              theme: "light",
+                              transition: Bounce,
+                            });
+                            return;
+                          }
                           setActiveLog(log);
                           setOpen(true);
                         }}
