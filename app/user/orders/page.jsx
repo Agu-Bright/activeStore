@@ -87,7 +87,7 @@ export default function Home() {
       try {
         const { data } = await axios.get("/api/logs/get-my-orders");
         console.log("orders", data);
-        setOrders(data?.orders);
+        setOrders(data?.orders.reverse());
       } catch (error) {
         toast.error(error?.response?.data?.message, {
           position: "top-center",
