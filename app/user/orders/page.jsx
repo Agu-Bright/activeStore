@@ -103,6 +103,7 @@ export default function Home() {
       }
     })();
   }, [state]);
+  
 
   if (status === "loading") {
     return (

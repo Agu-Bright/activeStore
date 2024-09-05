@@ -14,7 +14,7 @@ import {
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation } from "swiper/modules";
 
@@ -23,6 +23,7 @@ import TableList from "./Table";
 
 import React from "react";
 import Image from "next/image";
+import { RestaurantContext } from "@context/RestaurantContext";
 
 const Topic = ({ title, src }) => {
   return (
@@ -37,7 +38,7 @@ export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [categories, setCategories] = useState([]);
-
+  const { myWallet, formatMoney } = useContext(RestaurantContext);
   useEffect(() => {
     (async () => {
       try {
@@ -80,12 +81,12 @@ export default function Home() {
               </span>
               <span style={{}}>{session?.user?.username}</span> 😇
             </h2>
-            <h2 style={{ fontSize: "1em", visibility: "hidden" }}>
+            <h2 style={{ fontSize: "1em" }}>
               <span style={{ fontWeight: "800", paddingRight: "10px" }}>
                 Balance:
               </span>
               <span style={{ textDecoration: "underline", cursor: "pointer" }}>
-                0.00 USD
+                {formatMoney(myWallet?.balance)}
               </span>
             </h2>
           </Stack>

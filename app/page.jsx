@@ -48,6 +48,7 @@ const page = () => {
           </a>
         </div>
       </header>
+
       <main className="main">
         {/* <!-- Hero Section --> */}
         <section id="hero" className="hero section">
@@ -76,7 +77,7 @@ const page = () => {
                 data-aos="zoom-out"
               >
                 <img
-                  src="/img/hero-img.png"
+                  src="/img/banner.jpg"
                   className="img-fluid animated"
                   alt=""
                 />
@@ -101,7 +102,7 @@ const page = () => {
                 data-aos="fade-up"
                 data-aos-delay="200"
               >
-                <div className="content">
+                <div className="content" style={{ height: "100%" }}>
                   <h3>About Active Store</h3>
                   <h2>
                     At Activestore, we specialize in providing a diverse array
@@ -134,7 +135,7 @@ const page = () => {
                 data-aos="zoom-out"
                 data-aos-delay="200"
               >
-                <img src="/img/about.jpg" className="img-fluid" alt="" />
+                <img src="/img/banner_1.jpg" className="img-fluid" alt="" />
               </div>
             </div>
           </div>
@@ -243,7 +244,7 @@ const page = () => {
                 data-aos="zoom-out"
                 data-aos-delay="100"
               >
-                <img src="/img/features.png" className="img-fluid" alt="" />
+                <img src="/img/banner_4.jpg" className="img-fluid" alt="" />
               </div>
 
               <div className="col-xl-6 d-flex">
@@ -446,7 +447,7 @@ const page = () => {
                 data-aos="fade-up"
                 data-aos-delay="100"
               >
-                <img src="/img/alt-features.png" className="img-fluid" alt="" />
+                <img src="/img/banner_2.jpg" className="img-fluid" alt="" />
               </div>
             </div>
           </div>
