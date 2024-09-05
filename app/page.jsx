@@ -1,6 +1,6 @@
 "use client";
 
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import "./main.css";
@@ -53,8 +53,29 @@ const page = () => {
         {/* <!-- Hero Section --> */}
         <section id="hero" className="hero section">
           <div className="container">
+            <Typography
+              sx={{
+                fontWeight: "800 !important",
+                fontSize: "2em !important",
+                color: "#4154f1 !important",
+                width: "100%",
+                display: { md: "none", xs: "block" },
+              }}
+            >
+              Welcome to ActiveStore
+            </Typography>
             <div className="row gy-4">
               <div className="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                <Typography
+                  sx={{
+                    fontWeight: "800 !important",
+                    fontSize: "2em !important",
+                    color: "#4154f1 !important",
+                    display: { md: "block", xs: "none" },
+                  }}
+                >
+                  Welcome to ActiveStore
+                </Typography>
                 <h1 data-aos="fade-up">
                   Discover unique social account in active store{" "}
                 </h1>
