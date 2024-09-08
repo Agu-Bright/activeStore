@@ -4,7 +4,6 @@ import { authOptions } from "@app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import Log from "@models/log";
-import Category from "@models/Category";
 import Wallet from "@models/wallet";
 import Order from "@models/order";
 
