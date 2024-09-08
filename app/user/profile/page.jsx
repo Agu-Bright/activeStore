@@ -126,7 +126,10 @@ export default function Home() {
                   </svg>
                   <div className="lh-100">
                     <h6 className="mb-0 text-black lh-100">Account Balance</h6>
-                    <small> {formatMoney(myWallet?.balance) || 0.0}</small>
+                    <small style={{ fontWeight: "800" }}>
+                      {" "}
+                      {formatMoney(myWallet?.balance) || 0.0}
+                    </small>
                   </div>
                 </div>
 

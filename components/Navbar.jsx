@@ -226,8 +226,9 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
                   <span style={{ paddingRight: "10px", fontWeight: "800" }}>
                     Balance:
                   </span>
-
-                  {formatMoney(myWallet?.balance) || 0.0}
+                  <span style={{ fontWeight: "800" }}>
+                    {formatMoney(myWallet?.balance) || 0.0}
+                  </span>
                 </Box>
               </nav>
             </div>

@@ -85,7 +85,13 @@ export default function Home() {
               <span style={{ fontWeight: "800", paddingRight: "10px" }}>
                 Balance:
               </span>
-              <span style={{ textDecoration: "underline", cursor: "pointer" }}>
+              <span
+                style={{
+                  textDecoration: "underline",
+                  cursor: "pointer",
+                  fontWeight: "800",
+                }}
+              >
                 {formatMoney(myWallet?.balance)}
               </span>
             </h2>
@@ -121,7 +127,7 @@ export default function Home() {
               overflow: "hidden",
             }}
           >
-            <img src="/img/flier-1.png" alt="flier" style={{ width: "100%" }} />
+            <img src="/img/flier-1.jpg" alt="flier" style={{ width: "100%" }} />
           </Box>
           <div>
             <>

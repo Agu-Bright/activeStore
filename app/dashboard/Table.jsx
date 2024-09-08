@@ -135,8 +135,8 @@ const Table = () => {
         order?.method,
         <div>
           {" "}
-          <span style={{ color: "black", fontWeight: "800" }}>$</span>{" "}
-          {order?.amount}
+          <span style={{ color: "black", fontWeight: "800" }}></span>{" "}
+          {formatMoney(order?.amount)}
         </div>,
 
         <>

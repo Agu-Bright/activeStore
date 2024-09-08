@@ -55,10 +55,10 @@ const InfoCards = ({ summary }) => {
                 {session?.user?.role === "admin" && <p>Task Reset</p>}
                 {session?.user?.role === "sub-admin" && <p>Task Reset</p>}
                 {session?.user?.role === "admin" && (
-                  <h4>{summary?.totalSubsc || "15"}</h4>
+                  <h4>{summary?.totalSubsc || "0"}</h4>
                 )}
                 {session?.user?.role === "sub-admin" && (
-                  <h4>{summary?.revCount || "15"}</h4>
+                  <h4>{summary?.revCount || "0"}</h4>
                 )}
               </div>
               {/* <div className="right">
@@ -73,7 +73,7 @@ const InfoCards = ({ summary }) => {
                 <div className="left">
                   {session?.user?.role === "admin" && <p>Users</p>}
                   {session?.user?.role === "admin" && (
-                    <h4>{summary?.totalUsers || "14"}</h4>
+                    <h4>{summary?.totalUsers || "0"}</h4>
                   )}
 
                   {/* <p>Bookmarked</p> */}
@@ -165,7 +165,7 @@ const InfoCards = ({ summary }) => {
                     <div className="left">
                       {session?.user?.role === "admin" && <p>Users</p>}
                       {session?.user?.role === "admin" && (
-                        <h4>{summary?.totalUsers || "14"}</h4>
+                        <h4>{summary?.totalUsers || "0"}</h4>
                       )}
 
                       {/* <p>Bookmarked</p> */}
@@ -188,7 +188,7 @@ const InfoCards = ({ summary }) => {
                         <p>Customer Service</p>
                       )}
                       {session?.user?.role === "admin" && (
-                        <h4>{summary?.totalUsers || "14"}</h4>
+                        <h4>{summary?.totalUsers || "0"}</h4>
                       )}
 
                       {/* <p>Bookmarked</p> */}

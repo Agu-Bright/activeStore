@@ -19,10 +19,9 @@ import { toast } from "react-toastify";
 import { Bounce } from "react-toastify"; // Import the Bounce transition if it's provided by your toast library
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import DownloadIcon from "@mui/icons-material/Download";
 import { writeFile, utils } from "xlsx";
 import { saveAs } from "file-saver";
-
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 // const array = [
 //   { log: "@username,password,email,emailpassword" },
 //   { log: "@username2,password2,email2,emailpassword2" },
@@ -34,9 +33,7 @@ export default function Home() {
   const router = useRouter();
   const [orders, setOrders] = useState([]);
   const [state, setState] = useState(false);
-
   const [refreshKey, setRefreshKey] = useState(0);
-
   const refreshComponent = () => {
     // Incrementing the key will force the component to re-render
     setRefreshKey((prevKey) => prevKey + 1);
@@ -103,7 +100,44 @@ export default function Home() {
       }
     })();
   }, [state]);
-  
+
+  const handleCopy = (address) => {
+    console.log(address);
+    const logArray = address.map((item) => item?.log);
+    //  const referralCode = session?.user?.referalCode;
+    const logString = JSON.stringify(logArray);
+    if (logString) {
+      navigator.clipboard
+        .writeText(logString)
+        .then(() => {
+          toast.success("Copied to Clipboard", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+          // Optionally, display a notification or toast here
+        })
+        .catch((err) => {
+          toast.error("copy failed", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+        });
+    }
+  };
 
   if (status === "loading") {
     return (
@@ -241,8 +275,8 @@ export default function Home() {
                             <span style={{ fontWeight: "800" }}>Logs:</span>
                             <span>{item?.logs?.length}</span>
                           </Typography>
-                          <IconButton onClick={() => downloadExcel(item.logs)}>
-                            <DownloadIcon />
+                          <IconButton onClick={() => handleCopy(item.logs)}>
+                            <ContentCopyIcon />
                           </IconButton>
                         </Box>
                       </Stack>
