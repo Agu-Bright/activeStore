@@ -167,7 +167,7 @@ export default function Home() {
 
                   <div className="lh-100">
                     <h6 className="mb-0 text-black lh-100">Complaints</h6>
-                    <a href="https://t.me/activest0re">
+                    <a href="https://t.me/active_storee">
                       <small>Click here to log your complaints</small>
                     </a>
                   </div>
