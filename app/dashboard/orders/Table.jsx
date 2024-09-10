@@ -49,7 +49,14 @@ const Table = () => {
     }
   };
   const [wallets, setWallets] = useState([]);
-  const columns = ["Account Name", "Email", "badge", "Amount", "Created At"];
+  const columns = [
+    "Account Name",
+    "Email",
+    "badge",
+    "Amount",
+    "logs",
+    "Created At",
+  ];
   const [state, setState] = useState(false);
   useEffect(() => {
     (async () => {
@@ -119,6 +126,7 @@ const Table = () => {
         </div>,
 
         formatMoney(Number(order?.logs.length * order?.orderLog?.price)),
+        order?.logs.length,
         formatDateToReadable(order?.createdAt),
       ])
     );
