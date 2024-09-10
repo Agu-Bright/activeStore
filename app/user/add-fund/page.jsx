@@ -86,7 +86,7 @@ export default function Home() {
         amount: amount,
         method: paymentMethod,
       });
-      toast.success("Deposit Submited", {
+      toast.success("Deposit Successful", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: true,
@@ -122,7 +122,7 @@ export default function Home() {
         amount: amount,
         method: paymentMethod,
       });
-      toast.success("Deposit Submited", {
+      toast.success("Deposit Successful", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: true,

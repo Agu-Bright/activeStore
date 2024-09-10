@@ -86,7 +86,7 @@ export default function FlutterButton({ session, amount, activeLog, count }) {
         amount: amount,
         method: "flutter",
       });
-      toast.success("Deposit Submited", {
+      toast.success("Deposit Successful", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: true,
