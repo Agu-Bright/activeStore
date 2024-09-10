@@ -35,7 +35,7 @@ const InfoCards = ({ summary }) => {
           <div className="col-lg-3 col-md-3 col-sm-6">
             <div className="ui-item bg-warning">
               <div className="left">
-                {session?.user?.role === "admin" && <p> Pending Deposits</p>}
+                {session?.user?.role === "admin" && <p>Todays Deposit</p>}
                 {session?.user?.role === "admin" && (
                   <h4>{summary?.totalRestaurants || "0"}</h4>
                 )}
@@ -52,8 +52,8 @@ const InfoCards = ({ summary }) => {
           <div className="col-lg-3 col-md-3 col-sm-6">
             <div className="ui-item bg-active">
               <div className="left">
-                {session?.user?.role === "admin" && <p>Task Reset</p>}
-                {session?.user?.role === "sub-admin" && <p>Task Reset</p>}
+                {session?.user?.role === "admin" && <p>Logs</p>}
+                {session?.user?.role === "sub-admin" && <p>Logs</p>}
                 {session?.user?.role === "admin" && (
                   <h4>{summary?.totalSubsc || "0"}</h4>
                 )}
@@ -125,7 +125,7 @@ const InfoCards = ({ summary }) => {
             >
               <div className="ui-item bg-warning">
                 <div className="left">
-                  {session?.user?.role === "admin" && <p> Pending Deposits</p>}
+                  {session?.user?.role === "admin" && <p> Todays Deposits</p>}
                   {session?.user?.role === "admin" && (
                     <h4>{summary?.totalRestaurants || "0"}</h4>
                   )}

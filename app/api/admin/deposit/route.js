@@ -17,10 +17,10 @@ export const POST = async (req, res) => {
     authOptions
   );
   if (!session) {
-    return Response.json(
-      { message: "You must be logged in." },
-      { status: 401 }
-    );
+    return Response.json({ message: "You must be logged in" }, { status: 401 });
+  }
+  if (session?.user.role !== "admin") {
+    return Response.json({ message: "Unauthorized route" }, { status: 409 });
   }
   try {
     await connectDB;
