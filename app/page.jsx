@@ -505,10 +505,7 @@ const page = () => {
           color: "white",
         }}
       >
-        <a
-          href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
-          target="_blank"
-        >
+        <a href="https://t.me/active_storee" target="_blank">
           <img
             style={{ width: "100%", height: "100%" }}
             src="/img/telegram.png"

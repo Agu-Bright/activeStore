@@ -10,6 +10,7 @@ import { Bounce } from "react-toastify"; // Import the Bounce transition if it's
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { RestaurantContext } from "@context/RestaurantContext";
 const style = {
   position: "absolute",
   top: "50%",
@@ -30,7 +31,7 @@ export default function DeleteModal({
   setState,
 }) {
   const handleClose = () => setOpen(false);
-
+  const { type } = React.useContext(RestaurantContext);
   React.useEffect(() => {
     return () => {
       setActive();
@@ -67,38 +68,72 @@ export default function DeleteModal({
       });
     }
   };
-  return (
-    <div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Stack direction="row" justifyContent="space-between">
-            <div></div>
-            <IconButton onClick={handleClose}>
-              <ClearIcon />
-            </IconButton>
-          </Stack>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            User Deletion{" "}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Are you sure, you want to delete {active?.user?.accountName}{" "}
-          </Typography>
-          <Stack direction="row" justifyContent="space-between">
-            <div></div>
-            <button
-              onClick={() => handleDelete(active?.user?._id)}
-              style={{ color: "white", background: "red", border: "none" }}
-            >
-              Delete
-            </button>
-          </Stack>
-        </Box>
-      </Modal>
-    </div>
-  );
+  if (type === "top_up") {
+    return (
+      <div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Stack direction="row" justifyContent="space-between">
+              <div></div>
+              <IconButton onClick={handleClose}>
+                <ClearIcon />
+              </IconButton>
+            </Stack>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Account Topup{" "}
+            </Typography>
+
+            <Stack direction="row" justifyContent="space-between">
+              <div></div>
+              <button
+                // onClick={() => handleDelete(active?.user?._id)}
+                style={{ color: "white", background: "red", border: "none" }}
+              >
+                Delete
+              </button>
+            </Stack>
+          </Box>
+        </Modal>
+      </div>
+    );
+  } else
+    return (
+      <div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Stack direction="row" justifyContent="space-between">
+              <div></div>
+              <IconButton onClick={handleClose}>
+                <ClearIcon />
+              </IconButton>
+            </Stack>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              User Deletion{" "}
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+              Are you sure, you want to delete {active?.user?.accountName}{" "}
+            </Typography>
+            <Stack direction="row" justifyContent="space-between">
+              <div></div>
+              <button
+                onClick={() => handleDelete(active?.user?._id)}
+                style={{ color: "white", background: "red", border: "none" }}
+              >
+                Delete
+              </button>
+            </Stack>
+          </Box>
+        </Modal>
+      </div>
+    );
 }

@@ -10,9 +10,10 @@ import { ToastContainer, toast } from "react-toastify";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteModal from "./Modal";
 import { RestaurantContext } from "@context/RestaurantContext";
-
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 const Table = () => {
-  const { formatDateToReadable, formatMoney } = useContext(RestaurantContext);
+  const { formatDateToReadable, formatMoney, setType } =
+    useContext(RestaurantContext);
   const handleCopy = (address) => {
     // const referralCode = session?.user?.referalCode;
     if (address) {
@@ -54,7 +55,8 @@ const Table = () => {
     "badge",
     "Account Balance",
     "Created At",
-    "Actions",
+    "Delete",
+    "Top Up",
   ];
   const [state, setState] = useState(false);
   useEffect(() => {
@@ -128,10 +130,20 @@ const Table = () => {
         <IconButton
           onClick={() => {
             setActive(order);
+            setType("");
             handleOpen();
           }}
         >
           <DeleteIcon />
+        </IconButton>,
+        <IconButton
+          onClick={() => {
+            setActive(order);
+            setType("top_up");
+            handleOpen();
+          }}
+        >
+          <AddCircleIcon sx={{ color: "green" }} />
         </IconButton>,
       ])
     );
