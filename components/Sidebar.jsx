@@ -12,6 +12,7 @@ import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -79,6 +80,16 @@ const Sidebar = () => {
                 <Link href="/dashboard/upload-logs" style={{ display: "flex" }}>
                   <HomeRepairServiceIcon sx={{ marginRight: "10px" }} />{" "}
                   <div>Manage Logs</div>
+                </Link>
+              </li>
+              <li
+                className={`${
+                  pathname === "/dashboard/upload-logs" ? "active" : ""
+                }`}
+              >
+                <Link href="/dashboard/orders" style={{ display: "flex" }}>
+                  <ProductionQuantityLimitsIcon sx={{ marginRight: "10px" }} />{" "}
+                  <div>Orders</div>
                 </Link>
               </li>
               <li
