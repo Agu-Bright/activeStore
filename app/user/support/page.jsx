@@ -142,7 +142,7 @@ export default function Home() {
                 </div>
 
                 <div className="d-flex align-items-center p-3 my-3 text-black-50 bg-purple rounded box-shadow">
-                  <a href="#">
+                  <a href="https://t.me/active_storee" target="_blank">
                     <svg
                       className="mr-3"
                       width="40"

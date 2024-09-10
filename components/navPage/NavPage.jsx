@@ -70,6 +70,29 @@ const NavPage = ({ children, buttonNav, topNav, title, type }) => {
         <ToastContainer />
 
         {/* <LiveChatScript /> */}
+        <div
+          style={{
+            width: "70px",
+            height: "70px",
+            borderRadius: "50%",
+            margin: "30px",
+            zIndex: "999",
+            position: "fixed",
+            bottom: 0,
+            right: 0,
+            color: "white",
+          }}
+        >
+          <a
+            href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
+            target="_blank"
+          >
+            <img
+              style={{ width: "100%", height: "100%" }}
+              src="/img/telegram.png"
+            />
+          </a>
+        </div>
       </div>
     );
 };

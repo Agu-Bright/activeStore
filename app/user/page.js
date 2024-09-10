@@ -127,7 +127,16 @@ export default function Home() {
               overflow: "hidden",
             }}
           >
-            <img src="/img/flier-1.jpg" alt="flier" style={{ width: "100%" }} />
+            <a
+              href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
+              target="_blank"
+            >
+              <img
+                src="/img/flier-1.jpg"
+                alt="flier"
+                style={{ width: "100%" }}
+              />
+            </a>
           </Box>
           <div>
             <>
