@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import connectDB from "@utils/connectDB";
 import { NextResponse } from "next/server";
 import Order from "@models/order";
-
+import Log from "@models/log";
 export const GET = async (req) => {
   //check if user is authenticated
   const session = await getServerSession(
