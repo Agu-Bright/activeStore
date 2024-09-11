@@ -250,7 +250,11 @@ export default function Home() {
                         >
                           <Box>
                             <Avatar
-                              src="/img/facebook.png"
+                              src={
+                                item?.orderLog?.image
+                                  ? item?.orderLog?.image
+                                  : `/img/${item?.orderLog?.social}.png`
+                              }
                               sx={{ borderRadius: "2px", marginRight: "15px" }}
                             />
                           </Box>
