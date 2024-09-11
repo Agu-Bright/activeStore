@@ -4,6 +4,7 @@ import connectDB from "@utils/connectDB";
 import { NextResponse } from "next/server";
 import Wallet from "@models/wallet";
 import Order from "@models/order";
+import Log from "@models/log";
 
 export const GET = async (req) => {
   //check if user is authenticated
