@@ -20,8 +20,6 @@ export const GET = async (req) => {
       { message: "You must be logged in." },
       { status: 401 }
     );
-  } else if (session && session?.user?.role !== "admin") {
-    return Response.json({ message: "Forbidden request" }, { status: 403 });
   }
   try {
     await connectDB;
