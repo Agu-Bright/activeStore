@@ -17,6 +17,7 @@ const orderModel = new mongoose.Schema({
       },
     },
   ],
+
   orderLog: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,

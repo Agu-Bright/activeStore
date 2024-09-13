@@ -24,13 +24,13 @@ export const POST = async (req, { params }) => {
     await connectDB;
     const id = params.id;
     const body = await req.json();
+    console.log(body);
 
-    await Log.findByIdAndUpdate(
-      id,
-      { $set: { logs: body?.logs || [] } }, // Ensure `body?.logs` is valid or use an empty array
-      { new: true } // Optionally return the updated document
-    );
-    return Response.json({ success: true }, { status: 200 });
+    const log = await Log.findByIdAndUpdate(id, {
+      price: body?.price,
+      description: body?.description,
+    });
+    return Response.json({ success: true, log }, { status: 200 });
   } catch (error) {
     return Response.json(
       { success: false, message: error.message },

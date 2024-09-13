@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { RestaurantContext } from "@context/RestaurantContext";
 
-const options = ["Delete Logs", "Add Logs"];
+const options = ["Add Logs", "Edit", "Delete Logs"];
 
 const ITEM_HEIGHT = 48;
 
@@ -50,12 +50,16 @@ export default function EditIcon({ _logId }) {
       >
         {options.map((option) => (
           <MenuItem
-            sx={{ color: `${option === "Add Logs" ? "black" : "red"}` }}
+            sx={{ color: `${option === "Delete Logs" ? "red" : "black"}` }}
             key={option}
             // selected={option === "Pyxis"}
             onClick={() => {
               if (option === "Add Logs") {
                 setType("add-log");
+                setLogId(_logId);
+                setOpen(true);
+              } else if (option === "Edit") {
+                setType("edit-log");
                 setLogId(_logId);
                 setOpen(true);
               } else {

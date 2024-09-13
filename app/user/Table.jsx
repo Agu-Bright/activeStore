@@ -54,14 +54,23 @@ export default function TableList({ title, key, category }) {
         <Stack
           direction="row"
           justifyContent="space-between"
-          sx={{ marginBottom: "10px" }}
+          sx={{
+            marginBottom: "10px",
+            background: "#8075ff",
+            padding: "8px",
+            borderRadius: "5px",
+          }}
         >
-          <Typography sx={{ fontWeight: "800" }}>{title}</Typography>
+          <Typography sx={{ fontWeight: "800", color: "white" }}>
+            {title}
+          </Typography>
           <div
             style={{ cursor: "pointer" }}
             onClick={() => router.push(`/user/products?cat=${category}`)}
           >
-            <span style={{ fontWeight: "400", marginRight: "10px" }}>
+            <span
+              style={{ fontWeight: "400", marginRight: "10px", color: "white" }}
+            >
               {" "}
               See More
             </span>

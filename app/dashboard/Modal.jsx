@@ -361,13 +361,19 @@ export default function BasicModal({
       });
     }
   };
+  const [logCategory, setLogCategory] = React.useState();
+  logCategory && console.log("logCat", logCategory);
   React.useEffect(() => {
-    if (type === "add-log") {
+    if (type === "add-log" || type === "edit-log") {
       (async () => {
         try {
           setLoading(true);
           const { data } = await axios.get(`/api/logs/admin/log/${logId}`);
-          setCurrentLogs(data?.logs);
+          if (type === "edit-log") {
+            setLogCategory(data?.logs);
+          } else {
+            setCurrentLogs(data?.logs?.logs);
+          }
           setLoading(false);
         } catch (error) {
           setLoading(false);
@@ -388,6 +394,45 @@ export default function BasicModal({
     try {
       setAdding(true);
       await axios.post(`/api/logs/updatelog/${logId}`, { logs: curentLogs });
+      toast.success("Update Successful", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      setAdding(false);
+      handleClose();
+      setToggle((prev) => !prev);
+    } catch (error) {
+      setAdding(false);
+      toast.error(error?.response?.data?.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
+
+  //---------------------------------Edit Log--------------------------\
+
+  const handleEditDetail = async () => {
+    console.log("Edit detail");
+    try {
+      setAdding(true);
+      await axios.post(`/api/logs/updatelog2/${logId}`, {
+        ...logCategory,
+      });
       toast.success("Update Successful", {
         position: "top-center",
         autoClose: 5000,
@@ -1298,6 +1343,73 @@ export default function BasicModal({
                   "Update"
                 )}
               </Button>
+            </Stack>
+          </Box>
+        </Modal>
+      </div>
+    );
+  } else if (type === "edit-log") {
+    return (
+      <div>
+        {/* <Button onClick={handleOpen}>Open modal</Button> */}
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Edit Log{" "}
+            </Typography>
+            <Box>
+              {logCategory && (
+                <>
+                  <div className="form-group" style={{ width: "100%" }}>
+                    <input
+                      type="number"
+                      name="log"
+                      className="input-text"
+                      placeholder=""
+                      style={{ width: "100%", marginTop: "5px" }}
+                      onChange={(e) =>
+                        setLogCategory((prev) => {
+                          return { ...prev, price: e.target.value };
+                        })
+                      }
+                      value={logCategory?.price}
+                    />
+                  </div>
+                  <div className="form-group" style={{ width: "100%" }}>
+                    <input
+                      type="text"
+                      name="log"
+                      className="input-text"
+                      placeholder=""
+                      style={{ width: "100%", marginTop: "5px" }}
+                      onChange={(e) =>
+                        setLogCategory((prev) => {
+                          return { ...prev, description: e.target.value };
+                        })
+                      }
+                      value={logCategory?.description}
+                    />
+                  </div>
+                </>
+              )}
+            </Box>
+            <Stack justifyContent="space-between" direction="row">
+              <Button sx={{ color: "red" }} onClick={() => handleClose()}>
+                cancel
+              </Button>
+              {!adding && (
+                <Button onClick={() => handleEditDetail()}>Update</Button>
+              )}{" "}
+              {adding && (
+                <Button>
+                  <CircularProgress sx={{ color: "blue" }} size={15} />
+                </Button>
+              )}{" "}
             </Stack>
           </Box>
         </Modal>

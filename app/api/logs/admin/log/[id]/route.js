@@ -25,7 +25,7 @@ export const GET = async (req, { params }) => {
     const id = params.id;
 
     const log = await Log.findById(id);
-    return Response.json({ success: true, logs: log?.logs }, { status: 200 });
+    return Response.json({ success: true, logs: log }, { status: 200 });
   } catch (error) {
     return Response.json(
       { success: false, message: error.message },
