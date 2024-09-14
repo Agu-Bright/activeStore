@@ -37,6 +37,7 @@ const Product = () => {
   const query = useSearchParams();
   console.log("query", query);
   const cat = query.get("cat");
+  const catType = query.get("catType")
   console.log("cat", cat);
   const [logs, setLogs] = useState([]);
 
@@ -48,7 +49,7 @@ const Product = () => {
       (async () => {
         try {
           //fetch logs based on category
-          const { data } = await axios.post("/api/logs/get-category-logs", {
+          const { data } = await axios.post("/api/logs/get-category-logs2", {
             category: cat,
           });
           console.log(data);
@@ -83,7 +84,7 @@ const Product = () => {
     return (
       <NavPage>
         <div>
-          <Typography>{cat}</Typography>
+          <Typography>{catType}</Typography>
           <>
             {logs.length > 0 &&
               logs.map((log) => (

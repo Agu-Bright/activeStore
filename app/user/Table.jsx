@@ -27,7 +27,7 @@ function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-export default function TableList({ title, key, category }) {
+export default function TableList({ title, key, category, catId }) {
   const router = useRouter();
   const [logs, setLogs] = React.useState([]);
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -66,7 +66,9 @@ export default function TableList({ title, key, category }) {
           </Typography>
           <div
             style={{ cursor: "pointer" }}
-            onClick={() => router.push(`/user/products?cat=${category}`)}
+            onClick={() =>
+              router.push(`/user/products?cat=${catId}&&catType=${category}`)
+            }
           >
             <span
               style={{ fontWeight: "400", marginRight: "10px", color: "white" }}

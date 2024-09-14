@@ -144,8 +144,9 @@ export default function Home() {
                 categories.map((category) => {
                   return (
                     <TableList
-                      key={category?.id}
+                      key={category?._id}
                       category={category?.catType}
+                      catId={category?._id}
                       title={
                         <Topic title={category?.catType} src="/img/star.png" />
                       }
