@@ -173,7 +173,11 @@ export default function BasicModal({ open, setOpen, handleClose }) {
                   </Typography>
                   <Stack spacing={10} direction="row" alignItems="start">
                     <Avatar
-                      src={`/img/${activeLog?.social}.png`}
+                      src={
+                        activeLog?.image
+                          ? activeLog?.image
+                          : `/img/${activeLog?.social}.png`
+                      }
                       alt="social"
                       sx={{ borderRadius: "1px", width: 56, height: 56 }}
                     />
@@ -184,6 +188,9 @@ export default function BasicModal({ open, setOpen, handleClose }) {
                           fontSize: { md: "1em", xs: "0.7em" },
                         }}
                       >
+                        <span style={{ fontWeight: "700", marginRight: "5px" }}>
+                          {activeLog?.social}:
+                        </span>
                         {activeLog?.description}
                       </Box>
                       <Typography
@@ -295,7 +302,11 @@ export default function BasicModal({ open, setOpen, handleClose }) {
                   </Typography>
                   <Stack spacing={10} direction="row" alignItems="start">
                     <Avatar
-                      src={`/img/${activeLog?.social}.png`}
+                      src={
+                        activeLog?.image
+                          ? activeLog?.image
+                          : `/img/${activeLog?.social}.png`
+                      }
                       alt="social"
                       sx={{ borderRadius: "1px", width: 56, height: 56 }}
                     />
@@ -306,6 +317,9 @@ export default function BasicModal({ open, setOpen, handleClose }) {
                           fontSize: { md: "1em", xs: "0.7em" },
                         }}
                       >
+                        <span style={{ fontWeight: "700", marginRight: "5px" }}>
+                          {activeLog?.social}:
+                        </span>
                         {activeLog?.description}
                       </Box>
                       <Typography
