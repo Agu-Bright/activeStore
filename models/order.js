@@ -17,7 +17,13 @@ const orderModel = new mongoose.Schema({
       },
     },
   ],
-
+  social: {
+    type: String,
+  },
+  image: { type: String },
+  description: {
+    type: String,
+  },
   orderLog: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,

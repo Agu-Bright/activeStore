@@ -64,6 +64,9 @@ export const POST = async (req, res) => {
       user: session?.user?.id,
       logs: orderedLog,
       orderLog: orderLog?._id,
+      social: orderLog?.social,
+      image: orderLog?.image,
+      description: orderLog?.description,
     });
     //remove balance from users account
     userWallet.balance = Number(userWallet.balance) - logCost;

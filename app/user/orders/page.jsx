@@ -84,7 +84,7 @@ export default function Home() {
       try {
         const { data } = await axios.get("/api/logs/get-my-orders");
         console.log("orders", data);
-        setOrders(data?.orders.reverse());
+        setOrders(data?.orders);
       } catch (error) {
         toast.error(error?.response?.data?.message, {
           position: "top-center",
@@ -251,9 +251,9 @@ export default function Home() {
                           <Box>
                             <Avatar
                               src={
-                                item?.orderLog?.image
-                                  ? item?.orderLog?.image
-                                  : `/img/${item?.orderLog?.social}.png`
+                                item?.image
+                                  ? item?.image
+                                  : `/img/${item?.social}.png`
                               }
                               sx={{ borderRadius: "2px", marginRight: "15px" }}
                             />
@@ -267,7 +267,7 @@ export default function Home() {
                           >
                             {item?.orderLog?.social}
                           </Typography>
-                          <Typography>{item?.orderLog?.description}</Typography>
+                          <Typography>{item?.description}</Typography>
                         </Box>
                         <Box
                           sx={{
