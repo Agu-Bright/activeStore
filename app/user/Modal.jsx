@@ -50,14 +50,14 @@ export default function BasicModal({ open, setOpen, handleClose }) {
   }, [activeLog]);
 
   const handleIncrement = () => {
-    const maxLength = Number(activeLog?.logs.length);
+    const maxLength = Number(activeLog?.logCount);
     if (count < maxLength) {
       setCount((prev) => prev + 1);
     }
   };
 
   const handleDecreament = () => {
-    const length = Number(activeLog?.logs.length);
+    const length = Number(activeLog?.logCount);
     if (count > 0) {
       setCount((prev) => prev - 1);
     }
@@ -193,7 +193,7 @@ export default function BasicModal({ open, setOpen, handleClose }) {
                         }}
                       >
                         <span style={{ fontWeight: "700" }}>Stock:</span>{" "}
-                        {activeLog?.logs?.length}
+                        {activeLog?.logCount}
                       </Typography>
                     </Stack>
                   </Stack>
@@ -315,7 +315,7 @@ export default function BasicModal({ open, setOpen, handleClose }) {
                         }}
                       >
                         <span style={{ fontWeight: "700" }}>Stock:</span>{" "}
-                        {activeLog?.logs?.length}
+                        {activeLog?.logCount}
                       </Typography>
                     </Stack>
                   </Stack>

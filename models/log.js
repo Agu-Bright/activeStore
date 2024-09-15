@@ -7,6 +7,9 @@ const logModel = new mongoose.Schema({
   image: {
     type: String,
   },
+  logCount: {
+    type: Number,
+  },
   logs: [
     {
       log: {

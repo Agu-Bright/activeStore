@@ -37,7 +37,7 @@ const Product = () => {
   const query = useSearchParams();
   console.log("query", query);
   const cat = query.get("cat");
-  const catType = query.get("catType")
+  const catType = query.get("catType");
   console.log("cat", cat);
   const [logs, setLogs] = useState([]);
 
@@ -159,7 +159,7 @@ const Product = () => {
                           <Typography
                             sx={{ textAlign: "center", color: "black" }}
                           >
-                            {log?.logs.length}
+                            {log?.logCount}
                           </Typography>
                         </Box>
                         <Box
@@ -192,7 +192,7 @@ const Product = () => {
                       >
                         <Button
                           onClick={() => {
-                            if (log?.logs.length === 0) {
+                            if (log?.logCount === 0) {
                               toast.error("Empty Logs", {
                                 position: "top-center",
                                 autoClose: 5000,

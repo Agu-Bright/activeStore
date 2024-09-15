@@ -26,7 +26,7 @@ export const POST = async (req, res) => {
   try {
     await connectDB;
     const body = await req.json();
-    console.log(body);
+
     const category = await Category.findOne({ catType: body.category });
     if (!category) {
       return new Response(

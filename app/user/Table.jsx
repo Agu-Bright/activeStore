@@ -39,8 +39,8 @@ export default function TableList({ title, key, category, catId }) {
     (async () => {
       try {
         //fetch logs based on category
-        const { data } = await axios.post("/api/logs/get-category-logs", {
-          category,
+        const { data } = await axios.post("/api/logs/get-category-logs2", {
+          category: catId,
         });
         setLogs(data?.logs.slice(0, 5));
       } catch (error) {
@@ -152,7 +152,7 @@ export default function TableList({ title, key, category, catId }) {
                         <Typography
                           sx={{ textAlign: "center", color: "black" }}
                         >
-                          {log?.logs.length}
+                          {log?.logCount}
                         </Typography>
                       </Box>
                       <Box
@@ -185,7 +185,7 @@ export default function TableList({ title, key, category, catId }) {
                     >
                       <Button
                         onClick={() => {
-                          if (log?.logs.length === 0) {
+                          if (log?.logCount === 0) {
                             toast.error("Empty Logs", {
                               position: "top-center",
                               autoClose: 5000,
