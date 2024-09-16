@@ -1,8 +1,13 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
 import Button from "@mui/material/Button";
-
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { IconButton, Stack } from "@mui/material";
+import { toast } from "react-toastify";
+import { Bounce } from "react-toastify"; // Import the Bounce transition if it's provided by your toast library
+import "react-toastify/dist/ReactToastify.css";
 const style = {
   position: "absolute",
   top: "50%",
@@ -10,67 +15,90 @@ const style = {
   transform: "translate(-50%, -50%)",
   width: 400,
   bgcolor: "background.paper",
-  border: "2px solid #000",
   boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
+  borderRadius: "10px",
+  p: 4,
 };
 
-function ChildModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
+export default function BasicModal({ open, setOpen, activeOrder }) {
+  const handleClose = () => setOpen(false);
+  activeOrder && console.log(activeOrder);
+  const handleCopy = (address) => {
+    if (address) {
+      navigator.clipboard
+        .writeText(address)
+        .then(() => {
+          toast.success("Copied to Clipboard", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+          // Optionally, display a notification or toast here
+        })
+        .catch((err) => {
+          toast.error("copy failed", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+        });
+    }
   };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <React.Fragment>
-      <Button onClick={handleOpen}>Open Child Modal</Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="child-modal-title"
-        aria-describedby="child-modal-description"
-      >
-        <Box sx={{ ...style, width: 200 }}>
-          <h2 id="child-modal-title">Text in a child modal</h2>
-          <p id="child-modal-description">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          </p>
-          <Button onClick={handleClose}>Close Child Modal</Button>
-        </Box>
-      </Modal>
-    </React.Fragment>
-  );
-}
-
-export default function NestedModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
         open={open}
         onClose={handleClose}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
       >
-        <Box sx={{ ...style, width: 400 }}>
-          <h2 id="parent-modal-title">Text in a modal</h2>
-          <p id="parent-modal-description">
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Ordered Logs{" "}
+          </Typography>
+          <Stack direction="column" spacing={2}>
+            {activeOrder &&
+              activeOrder?.map((item) => (
+                <Stack
+                  direction="row"
+                  sx={{
+                    border: "0.1px solid gray",
+                    padding: "5px",
+                    borderRadius: "5px",
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      overflowX: "scroll",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "flex-start",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {item?.log}
+                  </Typography>
+                  <IconButton onClick={() => handleCopy(item?.log)}>
+                    <ContentCopyIcon />
+                  </IconButton>
+                </Stack>
+              ))}
+          </Stack>
+          {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </p>
-          <ChildModal />
+          </Typography> */}
         </Box>
       </Modal>
     </div>

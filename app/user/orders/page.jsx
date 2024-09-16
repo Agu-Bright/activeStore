@@ -1,5 +1,4 @@
 "use client";
-import LiveChatScript from "@components/LiveChat";
 import NavPage from "@components/navPage/NavPage";
 import {
   Box,
@@ -21,7 +20,8 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { writeFile, utils } from "xlsx";
 import { saveAs } from "file-saver";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import BasicModal from "./Modal";
 // const array = [
 //   { log: "@username,password,email,emailpassword" },
 //   { log: "@username2,password2,email2,emailpassword2" },
@@ -34,6 +34,11 @@ export default function Home() {
   const [orders, setOrders] = useState([]);
   const [state, setState] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [activeOrder, setActiveOrder] = useState();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
   const refreshComponent = () => {
     // Incrementing the key will force the component to re-render
     setRefreshKey((prevKey) => prevKey + 1);
@@ -101,43 +106,7 @@ export default function Home() {
     })();
   }, [state]);
 
-  const handleCopy = (address) => {
-    console.log(address);
-    const logArray = address.map((item) => item?.log);
-    //  const referralCode = session?.user?.referalCode;
-    const logString = JSON.stringify(logArray);
-    if (logString) {
-      navigator.clipboard
-        .writeText(logString)
-        .then(() => {
-          toast.success("Copied to Clipboard", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-          });
-          // Optionally, display a notification or toast here
-        })
-        .catch((err) => {
-          toast.error("copy failed", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-          });
-        });
-    }
-  };
+
 
   if (status === "loading") {
     return (
@@ -279,8 +248,13 @@ export default function Home() {
                             <span style={{ fontWeight: "800" }}>Logs:</span>
                             <span>{item?.logs?.length}</span>
                           </Typography>
-                          <IconButton onClick={() => handleCopy(item.logs)}>
-                            <ContentCopyIcon />
+                          <IconButton
+                            onClick={() => {
+                              setActiveOrder(item.logs);
+                              handleOpen();
+                            }}
+                          >
+                            <VisibilityIcon />
                           </IconButton>
                         </Box>
                       </Stack>
@@ -290,6 +264,7 @@ export default function Home() {
               </div>
             )}
           </div>
+          <BasicModal open={open} setOpen={setOpen} activeOrder={activeOrder} />
         </NavPage>
       </div>
     );
