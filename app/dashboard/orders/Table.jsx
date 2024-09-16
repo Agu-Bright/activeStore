@@ -52,7 +52,8 @@ const Table = () => {
   const columns = [
     "Account Name",
     "Email",
-    "badge",
+    "role",
+    "log",
     "Amount",
     "logs",
     "Created At",
@@ -124,6 +125,7 @@ const Table = () => {
         >
           {order?.user?.role}
         </div>,
+        order?.social,
 
         formatMoney(Number(order?.logs.length * order?.orderLog?.price)),
         order?.logs.length,
