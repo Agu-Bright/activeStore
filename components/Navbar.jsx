@@ -16,6 +16,7 @@ import { Badge, BadgeProps } from "@mui/material";
 import { display } from "@mui/system";
 import BookOnlineIcon from "@mui/icons-material/BookOnline";
 import SideBarDrawer from "./SidebarDrawer";
+import SideBarDrawer2 from "./SidebarDrawer2";
 import Points from "./Points";
 import { RestaurantContext } from "@context/RestaurantContext";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -33,7 +34,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const Navbar = ({ fixed, type, data, topNav, title }) => {
-  const { setState, user, myWallet, formatMoney } =
+  const { setState, user, myWallet, formatMoney, sidebar2, setSideBar2 } =
     useContext(RestaurantContext);
 
   //menu state
@@ -82,6 +83,9 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
   };
   const handleSidebarClose = () => {
     setSideBar(false);
+  };
+  const handleSidebarClose2 = () => {
+    setSideBar2(false);
   };
   const [openDrawer, setOpen] = useState(false);
 
@@ -236,6 +240,11 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
           <SideBarDrawer
             open={sidebar}
             close={handleSidebarClose}
+            session={session}
+          />
+          <SideBarDrawer2
+            open={sidebar2}
+            close={handleSidebarClose2}
             session={session}
           />
         </>

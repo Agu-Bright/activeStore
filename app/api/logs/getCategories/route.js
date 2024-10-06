@@ -15,12 +15,13 @@ export const GET = async (req) => {
     },
     authOptions
   );
-  if (!session) {
-    return Response.json(
-      { message: "You must be logged in." },
-      { status: 401 }
-    );
-  }
+  // if (!session) {
+  //   return Response.json(
+  //     { message: "You must be logged in." },
+  
+  //     { status: 401 }
+  //   );
+  // }
   try {
     await connectDB;
     const categories = await Category.find();

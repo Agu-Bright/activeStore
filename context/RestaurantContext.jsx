@@ -16,6 +16,9 @@ const RestaurantContextProvider = ({ children }) => {
   const [state, setState] = useState("reservation");
   const [task, setTask] = useState(false);
   const [myCountry, setMyCountry] = useState("");
+  const [sidebar2, setSideBar2] = useState(false);
+  const [globalCat, setGlobalCat] = useState([]);
+
   //reservation Data
   const [date, setDate] = useState();
   const [time, setTime] = useState();
@@ -194,6 +197,10 @@ const RestaurantContextProvider = ({ children }) => {
         setLogId,
         loading,
         setLoading,
+        sidebar2,
+        setSideBar2,
+        globalCat,
+        setGlobalCat,
       }}
     >
       {children}

@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode, Navigation } from "swiper/modules";
+import SortIcon from "@mui/icons-material/Sort";
 
 import "swiper/css";
 import TableList from "./Table";
@@ -38,12 +39,14 @@ export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [categories, setCategories] = useState([]);
-  const { myWallet, formatMoney } = useContext(RestaurantContext);
+  const { myWallet, formatMoney, setSideBar2, setGlobalCat } =
+    useContext(RestaurantContext);
   useEffect(() => {
     (async () => {
       try {
         const { data } = await axios.get("/api/logs/getCategories");
         setCategories(data?.categories);
+        setGlobalCat(data?.categories);
       } catch (error) {
         console.log(error);
       }
@@ -138,6 +141,20 @@ export default function Home() {
               />
             </a>
           </Box>
+          <Stack
+            justifyContent="center"
+            alignItems="flex-end"
+            sx={{ padding: "10px" }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Typography sx={{ fontWeight: "800", marginRight: "8px" }}>
+                Sort
+              </Typography>
+              <IconButton onClick={() => setSideBar2(true)}>
+                <SortIcon sx={{ fontWeight: "800" }} />
+              </IconButton>
+            </Box>
+          </Stack>
           <div>
             <>
               {categories.length > 0 &&
