@@ -141,7 +141,7 @@ export default function Home() {
               />
             </a>
           </Box>
-          <Stack
+          {/* <Stack
             justifyContent="center"
             alignItems="flex-end"
             sx={{ padding: "10px" }}
@@ -154,7 +154,7 @@ export default function Home() {
                 <SortIcon sx={{ fontWeight: "800" }} />
               </IconButton>
             </Box>
-          </Stack>
+          </Stack> */}
           <div>
             <>
               {categories.length > 0 &&

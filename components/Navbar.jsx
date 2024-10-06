@@ -23,7 +23,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import TopNav from "./topNav/TopNav";
 import ViewWeekIcon from "@mui/icons-material/ViewWeek";
-import Image from "next/image";
+import SortIcon from "@mui/icons-material/Sort";
+
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
     right: -3,
@@ -190,24 +191,37 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
           >
             <div className="container-fluid">
               <nav className="navbar navbar-expand-lg navbar-light">
-                <Link
-                  style={{
-                    fontWeight: "800",
-                    display: "flex",
-                    alignItems: "center",
-                    flexDirection: "row",
-                  }}
-                  className="navbar-brand logo"
-                  href="/user"
+                <Stack
+                  direction="row"
+                  justifyContent="space-between"
+                  alignItems="center"
                 >
-                  <Image
-                    src="/img/logo.png"
-                    width={50}
-                    height={40}
-                    alt="logo"
-                  />
-                  <Typography>Active Store </Typography>
-                </Link>
+                  <IconButton
+                    onClick={() => setSideBar2(true)}
+                    sx={{ border: "0.1px solid gray", marginRight: "10px" }}
+                  >
+                    <SortIcon sx={{ fontWeight: "800" }} />
+                  </IconButton>
+                  <Link
+                    style={{
+                      fontWeight: "800",
+                      display: "flex",
+                      alignItems: "center",
+                      flexDirection: "row",
+                    }}
+                    className="navbar-brand logo"
+                    href="/user"
+                  >
+                    <img
+                      src="/img/logo.png"
+                      alt="logo"
+                      style={{ height: "30px" }}
+                    />
+                    <Typography sx={{ fontWeight: "800" }}>
+                      Active Store{" "}
+                    </Typography>
+                  </Link>
+                </Stack>
                 <IconButton
                   // style={{ border: "1px solid black" }}
                   onClick={() => setSideBar(true)}
