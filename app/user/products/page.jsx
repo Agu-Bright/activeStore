@@ -38,19 +38,21 @@ const Product = () => {
   console.log("query", query);
   const cat = query.get("cat");
   const catType = query.get("catType");
-  console.log("cat", cat);
+  const special = query.get("special");
+  console.log("speciel", special);
   const [logs, setLogs] = useState([]);
 
   const isMobile = useMediaQuery("(max-width:600px)");
   const { open, setOpen, activeLog, setActiveLog, formatMoney } =
     useContext(RestaurantContext);
   useEffect(() => {
-    cat &&
+    if (special) {
       (async () => {
         try {
+          console.log("fetching with social");
           //fetch logs based on category
           const { data } = await axios.post("/api/logs/get-category-logs2", {
-            category: cat,
+            social: "facebook",
           });
           console.log(data);
           setLogs(data?.logs);
@@ -58,7 +60,24 @@ const Product = () => {
           console.log(error);
         }
       })();
-  }, [cat]);
+    } else {
+      cat &&
+        (async () => {
+          console.log("fetching with normal");
+
+          try {
+            //fetch logs based on category
+            const { data } = await axios.post("/api/logs/get-category-logs2", {
+              category: cat,
+            });
+            console.log(data);
+            setLogs(data?.logs);
+          } catch (error) {
+            console.log(error);
+          }
+        })();
+    }
+  }, [cat, special]);
 
   if (status === "loading") {
     return (
@@ -193,7 +212,7 @@ const Product = () => {
                         <Button
                           onClick={() => {
                             if (log?.logCount === 0) {
-                              toast.error("Empty Logs", {
+                              toast.error("Sold Out", {
                                 position: "top-center",
                                 autoClose: 5000,
                                 hideProgressBar: true,

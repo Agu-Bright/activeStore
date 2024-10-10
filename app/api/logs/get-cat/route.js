@@ -26,15 +26,9 @@ export const POST = async (req, res) => {
   try {
     await connectDB;
     const body = await req.json();
-    const category = await Category.findById(body.category);
-    if (!category) {
-      return new Response(
-        JSON.stringify({ success: false, message: "Category Doesn't Exist" }),
-        { status: 500 }
-      );
-    }
+  
     // Fetch logs without the `logs` field but include `logCount`
-    const logs = await Log.find({ category: category._id }).select("-logs");
+    const logs = await Log.find({ social: body.social}).select("-logs");
 
     // For each log, calculate the length of the `logs` array
     const logsWithCount = await Promise.all(

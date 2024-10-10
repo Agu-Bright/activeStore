@@ -6,10 +6,10 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const page = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-
   const handleSubmit = async (e, _emial) => {
     e.preventDefault();
     try {
@@ -45,6 +45,7 @@ const page = () => {
       });
     }
   };
+  
   return (
     <div className="contact-section overview-bgi">
       <div className="container">

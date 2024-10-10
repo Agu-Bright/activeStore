@@ -59,7 +59,7 @@ function SideBarDrawer2({ open, close }) {
                 <div
                   onClick={() => {
                     router.push(
-                      "/user/products?cat=66e2317767f6ea038e702a07&&catType=FACEBOOK"
+                      "/user/products?cat=66e2317767f6ea038e702a07&&catType=FACEBOOK&&special=true"
                     );
                     close();
                   }}

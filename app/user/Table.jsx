@@ -191,7 +191,7 @@ export default function TableList({ title, key, category, catId }) {
                       <Button
                         onClick={() => {
                           if (log?.logCount === 0) {
-                            toast.error("Empty Logs", {
+                            toast.error("Sold Out", {
                               position: "top-center",
                               autoClose: 5000,
                               hideProgressBar: true,
