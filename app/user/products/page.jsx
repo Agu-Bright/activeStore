@@ -51,7 +51,7 @@ const Product = () => {
         try {
           console.log("fetching with social");
           //fetch logs based on category
-          const { data } = await axios.post("/api/logs/get-category-logs2", {
+          const { data } = await axios.post("/api/logs/get-cat", {
             social: "facebook",
           });
           console.log(data);
