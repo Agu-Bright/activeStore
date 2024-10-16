@@ -157,7 +157,7 @@ export default function Home() {
                   target="_blank"
                 >
                   <img
-                    src="/img/telegram-banner.png"
+                    src="/img/flier-3.png"
                     alt="flier"
                     style={{ width: "100%" }}
                   />
