@@ -75,7 +75,7 @@ export default function Home() {
 
             <div className="card my-3">
               <div className="card-body">
-                <div className="d-flex justify-content-start col-lg-12  col-sm-12 p-3 my-3 text-black-50">
+                {/* <div className="d-flex justify-content-start col-lg-12  col-sm-12 p-3 my-3 text-black-50">
                   <svg
                     className="mr-3"
                     width="40"
@@ -107,7 +107,7 @@ export default function Home() {
                       <small>Click to join group</small>
                     </a>
                   </div>
-                </div>
+                </div> */}
 
                 <div className="d-flex align-items-center p-3 my-3 text-black-50 bg-purple rounded box-shadow">
                   <svg

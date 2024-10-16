@@ -6,7 +6,7 @@ import SpatialAudioIcon from "@mui/icons-material/SpatialAudio";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import RestoreIcon from "@mui/icons-material/Restore";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import { IconButton, Stack } from "@mui/material";
+import { Box, IconButton, Stack } from "@mui/material";
 import { RestaurantContext } from "@context/RestaurantContext";
 import { useRouter } from "next/navigation";
 import Call from "@components/CallModal";
@@ -48,10 +48,10 @@ const NavPage = ({ children, buttonNav, topNav, title, type }) => {
           <div className="container-fluid ">
             <div className="row">
               <Sidebar />
-              <div
+              <Box
                 className="dashboard-content dashboard_row"
-                style={{
-                  width: "100%",
+                sx={{
+                  width: { md: "75%" },
                 }}
               >
                 <div>
@@ -63,7 +63,7 @@ const NavPage = ({ children, buttonNav, topNav, title, type }) => {
                     handleClose={handleClose}
                   />
                 </div>
-              </div>
+              </Box>
             </div>
           </div>
         </div>

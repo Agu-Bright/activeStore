@@ -1,25 +1,19 @@
 "use client";
 import LiveChatScript from "@components/LiveChat";
 import NavPage from "@components/navPage/NavPage";
-import {
-  Box,
-  CircularProgress,
-  Stack,
-  Typography,
-  Grid,
-  Paper,
-  IconButton,
-  Avatar,
-} from "@mui/material";
+import { Box, CircularProgress, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation } from "swiper/modules";
-import SortIcon from "@mui/icons-material/Sort";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
+// Import Swiper styles
 import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
 import TableList from "./Table";
 
 import React from "react";
@@ -76,7 +70,7 @@ export default function Home() {
   } else
     return (
       <NavPage>
-        <Box sx={{ width: "100%", height: "100vh" }}>
+        <Box sx={{ height: "100vh" }}>
           <Stack direction="row" justifyContent="space-between">
             <h2 style={{ fontSize: "1em" }}>
               <span style={{ color: "#8075ff", fontWeight: "800" }}>
@@ -130,16 +124,44 @@ export default function Home() {
               overflow: "hidden",
             }}
           >
-            <a
-              href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
-              target="_blank"
+            <Swiper
+              style={{ width: "100%", height: "100%" }}
+              spaceBetween={30}
+              centeredSlides={true}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+              modules={[Autoplay]}
+              className="mySwiper"
             >
-              <img
-                src="/img/flier-1.jpg"
-                alt="flier"
-                style={{ width: "100%" }}
-              />
-            </a>
+              <SwiperSlide>
+                {" "}
+                <a
+                  href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
+                  target="_blank"
+                >
+                  <img
+                    src="/img/Welcome.png"
+                    alt="flier"
+                    style={{ width: "100%" }}
+                  />
+                </a>
+              </SwiperSlide>
+              <SwiperSlide>
+                {" "}
+                <a
+                  href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
+                  target="_blank"
+                >
+                  <img
+                    src="/img/telegram-banner.png"
+                    alt="flier"
+                    style={{ width: "100%" }}
+                  />
+                </a>
+              </SwiperSlide>
+            </Swiper>
           </Box>
           {/* <Stack
             justifyContent="center"

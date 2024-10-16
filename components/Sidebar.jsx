@@ -13,6 +13,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
+import { Box } from "@mui/material";
 
 const Sidebar = () => {
   const pathname = usePathname();
@@ -20,7 +21,7 @@ const Sidebar = () => {
   const root = pathname.split("/")[1];
   return (
     <>
-      <div className="dashboard-nav dashboard_row" style={{ zIndex: "999" }}>
+      <Box className="dashboard-nav dashboard_row" sx={{ zIndex: "999" }}>
         <div className="dashboard-inner">
           {root === "user" && (
             <ul style={{ marginTop: "10px" }}>
@@ -161,7 +162,7 @@ const Sidebar = () => {
             </ul>
           )}
         </div>
-      </div>
+      </Box>
     </>
   );
 };

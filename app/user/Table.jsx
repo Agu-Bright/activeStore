@@ -90,6 +90,7 @@ export default function TableList({ title, key, category, catId }) {
                   padding: "15px 10px",
                   border: "0.2px solid #dcd7d7",
                   borderRadius: "5px",
+                  wdth: "100%",
                 }}
               >
                 <Stack
@@ -121,12 +122,7 @@ export default function TableList({ title, key, category, catId }) {
                       {log?.description}
                     </Typography>
                   </Box>
-                  <Divider
-                    sx={{
-                      display: { md: "none", xs: "block" },
-                      margin: "15px 0px",
-                    }}
-                  />
+
                   <Stack
                     direction="row"
                     justifyContent="space-between"
