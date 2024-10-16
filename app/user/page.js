@@ -138,11 +138,12 @@ export default function Home() {
               <SwiperSlide>
                 {" "}
                 <a
-                  href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
+                  // href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
+                  href="#"
                   target="_blank"
                 >
                   <img
-                    src="/img/welcome.png"
+                    src="/img/flier-1.png"
                     alt="flier"
                     style={{ width: "100%" }}
                   />
@@ -151,7 +152,8 @@ export default function Home() {
               <SwiperSlide>
                 {" "}
                 <a
-                  href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
+                  // href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
+                  href="#"
                   target="_blank"
                 >
                   <img
