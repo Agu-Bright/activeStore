@@ -142,7 +142,7 @@ export default function Home() {
                   target="_blank"
                 >
                   <img
-                    src="/img/Welcome.png"
+                    src="/img/welcome.png"
                     alt="flier"
                     style={{ width: "100%" }}
                   />
