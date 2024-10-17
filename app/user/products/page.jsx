@@ -140,7 +140,12 @@ const Product = () => {
                           marginBottom: isMobile ? "10px" : "0",
                         }}
                       />
-                      <Typography>{log?.description}</Typography>
+                      <Typography>
+                        <span style={{ fontWeight: "700", marginRight: "5px" }}>
+                          {log?.social}:
+                        </span>
+                        {log?.description}
+                      </Typography>{" "}
                     </Box>
                     <Divider
                       sx={{
