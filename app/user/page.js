@@ -139,7 +139,7 @@ export default function Home() {
                 {" "}
                 <a
                   // href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
-                  href="https://t.me/active_storee"
+                  href="https://t.me/activest0re"
                   target="_blank"
                 >
                   <img
@@ -153,7 +153,7 @@ export default function Home() {
                 {" "}
                 <a
                   // href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
-                  href="https://t.me/active_storee"
+                  href="https://t.me/activest0re"
                   target="_blank"
                 >
                   <img
