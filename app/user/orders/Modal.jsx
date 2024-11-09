@@ -69,32 +69,40 @@ export default function BasicModal({ open, setOpen, activeOrder }) {
             Ordered Logs{" "}
           </Typography>
           <Stack direction="column" spacing={2}>
-            {activeOrder &&
-              activeOrder?.map((item) => (
-                <Stack
-                  direction="row"
-                  sx={{
-                    border: "0.1px solid gray",
-                    padding: "5px",
-                    borderRadius: "5px",
-                  }}
-                >
-                  <Typography
+            <div
+              style={{
+                height: "60vh",
+                overflowY: "scroll",
+              }}
+            >
+              {activeOrder &&
+                activeOrder?.map((item) => (
+                  <Stack
+                    direction="row"
                     sx={{
-                      overflowX: "scroll",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      cursor: "pointer",
+                      border: "0.1px solid gray",
+                      padding: "5px",
+                      borderRadius: "5px",
+                      marginBottom: "2px",
                     }}
                   >
-                    {item?.log}
-                  </Typography>
-                  <IconButton onClick={() => handleCopy(item?.log)}>
-                    <ContentCopyIcon />
-                  </IconButton>
-                </Stack>
-              ))}
+                    <Typography
+                      sx={{
+                        overflowX: "scroll",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {item?.log}
+                    </Typography>
+                    <IconButton onClick={() => handleCopy(item?.log)}>
+                      <ContentCopyIcon />
+                    </IconButton>
+                  </Stack>
+                ))}
+            </div>
           </Stack>
           {/* <Typography id="modal-modal-description" sx={{ mt: 2 }}>
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.

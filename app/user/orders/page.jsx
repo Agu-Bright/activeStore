@@ -106,8 +106,6 @@ export default function Home() {
     })();
   }, [state]);
 
-
-
   if (status === "loading") {
     return (
       <div
@@ -224,7 +222,10 @@ export default function Home() {
                                   ? item?.image
                                   : `/img/${item?.social}.png`
                               }
-                              sx={{ borderRadius: "2px", marginRight: "15px" }}
+                              sx={{
+                                borderRadius: "2px",
+                                marginRight: "15px",
+                              }}
                             />
                           </Box>
                           <Typography

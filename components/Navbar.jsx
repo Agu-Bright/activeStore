@@ -24,6 +24,7 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import TopNav from "./topNav/TopNav";
 import ViewWeekIcon from "@mui/icons-material/ViewWeek";
 import SortIcon from "@mui/icons-material/Sort";
+import Image from "next/image";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -212,10 +213,11 @@ const Navbar = ({ fixed, type, data, topNav, title }) => {
                     className="navbar-brand logo"
                     href="/user"
                   >
-                    <img
+                    <Image
                       src="/img/logo.png"
                       alt="logo"
-                      style={{ height: "30px" }}
+                      width={30}
+                      height={30}
                     />
                     <Typography sx={{ fontWeight: "800" }}>
                       Active Store{" "}

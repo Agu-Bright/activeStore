@@ -99,7 +99,7 @@ export default function Home() {
               fontWeight: "800",
               fontSize: { md: "3em", xs: "1.6em" },
               background:
-                "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
+                "linear-gradient(92.12deg, #007C9B 1.46%, #00CCFF 41.25%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}

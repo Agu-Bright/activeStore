@@ -4,6 +4,7 @@ import { CircularProgress, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import "./main.css";
+import Image from "next/image";
 
 const page = () => {
   const router = useRouter();
