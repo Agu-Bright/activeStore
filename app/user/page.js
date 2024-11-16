@@ -328,18 +328,24 @@ export default function Home() {
                             height={20}
                             className="mr-2"
                           />
-                          <Typography className="mr-2">
+                          <Typography
+                            className="mr-2"
+                            style={{ fontSize: "12px" }}
+                          >
                             {item?.user?.username}
                           </Typography>{" "}
                           |{" "}
                           <Typography
                             className="mr-2 !text-green"
-                            sx={{ color: "green" }}
+                            sx={{ color: "green", fontSize: "12px" }}
                           >
                             Deposited
                           </Typography>
                           |{" "}
-                          <Typography className="mr-2" sx={{ color: "orange" }}>
+                          <Typography
+                            className="mr-2"
+                            sx={{ color: "orange", fontSize: "12px" }}
+                          >
                             &#8358;{item?.amount}
                           </Typography>{" "}
                           |{" "}
@@ -347,8 +353,9 @@ export default function Home() {
                             sx={{
                               background: "#8075FF",
                               borderRadius: "10px",
-                              padding: "2px 3px",
+                              padding: "2px",
                               color: "white",
+                              fontSize: "12px",
                             }}
                           >
                             {timeAgo(item?.createdAt)}
@@ -368,11 +375,17 @@ export default function Home() {
                             height={20}
                             className="mr-2"
                           />
-                          <Typography className="mr-2">
+                          <Typography
+                            className="mr-2"
+                            style={{ fontSize: "12px" }}
+                          >
                             {item?.user?.username}
                           </Typography>{" "}
                           |{" "}
-                          <Typography sx={{ color: "green" }} className="mr-2 ">
+                          <Typography
+                            sx={{ color: "green", fontSize: "12px" }}
+                            className="mr-2 "
+                          >
                             Bought
                           </Typography>
                           |{" "}
@@ -380,7 +393,10 @@ export default function Home() {
                             {item?.social}
                           </Typography>{" "}
                           |{" "}
-                          <Typography className="mr-2" sx={{ color: "orange" }}>
+                          <Typography
+                            className="mr-2"
+                            sx={{ color: "orange", fontSize: "12px" }}
+                          >
                             &#8358;{item?.orderLog?.price}
                           </Typography>{" "}
                           |{" "}
@@ -390,6 +406,7 @@ export default function Home() {
                               borderRadius: "10px",
                               padding: "2px",
                               color: "white",
+                              fontSize: "12px",
                             }}
                           >
                             {timeAgo(item?.createdAt)}
