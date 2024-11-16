@@ -192,7 +192,7 @@ function SideBarDrawer2({ open, close }) {
                   </div>
                 </div>
               </li>
-              <li style={{ marginTop: "15px", cursor: "pointer" }}>
+              {/* <li style={{ marginTop: "15px", cursor: "pointer" }}>
                 <div
                   onClick={() => {
                     router.push(
@@ -213,8 +213,8 @@ function SideBarDrawer2({ open, close }) {
                     Texting{" "}
                   </div>
                 </div>
-              </li>
-              <li style={{ marginTop: "15px", cursor: "pointer" }}>
+              </li> */}
+              {/* <li style={{ marginTop: "15px", cursor: "pointer" }}>
                 <div
                   onClick={() => {
                     router.push(
@@ -235,8 +235,8 @@ function SideBarDrawer2({ open, close }) {
                     Reddit{" "}
                   </div>
                 </div>
-              </li>
-              <li style={{ marginTop: "15px", cursor: "pointer" }}>
+              </li> */}
+              {/* <li style={{ marginTop: "15px", cursor: "pointer" }}>
                 <div
                   onClick={() => {
                     router.push(
@@ -257,7 +257,7 @@ function SideBarDrawer2({ open, close }) {
                     DISCORD{" "}
                   </div>
                 </div>
-              </li>
+              </li> */}
               <li style={{ marginTop: "15px", cursor: "pointer" }}>
                 <div
                   onClick={() => {
@@ -322,7 +322,7 @@ function SideBarDrawer2({ open, close }) {
                   </div>
                 </div>
               </li>
-              <li style={{ marginTop: "15px", cursor: "pointer" }}>
+              {/* <li style={{ marginTop: "15px", cursor: "pointer" }}>
                 <div
                   onClick={() => {
                     router.push(
@@ -343,8 +343,8 @@ function SideBarDrawer2({ open, close }) {
                     LINKEDIN{" "}
                   </div>
                 </div>
-              </li>
-              <li style={{ marginTop: "15px", cursor: "pointer" }}>
+              </li> */}
+              {/* <li style={{ marginTop: "15px", cursor: "pointer" }}>
                 <div
                   onClick={() => {
                     router.push(
@@ -365,7 +365,7 @@ function SideBarDrawer2({ open, close }) {
                     TWITCH{" "}
                   </div>
                 </div>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

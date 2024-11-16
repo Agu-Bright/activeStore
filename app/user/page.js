@@ -1,7 +1,15 @@
 "use client";
 import LiveChatScript from "@components/LiveChat";
 import NavPage from "@components/navPage/NavPage";
-import { Box, CircularProgress, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Stack,
+  Typography,
+  Avatar,
+  Button,
+  Divider,
+} from "@mui/material";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -20,6 +28,30 @@ import React from "react";
 import Image from "next/image";
 import { RestaurantContext } from "@context/RestaurantContext";
 
+function timeAgo(dateString) {
+  const givenDate = new Date(dateString);
+  const now = new Date();
+
+  // Calculate the difference in milliseconds
+  const diff = now - givenDate;
+
+  // Convert to various time units
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const weeks = Math.floor(days / 7);
+  const years = Math.floor(days / 365);
+
+  // Determine the appropriate unit
+  if (seconds < 60) return `${seconds} seconds ago`;
+  if (minutes < 60) return `${minutes} minutes ago`;
+  if (hours < 24) return `${hours} hours ago`;
+  if (days < 7) return `${days} days ago`;
+  if (weeks < 52) return `${weeks} weeks ago`;
+  return `${years} years ago`;
+}
+
 const Topic = ({ title, src }) => {
   return (
     <div>
@@ -33,8 +65,22 @@ export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [categories, setCategories] = useState([]);
+  const [values, setvalues] = useState([]);
+
   const { myWallet, formatMoney, setSideBar2, setGlobalCat } =
     useContext(RestaurantContext);
+
+  useEffect(() => {
+    const fetchValues = async () => {
+      try {
+        const { data } = await axios.get("/api/get-orders-deposits");
+        setvalues(data?.values);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchValues();
+  }, []);
   useEffect(() => {
     (async () => {
       try {
@@ -165,20 +211,7 @@ export default function Home() {
               </SwiperSlide>
             </Swiper>
           </Box>
-          {/* <Stack
-            justifyContent="center"
-            alignItems="flex-end"
-            sx={{ padding: "10px" }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography sx={{ fontWeight: "800", marginRight: "8px" }}>
-                Sort
-              </Typography>
-              <IconButton onClick={() => setSideBar2(true)}>
-                <SortIcon sx={{ fontWeight: "800" }} />
-              </IconButton>
-            </Box>
-          </Stack> */}
+
           <div>
             <>
               {categories.length > 0 &&
@@ -255,17 +288,122 @@ export default function Home() {
                 </div>
               )}
             </>
-          </div>
+            <div className="mt-5">
+              <Stack
+                direction="row"
+                justifyContent="space-between"
+                sx={{
+                  marginBottom: "10px",
+                  background: "#131132",
+                  padding: "8px",
+                  borderRadius: "5px",
+                }}
+              >
+                <Typography sx={{ fontWeight: "800", color: "white" }}>
+                  latest Orders and Deposits
+                </Typography>
+              </Stack>
 
-          {/* <TableList
-            title={<Topic title="Facebook" src="/img/facebook-1.png" />}
-          />
-          <TableList title={<Topic title="Twitter" src="/img/twitter.png" />} />
-          <TableList
-            title={<Topic title="Instagram" src="/img/instagram.png" />}
-          />
-          <TableList title={<Topic title="Email" src="/img/gmail.png" />} />
-          <TableList title={<Topic title="Others" src="/img/star.png" />} /> */}
+              <Box
+                sx={{
+                  marginTop: "10px",
+                  marginBottom: "15px",
+                  padding: "15px 10px",
+                  border: "0.2px solid #dcd7d7",
+                  borderRadius: "5px",
+                  wdth: "100%",
+                  maxHeight: "80vh",
+                  overflowY: "scroll",
+                }}
+              >
+                {values.map((item) => {
+                  if (item.method) {
+                    return (
+                      <>
+                        <Stack flexDirection={{ md: "row", xs: "column" }}>
+                          <Image
+                            src="/img/icons/deposit.png"
+                            alt="deposit"
+                            width={20}
+                            height={20}
+                            className="mr-2"
+                          />
+                          <Typography className="mr-2">
+                            {item?.user?.username}
+                          </Typography>{" "}
+                          |{" "}
+                          <Typography
+                            className="mr-2 !text-green"
+                            sx={{ color: "green" }}
+                          >
+                            Deposited
+                          </Typography>
+                          |{" "}
+                          <Typography className="mr-2" sx={{ color: "orange" }}>
+                            &#8358;{item?.amount}
+                          </Typography>{" "}
+                          |{" "}
+                          <Typography
+                            sx={{
+                              background: "#8075FF",
+                              borderRadius: "10px",
+                              padding: "2px 3px",
+                              color: "white",
+                            }}
+                          >
+                            {timeAgo(item?.createdAt)}
+                          </Typography>
+                        </Stack>
+                        <Divider className="my-2" />
+                      </>
+                    );
+                  } else {
+                    return (
+                      <>
+                        <Stack flexDirection={{ md: "row", xs: "column" }}>
+                          <Image
+                            src="/img/icons/order.png"
+                            alt="order"
+                            width={20}
+                            height={20}
+                            className="mr-2"
+                          />
+                          <Typography className="mr-2">
+                            {item?.user?.username}
+                          </Typography>{" "}
+                          |{" "}
+                          <Typography sx={{ color: "green" }} className="mr-2 ">
+                            Bought
+                          </Typography>
+                          |{" "}
+                          <Typography className="mr-2">
+                            {item?.social}
+                          </Typography>{" "}
+                          |{" "}
+                          <Typography className="mr-2" sx={{ color: "orange" }}>
+                            &#8358;{item?.orderLog?.price}
+                          </Typography>{" "}
+                          |{" "}
+                          <Typography
+                            sx={{
+                              background: "#8075FF",
+                              borderRadius: "10px",
+                              padding: "2px",
+                              color: "white",
+                            }}
+                          >
+                            {timeAgo(item?.createdAt)}
+                          </Typography>
+                        </Stack>
+                        <Divider className="my-2" />
+                      </>
+                    );
+                  }
+                })}
+              </Box>
+              <div style={{ visibility: "hidden" }}>hii</div>
+            </div>
+          </div>
         </Box>
       </NavPage>
     );
