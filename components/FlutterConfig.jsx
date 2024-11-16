@@ -120,7 +120,7 @@ export default function FlutterButton({ session, amount, activeLog, count }) {
   };
   const fwConfig = {
     ...config,
-    text: "Process Order",
+    text: "Pay With Flutter",
     callback: async (response) => {
       await handleSubmit(response);
     },

@@ -320,7 +320,7 @@ export default function Home() {
                   if (item.method) {
                     return (
                       <>
-                        <Stack flexDirection={{ md: "row", xs: "column" }}>
+                        <Stack flexDirection={{ md: "row" }}>
                           <Image
                             src="/img/icons/deposit.png"
                             alt="deposit"
@@ -360,7 +360,7 @@ export default function Home() {
                   } else {
                     return (
                       <>
-                        <Stack flexDirection={{ md: "row", xs: "column" }}>
+                        <Stack flexDirection={{ md: "row" }}>
                           <Image
                             src="/img/icons/order.png"
                             alt="order"

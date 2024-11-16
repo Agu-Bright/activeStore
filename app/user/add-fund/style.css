@@ -11,3 +11,20 @@
   font-size: 16px;
   transition: border-color 0.3s, color 0.3s; /* Smooth transition */
 }
+
+.button_style {
+  display: flex;
+  border: none;
+  color: white;
+  font-weight: 800;
+  border-radius: 10px;
+  font-size: 1.2em;
+  margin-top: 20px;
+  text-align: center;
+  background: linear-gradient(
+    90deg,
+    rgba(128, 117, 255, 1) 0%,
+    rgba(128, 117, 255, 1) 35%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}

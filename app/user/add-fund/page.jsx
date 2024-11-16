@@ -368,6 +368,11 @@ export default function Home() {
                 </button>
               )} */}
               {amount && <FlutterButton amount={amount} session={session} />}{" "}
+              {amount && (
+                <button className="btn-md btn-block button_style">
+                  Pay With Crypto
+                </button>
+              )}{" "}
             </div>
             {/* 
             <input
