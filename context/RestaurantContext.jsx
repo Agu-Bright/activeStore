@@ -31,6 +31,7 @@ const RestaurantContextProvider = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState(false);
+  const [type2, setType2] = useState("");
   const handleOpen = () => setOpen(false);
   const handleClose = () => {
     setActiveLog("");
@@ -69,6 +70,19 @@ const RestaurantContextProvider = ({ children }) => {
 
   const [active, setActive] = useState("home");
   const [totalP, setTotalp] = useState("home");
+
+  const [rate, setRate] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await axios.get("/api/get-rate");
+        setRate(data?.rate);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [state]);
 
   useEffect(() => {
     (async () => {
@@ -144,6 +158,27 @@ const RestaurantContextProvider = ({ children }) => {
     return `${day} ${month} ${year}: ${hour}:${min}:${sec}`;
   }
 
+  function formatDollar(number) {
+    if (number === undefined || number === null) {
+      console.error("Invalid value provided to formatMoney");
+      return "$0.00";
+    }
+
+    const numericValue = Number(number);
+
+    if (isNaN(numericValue)) {
+      console.error("Value provided to formatMoney is not a number");
+      return "$0.00";
+    }
+
+    return numericValue.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  }
+
   return (
     <RestaurantContext.Provider
       value={{
@@ -201,6 +236,10 @@ const RestaurantContextProvider = ({ children }) => {
         setSideBar2,
         globalCat,
         setGlobalCat,
+        type2,
+        setType2,
+        rate,
+        formatDollar,
       }}
     >
       {children}

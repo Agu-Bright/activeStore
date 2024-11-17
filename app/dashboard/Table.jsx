@@ -56,6 +56,8 @@ const Table = () => {
     "Email",
     "Payment Method",
     "Amount",
+    "usdt",
+    "network",
     "screenshot",
     "status",
     "Created At",
@@ -137,6 +139,16 @@ const Table = () => {
           {" "}
           <span style={{ color: "black", fontWeight: "800" }}></span>{" "}
           {formatMoney(order?.amount)}
+        </div>,
+        <div>
+          {" "}
+          <span style={{ color: "black", fontWeight: "800" }}></span>{" "}
+          {order?.usdt}
+        </div>,
+        <div>
+          {" "}
+          <span style={{ color: "black", fontWeight: "800" }}></span>{" "}
+          {order?.network}
         </div>,
 
         <>

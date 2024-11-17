@@ -20,6 +20,12 @@ const depositModel = new mongoose.Schema({
   amount: {
     type: String,
   },
+  network: {
+    type: String,
+  },
+  usdt: {
+    type: String,
+  },
   status: {
     type: String,
     default: "pending",

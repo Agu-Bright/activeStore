@@ -1,12 +1,10 @@
 "use client";
-import LiveChatScript from "@components/LiveChat";
 import NavPage from "@components/navPage/NavPage";
 import {
   Box,
   CircularProgress,
   Stack,
   Typography,
-  Grid,
   Paper,
   IconButton,
   Avatar,
@@ -23,6 +21,8 @@ import "react-toastify/dist/ReactToastify.css";
 import FlutterButton from "@components/FlutterConfig";
 import { RestaurantContext } from "@context/RestaurantContext";
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
+import ClearIcon from "@mui/icons-material/Clear";
+
 function formatDateString(dateString) {
   // Create a new Date object from the input date string
   const date = new Date(dateString);
@@ -58,7 +58,16 @@ export default function Home() {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [deposits, setDeposits] = useState("");
   const [image, setImage] = useState("");
-  const { state, setState } = useContext(RestaurantContext);
+  const [active, setActive] = useState("");
+  const [main, setMain] = useState("");
+  const { state, setState, rate, formatMoney, formatDollar } =
+    useContext(RestaurantContext);
+
+  const [adminWallet, setAdminWallets] = useState([]);
+
+  rate && console.log("rate", rate);
+  const [appState, setAppState] = useState("default");
+
   const handleScreenshot = () => {
     const el = document.getElementById("screenshot");
     if (el) {
@@ -83,9 +92,13 @@ export default function Home() {
     }
     try {
       setLoading(true);
-      const { data } = await axios.post("/api/deposit/create-deposit/", {
+      const { data } = await axios.post("/api/deposit/crypto-deposit/", {
         amount: amount,
-        method: paymentMethod,
+        method: "crypto",
+        network: main?.network,
+        usdt: Number(amount / rate?.rate).toFixed(2),
+        screenShot: image,
+        status: "pending",
       });
       toast.success("Deposit Successful", {
         position: "top-center",
@@ -100,6 +113,10 @@ export default function Home() {
       });
       setState((prev) => !prev);
       setLoading(false);
+      setAmount("");
+      setAppState("default");
+      setImage("");
+      setAmount("");
     } catch (error) {
       setLoading(false);
       toast.error(error?.response?.data?.message, {
@@ -116,41 +133,68 @@ export default function Home() {
     }
   };
 
-  const handleUploadScreendhot = async (image) => {
-    try {
-      const { data } = await axios.post("/api/deposit/create-deposit/", {
-        screenShot: image,
-        amount: amount,
-        method: paymentMethod,
-      });
-      toast.success("Deposit Successful", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
-      setAmount("");
-      setPaymentMethod("");
-      setImage("");
-    } catch (error) {
-      toast.error(error?.response?.data?.message, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+  const [fetching, setFetching] = useState(false);
+  useEffect(() => {
+    appState === "crypto" &&
+      (async () => {
+        try {
+          setFetching(true);
+          const { data } = await axios.get(`/api/get-admin-wallet`);
+          setAdminWallets(data?.wallets);
+          setFetching(false);
+        } catch (error) {
+          toast.error("Unable to fetch Wallet", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+          setFetching(false);
+        }
+      })();
+  }, [appState]);
+
+  const handleCopy = (address) => {
+    // const referralCode = session?.user?.referalCode;
+    if (address) {
+      navigator.clipboard
+        .writeText(address)
+        .then(() => {
+          toast.success("Copied to Clipboard", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+          // Optionally, display a notification or toast here
+        })
+        .catch((err) => {
+          toast.error("copy failed", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+        });
     }
   };
+
+  //--------------------------------------------------------------------------------------------------------------------
 
   const [colorIndex, setColorIndex] = useState(0);
 
@@ -227,188 +271,254 @@ export default function Home() {
     return (
       <NavPage>
         <div class="container">
-          <div class="row p-3">
-            <div class="col-12">
-              <form>
-                <p class="mt-3" style={{ fontWeight: "700" }}>
-                  Top up your wallet easily using Bank Transfer or Card
-                </p>
+          <div class="col">
+            <div className="col">
+              {appState === "default" && (
+                <>
+                  <form>
+                    <p class="mt-3" style={{ fontWeight: "700" }}>
+                      Top up your wallet easily using Bank Transfer or Crypto
+                    </p>
 
-                <div class="card" style={{ marginBottom: "20px" }}>
-                  <div class="card-body">
-                    <h6 style={{ fontWeight: "700" }}>Enter Amount (NGN)</h6>
-                    <input
-                      style={{ margin: "10px 0px" }}
-                      placeholder="Enter amount"
-                      type="number"
-                      name="amount"
-                      onChange={(e) => setAmount(e.target.value)}
-                      value={amount}
-                      class="text-dark p-2 form-control inputField"
-                      required=""
-                    />
-                  </div>
-                </div>
-
-                {/* {amount && (
-                  <div class="card">
-                    <div class="card-body">
-                      <h6 class="mb-1 mt-1">Select Payment Gateway</h6>
-                      <div class="d-flex align-items-center mb-3">
-                        <div class="col-12">
-                          <select
-                            class="text-dark form-control2"
-                            name="gateway"
-                            required
-                            value={paymentMethod}
-                            onChange={(e) => setPaymentMethod(e.target.value)}
-                          >
-                            <option value="">Select payment method</option>
-                            <option value="instant">Instant Payment</option>
-                            <option value="manual">Manual Payment</option>
-                          </select>
-                        </div>
+                    <div class="card" style={{ marginBottom: "20px" }}>
+                      <div class="card-body">
+                        <h6 style={{ fontWeight: "700" }}>
+                          Enter Amount (NGN)
+                        </h6>
+                        <input
+                          style={{ margin: "10px 0px" }}
+                          placeholder="Enter amount"
+                          type="number"
+                          name="amount"
+                          onChange={(e) => setAmount(e.target.value)}
+                          value={amount}
+                          class="text-dark p-2 form-control inputField"
+                          required=""
+                        />
                       </div>
                     </div>
-                  </div>
-                )} */}
-
-                {/* <div style={{ marginTop: "10px" }}>
-                  {uploading ? (
-                    <div
-                      style={{
-                        width: "150px",
-                        height: "150px",
-                        border: "0.1px solid #cacecf",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        borderRadius: "5px",
-                      }}
+                  </form>
+                  {amount && (
+                    <FlutterButton amount={amount} session={session} />
+                  )}{" "}
+                  {amount && (
+                    <button
+                      onClick={() => setAppState("crypto")}
+                      className="btn-md btn-block button_style"
                     >
-                      <CircularProgress sx={{ color: "rgba(0,212,255,1)" }} />
-                    </div>
-                  ) : (
-                    <>
-                      {image && (
-                        <Avatar
-                          src={image}
-                          alt="screendhot"
-                          sx={{
-                            width: "100px",
-                            height: "100px",
-                            borderRadius: "5px",
-                          }}
-                        />
-                      )}
-                    </>
-                  )}
-                </div> */}
-              </form>
-              {/* {paymentMethod === "manual" && !uploading && !image && (
-                <button
-                  onClick={() => handleScreenshot()}
-                  className="btn-md  btn-block"
-                  style={{
-                    marginTop: "20px",
-                    border: "none",
-                    color: "white",
-                    fontWeight: "800",
-                    borderRadius: "10px",
-                    fontSize: "1.2em",
-                    background:
-                      "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
-                  }}
-                >
-                  {loading ? (
-                    <CircularProgress size={20} sx={{ color: "white" }} />
-                  ) : (
-                    "Click to upload screenshot"
-                  )}
-                </button>
+                      Pay With Crypto
+                    </button>
+                  )}{" "}
+                </>
               )}
-              {image && (
-                <button
-                  onClick={() => handleUploadScreendhot(image)}
-                  className="btn-md  btn-block"
-                  style={{
-                    marginTop: "20px",
-                    border: "none",
-                    color: "white",
-                    fontWeight: "800",
-                    borderRadius: "10px",
-                    fontSize: "1.2em",
-                    background:
-                      "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
-                  }}
-                >
-                  Deposit{" "}
-                </button>
-              )}
-              {(!paymentMethod || paymentMethod === "instant") && (
-                <button
-                  onClick={() => handleSubmit()}
-                  style={{
-                    border: "none",
-                    color: "white",
-                    fontWeight: "800",
-                    borderRadius: "10px",
-                    fontSize: "1.2em",
-                    background:
-                      "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
-                  }}
-                  className="btn-md  btn-block"
-                  disabled={paymentMethod ? false : true}
-                >
-                  {loading ? (
-                    <CircularProgress size={20} sx={{ color: "white" }} />
-                  ) : (
-                    "Continue"
-                  )}
-                </button>
-              )} */}
-              {amount && <FlutterButton amount={amount} session={session} />}{" "}
-              {amount && (
-                <button className="btn-md btn-block button_style">
-                  Pay With Crypto
-                </button>
-              )}{" "}
-            </div>
-            {/* 
-            <input
-              type="file"
-              id="screenshot"
-              style={{ display: "none" }}
-              onChange={async (e) => {
-                const file = e.target?.files;
-                if (file) {
-                  try {
-                    setUploading(true);
-                    const { data } = await axios.post(
-                      "/api/cloudinaryupload/profile",
-                      file
-                    );
-                    setImage(data?.photosArray[0].url);
-                    setUploading(false);
-                  } catch (error) {
-                    setUploading(false);
-                    toast.error("Unable to upload", {
-                      position: "top-center",
-                      autoClose: 5000,
-                      hideProgressBar: true,
-                      closeOnClick: true,
-                      pauseOnHover: true,
-                      draggable: true,
-                      progress: undefined,
-                      theme: "light",
-                      transition: Bounce,
-                    });
-                  }
-                }
+              {appState === "crypto" && (
+                <>
+                  <div
+                    style={{
+                      border: "1px dotted gray",
+                      borderRadius: "10px",
+                      padding: "10px",
+                    }}
+                  >
+                    <Stack direction="row" justifyContent="space-between">
+                      <div></div>
+                      <IconButton
+                        onClick={() => {
+                          setImage("");
+                          setAppState("default");
+                          setAmount("");
+                        }}
+                      >
+                        <ClearIcon sx={{ color: "red" }} />
+                      </IconButton>
+                    </Stack>
+                    <Box>
+                      <Typography>
+                        Payment Amount: {formatMoney(amount)}
+                      </Typography>
+                      <Typography>
+                        Exchange Rate: {formatMoney(rate?.rate)}
+                      </Typography>
+                      <Typography style={{ color: "green", fontWeight: "800" }}>
+                        USDT Equivalent:{" "}
+                        {formatDollar(Number(amount / rate?.rate).toFixed(2))}
+                      </Typography>
+                    </Box>
+                    <Typography style={{ fontWeight: "800", marginTop: "5px" }}>
+                      Select Network
+                    </Typography>
+                    <Stack
+                      spacing={2}
+                      direction="column"
+                      justifyContent="space-between"
+                    >
+                      {adminWallet &&
+                        adminWallet.length > 0 &&
+                        adminWallet.map((item, index) => {
+                          return (
+                            <Paper
+                              key={index}
+                              onClick={() => {
+                                setActive(item?.network);
+                                setMain(item);
+                                setPaymentMethod(item?.network);
+                              }}
+                              sx={{
+                                width: "100%",
+                                alignContent: "center",
+                                padding: "10px",
+                                cursor: "pointer",
+                                background: `${
+                                  active === item?.network
+                                    ? "linear-gradient(90deg, #efeff4 0%, #e8e7f2 35%, #d3e5e8 100%)"
+                                    : "white"
+                                }`,
+                              }}
+                            >
+                              <Typography
+                                sx={{
+                                  color: "black",
+                                }}
+                              >
+                                Network: {item?.network}
+                              </Typography>
+                            </Paper>
+                          );
+                        })}
 
-                // setImage()
-              }}
-            /> */}
+                      {fetching && (
+                        <CircularProgress size={20} sx={{ color: "#8075f" }} />
+                      )}
+                      {main?.walletAddress && (
+                        <>
+                          <Typography
+                            sx={{
+                              cursor: "pointer",
+                              border: "0.1px dotted gray",
+                              borderRadius: "10px",
+                              padding: "0px",
+                              margin: "0px",
+                            }}
+                            onClick={() => handleCopy(main?.walletAddress)}
+                          >
+                            <span
+                              style={{
+                                background: "gray",
+                                color: "white",
+                                borderTopLeftRadius: "10px",
+                                borderBottomLeftRadius: "10px",
+                                height: "100%",
+                                paddingRight: "4px",
+                              }}
+                            >
+                              copy:
+                            </span>
+                            <span>{main?.walletAddress}</span>
+                          </Typography>
+                          <Typography>
+                            Upload a screenshot of your transaction to verify
+                            deposit
+                          </Typography>
+                          <button
+                            style={{
+                              background:
+                                "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
+                              border: "none",
+                              borderRadius: "10px",
+                              color: "white",
+                            }}
+                            onClick={handleScreenshot}
+                          >
+                            Upload Screenshot
+                          </button>
+                          <input
+                            type="file"
+                            id="screenshot"
+                            style={{ display: "none" }}
+                            onChange={async (e) => {
+                              const file = e.target?.files;
+                              if (file) {
+                                try {
+                                  setUploading(true);
+                                  const { data } = await axios.post(
+                                    "/api/cloudinaryupload/profile",
+                                    file
+                                  );
+                                  setImage(data?.photosArray[0].url);
+                                  setUploading(false);
+                                } catch (error) {
+                                  setUploading(false);
+                                  toast.error("Unable to upload", {
+                                    position: "top-center",
+                                    autoClose: 5000,
+                                    hideProgressBar: true,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined,
+                                    theme: "light",
+                                    transition: Bounce,
+                                  });
+                                }
+                              }
+                            }}
+                          />
+                          <div style={{ marginTop: "10px" }}>
+                            {uploading ? (
+                              <div
+                                style={{
+                                  width: "150px",
+                                  height: "150px",
+                                  border: "0.1px solid #cacecf",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  borderRadius: "5px",
+                                }}
+                              >
+                                <CircularProgress
+                                  sx={{ color: "rgba(0,212,255,1)" }}
+                                />
+                              </div>
+                            ) : (
+                              <>
+                                {image && (
+                                  <>
+                                    <Avatar
+                                      src={image}
+                                      alt="screendhot"
+                                      sx={{
+                                        width: "100px",
+                                        height: "100px",
+                                        borderRadius: "5px",
+                                      }}
+                                    />
+                                    <button
+                                      style={{
+                                        background:
+                                          "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
+                                        border: "none",
+                                        padding: "2px 4px",
+                                        borderRadius: "10px",
+                                        marginTop: "10px",
+                                        color: "white",
+                                      }}
+                                      onClick={handleSubmit}
+                                    >
+                                      Submit
+                                    </button>
+                                  </>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        </>
+                      )}
+                    </Stack>
+                  </div>
+                </>
+              )}
+            </div>
 
             <Divider sx={{ margin: "20px 0px" }} />
             <Stack direction="row" alignItems="center">
