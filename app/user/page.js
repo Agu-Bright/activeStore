@@ -332,7 +332,7 @@ export default function Home() {
                             className="mr-2"
                             style={{ fontSize: "12px" }}
                           >
-                            {item?.user?.username}
+                            {item?.user?.username.slice(0, 3)}
                           </Typography>{" "}
                           |{" "}
                           <Typography
@@ -379,7 +379,7 @@ export default function Home() {
                             className="mr-2"
                             style={{ fontSize: "12px" }}
                           >
-                            {item?.user?.username}
+                            {item?.user?.username.slice(0, 3)}
                           </Typography>{" "}
                           |{" "}
                           <Typography
