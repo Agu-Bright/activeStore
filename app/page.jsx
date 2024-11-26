@@ -77,9 +77,7 @@ const page = () => {
                 >
                   Welcome to ActiveStore
                 </Typography>
-                <h1 data-aos="fade-up">
-                  Discover unique social account in active store{" "}
-                </h1>
+                <h1>Discover unique social account in active store </h1>
                 <p data-aos="fade-up" data-aos-delay="100">
                   Boost your online presence by browsing, authenticating, and
                   obtaining genuine accounts on active store.
