@@ -65,7 +65,6 @@ export default function Home() {
 
   const [adminWallet, setAdminWallets] = useState([]);
 
-  rate && console.log("rate", rate);
   const [appState, setAppState] = useState("default");
 
   const handleScreenshot = () => {
@@ -159,40 +158,40 @@ export default function Home() {
       })();
   }, [appState]);
 
-  const handleCopy = (address) => {
-    // const referralCode = session?.user?.referalCode;
-    if (address) {
-      navigator.clipboard
-        .writeText(address)
-        .then(() => {
-          toast.success("Copied to Clipboard", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
+    const handleCopy = (address) => {
+      // const referralCode = session?.user?.referalCode;
+      if (address) {
+        navigator.clipboard
+          .writeText(address)
+          .then(() => {
+            toast.success("Copied to Clipboard", {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              transition: Bounce,
+            });
+            // Optionally, display a notification or toast here
+          })
+          .catch((err) => {
+            toast.error("copy failed", {
+              position: "top-center",
+              autoClose: 5000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              transition: Bounce,
+            });
           });
-          // Optionally, display a notification or toast here
-        })
-        .catch((err) => {
-          toast.error("copy failed", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-          });
-        });
-    }
-  };
+      }
+    };
 
   //--------------------------------------------------------------------------------------------------------------------
 
