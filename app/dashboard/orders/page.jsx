@@ -1,31 +1,15 @@
 "use client";
-// import Navbar from "@components/Navbar";
-import {
-  Box,
-  CircularProgress,
-  Stack,
-  Typography,
-  Grid,
-  Paper,
-  IconButton,
-  Avatar,
-} from "@mui/material";
-import { images } from "@next.config.cjs";
-import axios from "axios";
+import { CircularProgress } from "@mui/material";
+
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-// import Body from "./Body";
 import dynamic from "next/dynamic";
 
-import NoSSRComponent from "@components/NoSSR";
-import { ToastContainer } from "react-toastify";
 const Navbar = dynamic(() => import("@components/Navbar"), { ssr: false });
 const Body = dynamic(() => import("./Body"), { ssr: false });
 export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  console.log(session);
 
   if (status === "loading") {
     return (

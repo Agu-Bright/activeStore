@@ -11,60 +11,26 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteModal from "./Modal";
 import { RestaurantContext } from "@context/RestaurantContext";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+
 const Table = () => {
   const { formatDateToReadable, formatMoney, setType } =
     useContext(RestaurantContext);
-  const handleCopy = (address) => {
-    // const referralCode = session?.user?.referalCode;
-    if (address) {
-      navigator.clipboard
-        .writeText(address)
-        .then(() => {
-          toast.success("Copied to Clipboard", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-          });
-          // Optionally, display a notification or toast here
-        })
-        .catch((err) => {
-          toast.error("copy failed", {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            transition: Bounce,
-          });
-        });
-    }
-  };
+  
+
   const [wallets, setWallets] = useState([]);
-  const columns = [
-    "Account Name",
-    "Email",
-    "role",
-    "log",
-    "Amount",
-    "logs",
-    "Created At",
-  ];
+  const [totalOrders, setTotalOrders] = useState(0); // For total orders
+  const [page, setPage] = useState(0); // Current page
+  const [rowsPerPage, setRowsPerPage] = useState(10); // Rows per page
   const [state, setState] = useState(false);
+
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get(`/api/admin/get-orders`);
+        const { data } = await axios.get(
+          `/api/admin/get-orders?page=${page + 1}&limit=${rowsPerPage}`
+        );
         setWallets(data?.orders);
-        console.log("data", data);
+        setTotalOrders(data?.pagination?.total); // Set total orders from response
       } catch (error) {
         toast.error(error?.response?.data?.message, {
           position: "top-center",
@@ -79,14 +45,24 @@ const Table = () => {
         });
       }
     })();
-  }, [state]);
+  }, [page, rowsPerPage, state]);
 
   const options = {
     responsive: "standard",
+    serverSide: true, // Enable server-side pagination
+    count: totalOrders, // Total orders for pagination
+    page, // Current page
+    rowsPerPage, // Rows per page
+    onChangePage: (newPage) => {
+      setPage(newPage); // Update page
+    },
+    onChangeRowsPerPage: (newRowsPerPage) => {
+      setRowsPerPage(newRowsPerPage); // Update rows per page
+      setPage(0); // Reset to the first page
+    },
   };
 
   const [active, setActive] = useState();
-  const handleOpen = () => setOpen(true);
   const [open, setOpen] = React.useState(false);
 
   const data = [];
@@ -112,32 +88,38 @@ const Table = () => {
             }`}
             alt="avatar"
           />
-
           <span style={{ marginLeft: "5px" }}>{order?.user?.username} </span>
         </div>,
-
         order?.user?.email,
         <div
           style={{
-            color: `${order?.user?.role === "admin" ? "red" : "reen"}`,
+            color: `${order?.user?.role === "admin" ? "red" : "green"}`,
             fontWeight: "800",
           }}
         >
           {order?.user?.role}
         </div>,
         order?.social,
-
         formatMoney(Number(order?.logs.length * order?.orderLog?.price)),
         order?.logs.length,
         formatDateToReadable(order?.createdAt),
       ])
     );
+
   return (
     <>
       <MUIDataTable
         title="Orders"
         data={data}
-        columns={columns}
+        columns={[
+          "Account Name",
+          "Email",
+          "Role",
+          "Log",
+          "Amount",
+          "Logs",
+          "Created At",
+        ]}
         options={options}
       />
       <DeleteModal
