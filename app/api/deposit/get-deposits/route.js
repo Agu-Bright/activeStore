@@ -2,11 +2,10 @@ import { authOptions } from "@app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import connectDB from "@utils/connectDB";
 import { NextResponse } from "next/server";
-import Wallet from "@models/wallet";
 import Deposit from "@models/Deposit";
 
 export const GET = async (req) => {
-  //check if user is authenticated
+  // Check if user is authenticated
   const session = await getServerSession(
     req,
     {
@@ -16,6 +15,7 @@ export const GET = async (req) => {
     },
     authOptions
   );
+
   if (!session) {
     return Response.json(
       { message: "You must be logged in." },
@@ -24,19 +24,44 @@ export const GET = async (req) => {
   } else if (session && session?.user?.role == "user") {
     return Response.json({ message: "Forbidden request" }, { status: 403 });
   }
+
   try {
     await connectDB;
 
-    const deposits = await Deposit.find().populate("user");
+    // Extract pagination parameters
+    const url = new URL(req.url);
+    const page = parseInt(url.searchParams.get("page") || "1", 10);
+    const limit = parseInt(url.searchParams.get("limit") || "10", 10);
+    const skip = (page - 1) * limit;
 
-    if (!deposits) {
+    // Fetch deposits with pagination
+    const deposits = await Deposit.find()
+      .populate("user")
+      .skip(skip)
+      .limit(limit);
+
+    const total = await Deposit.countDocuments();
+
+    if (!deposits || deposits.length === 0) {
       return Response.json(
-        { success: false, message: "No wallet Found" },
+        { success: false, message: "No deposits found" },
         { status: 404 }
       );
     }
 
-    return Response.json({ message: "success", deposits }, { status: 200 });
+    // Return paginated results
+    return Response.json(
+      {
+        message: "success",
+        deposits,
+        pagination: {
+          total,
+          page,
+          pages: Math.ceil(total / limit),
+        },
+      },
+      { status: 200 }
+    );
   } catch (error) {
     return Response.json(
       { success: false, message: error.message },
