@@ -434,31 +434,6 @@ const page = () => {
                       </p>
                     </div>
                   </div>
-                  {/* <!-- End Feature Item --> */}
-
-                  {/* <div className="col-md-6 icon-box">
-                    <i className="bi bi-lightning-charge"></i>
-                    <div>
-                      <h4>Molestiae dolor</h4>
-                      <p>
-                        Et fuga et deserunt et enim. Dolorem architecto ratione
-                        tensa raptor marte
-                      </p>
-                    </div>
-                  </div> */}
-                  {/* <!-- End Feature Item --> */}
-
-                  {/* <div className="col-md-6 icon-box">
-                    <i className="bi bi-patch-check"></i>
-                    <div>
-                      <h4>Explicabo consectetur</h4>
-                      <p>
-                        Est autem dicta beatae suscipit. Sint veritatis et sit
-                        quasi ab aut inventore
-                      </p>
-                    </div>
-                  </div> */}
-                  {/* <!-- End Feature Item --> */}
                 </div>
               </div>
 

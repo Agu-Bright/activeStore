@@ -36,6 +36,7 @@ export const GET = async (req) => {
 
     // Fetch deposits with pagination
     const deposits = await Deposit.find()
+      .sort({ createdAt: -1 })
       .populate("user")
       .skip(skip)
       .limit(limit);
