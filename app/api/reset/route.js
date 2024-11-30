@@ -1,19 +1,12 @@
 import connectDB from "@utils/connectDB";
-import { authOptions } from "@app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
-import Profit from "@models/Profit";
-import Rate from "@models/rate";
 import User from "@models/user";
 import Wallet from "@models/wallet";
 
 export const GET = async (req, res) => {
   try {
     await connectDB;
-
     // find all users
     const users = await User.find();
-
     for (const user of users) {
       // Check if the user already has a wallet
       const existingWallet = await Wallet.findOne({ user: user._id });
@@ -26,8 +19,6 @@ export const GET = async (req, res) => {
         console.log(`Wallet created for user: ${user.username}`);
       }
     }
-
-    // find all wallets
 
     return new Response(
       JSON.stringify({ success: true, message: "wallet created" }),
