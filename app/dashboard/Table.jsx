@@ -11,11 +11,13 @@ import { RestaurantContext } from "@context/RestaurantContext";
 const Table = () => {
   const { formatMoney, formatDateToReadable } = useContext(RestaurantContext);
 
-  const [wallets, setWallets] = useState([]);
-  const [page, setPage] = useState(0); // MUIDataTable uses zero-based indexing
+  const [wallets, setWallets] = useState([]); // Fetched data
+  const [filteredWallets, setFilteredWallets] = useState([]); // Filtered data
+  const [page, setPage] = useState(0); // Zero-based page index
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState(""); // Search input
 
   const columns = [
     "Account Name",
@@ -30,14 +32,15 @@ const Table = () => {
     "Actions",
   ];
 
-  // Fetch paginated data
+  // Fetch paginated data from the server
   const fetchDeposits = async (page, limit) => {
     setLoading(true);
     try {
       const { data } = await axios.get(`/api/deposit/get-deposits`, {
-        params: { page: page + 1, limit }, // Adjust for zero-based indexing
+        params: { page: page + 1, limit },
       });
-      setWallets(data.deposits);
+      setWallets(data.deposits); // Update server-fetched data
+      setFilteredWallets(data.deposits); // Reset filtered data
       setTotalRows(data.pagination.total);
     } catch (error) {
       toast.error("Failed to fetch deposits.", { transition: Bounce });
@@ -50,13 +53,21 @@ const Table = () => {
     fetchDeposits(page, rowsPerPage);
   }, [page, rowsPerPage]);
 
+  // Filter `wallets` based on `searchText`
+  useEffect(() => {
+    const filtered = wallets.filter((order) =>
+      order?.user?.email?.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredWallets(filtered);
+  }, [searchText, wallets]);
+
   const getColor = (status) => {
     if (status === "success") return "green";
     if (status === "pending") return "orange";
     if (status === "rejected") return "red";
   };
 
-  const data = wallets.map((order) => [
+  const data = filteredWallets.map((order) => [
     <div style={{ display: "flex", alignItems: "center" }}>
       <Avatar
         sx={{
@@ -116,7 +127,11 @@ const Table = () => {
     onChangePage: (newPage) => setPage(newPage),
     onChangeRowsPerPage: (newRowsPerPage) => {
       setRowsPerPage(newRowsPerPage);
-      setPage(0); // Reset to first page
+      setPage(0); // Reset to the first page
+    },
+    onSearchChange: (searchVal) => {
+      setSearchText(searchVal || ""); // Update search state
+      setPage(0); // Reset to the first page
     },
     textLabels: {
       body: {
