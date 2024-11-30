@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth";
 import connectDB from "@utils/connectDB";
 import { NextResponse } from "next/server";
 import Order from "@models/order";
+import User from "@models/user"; // Assuming you have a User model
 
 export const GET = async (req) => {
   // Check if the user is authenticated
@@ -31,17 +32,29 @@ export const GET = async (req) => {
   try {
     await connectDB;
 
-    // Parse query parameters for pagination
+    // Parse query parameters
     const { searchParams } = new URL(req.url);
+    const email = searchParams.get("email"); // Search by email
     const page = parseInt(searchParams.get("page")) || 1; // Default to page 1
     const limit = parseInt(searchParams.get("limit")) || 10; // Default to 10 orders per page
+    const skip = (page - 1) * limit; // Calculate skip value for MongoDB query
 
-    // Calculate skip value for MongoDB query
-    const skip = (page - 1) * limit;
+    let query = {};
+    if (email) {
+      // Find the user by email
+      const user = await User.findOne({ email });
+      if (!user) {
+        return new Response(
+          JSON.stringify({ message: "No user found with this email." }),
+          { status: 404 }
+        );
+      }
+      query = { user: user._id }; // Update query to filter by user ID
+    }
 
-    // Fetch paginated orders
-    const totalOrders = await Order.countDocuments(); // Total number of orders
-    const orders = await Order.find()
+    // Fetch paginated orders based on the query
+    const totalOrders = await Order.countDocuments(query); // Total number of filtered orders
+    const orders = await Order.find(query)
       .populate("orderLog user")
       .sort({ createdAt: -1 }) // Sort orders by creation date (newest first)
       .skip(skip)

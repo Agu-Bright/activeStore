@@ -21,29 +21,32 @@ const Table = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        // Fetch paginated orders from the server
+        // Fetch paginated orders from the server, with email search if provided
         const { data } = await axios.get(
-          `/api/admin/get-orders?page=${page + 1}&limit=${rowsPerPage}`
+          `/api/admin/get-orders?page=${
+            page + 1
+          }&limit=${rowsPerPage}&email=${searchText}`
         );
         setWallets(data?.orders); // Update fetched orders
         setFilteredWallets(data?.orders); // Default filtered data is the fetched data
         setTotalOrders(data?.pagination?.total); // Update total order count
       } catch (error) {
-        toast.error(error?.response?.data?.message, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme: "light",
-          transition: Bounce,
-        });
+        // toast.error(error?.response?.data?.message, {
+        //   position: "top-center",
+        //   autoClose: 5000,
+        //   hideProgressBar: true,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   theme: "light",
+        //   transition: Bounce,
+        // });
+        setFilteredWallets([]);
       }
     };
 
     fetchOrders();
-  }, [page, rowsPerPage]);
+  }, [page, rowsPerPage, searchText]); // Add searchText to dependencies
 
   // Filter wallets based on search text
   useEffect(() => {
