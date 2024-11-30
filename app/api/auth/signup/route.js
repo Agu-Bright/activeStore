@@ -35,12 +35,13 @@ export const POST = async (req, res) => {
       confirmPassword: body.confirmPassword,
       email: body?.email,
     });
-
-    await sendMail("welcome", user.username, user.email);
-    //create wallet for this user
     const _wallet = await Wallet.create({
       user: user._id,
     });
+
+    await sendMail("welcome", user.username, user.email);
+    //create wallet for this user
+
     return new Response(JSON.stringify({ success: true, user }), {
       status: 200,
     });
