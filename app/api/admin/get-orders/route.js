@@ -32,7 +32,6 @@ export const GET = async (req) => {
   try {
     await connectDB;
 
-    // Parse query parameters
     const { searchParams } = new URL(req.url);
     const email = searchParams.get("email"); // Search by email
     const page = parseInt(searchParams.get("page")) || 1; // Default to page 1
@@ -51,6 +50,8 @@ export const GET = async (req) => {
       }
       query = { user: user._id }; // Update query to filter by user ID
     }
+
+    console.log(query);
 
     // Fetch paginated orders based on the query
     const totalOrders = await Order.countDocuments(query); // Total number of filtered orders

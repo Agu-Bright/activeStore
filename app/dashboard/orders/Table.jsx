@@ -10,17 +10,18 @@ import { RestaurantContext } from "@context/RestaurantContext";
 
 const Table = () => {
   const { formatDateToReadable, formatMoney } = useContext(RestaurantContext);
-
-  const [wallets, setWallets] = useState([]); // Fetched orders from the server
-  const [filteredWallets, setFilteredWallets] = useState([]); // Filtered orders for search
+  const [wallets, setWallets] = useState([]);
+  const [filteredWallets, setFilteredWallets] = useState([]);
   const [totalOrders, setTotalOrders] = useState(0);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [searchText, setSearchText] = useState(""); // Search text state
+  const [searchText, setSearchText] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
+        setLoading(true);
         // Fetch paginated orders from the server, with email search if provided
         const { data } = await axios.get(
           `/api/admin/get-orders?page=${
@@ -30,6 +31,7 @@ const Table = () => {
         setWallets(data?.orders); // Update fetched orders
         setFilteredWallets(data?.orders); // Default filtered data is the fetched data
         setTotalOrders(data?.pagination?.total); // Update total order count
+        setLoading(false);
       } catch (error) {
         // toast.error(error?.response?.data?.message, {
         //   position: "top-center",
@@ -41,24 +43,24 @@ const Table = () => {
         //   theme: "light",
         //   transition: Bounce,
         // });
+        setLoading(false);
         setFilteredWallets([]);
       }
     };
 
     fetchOrders();
-  }, [page, rowsPerPage, searchText]); // Add searchText to dependencies
+  }, [page, rowsPerPage, searchText]);
 
-  // Filter wallets based on search text
   useEffect(() => {
     const filtered = wallets.filter((order) =>
       order?.user?.email?.toLowerCase().includes(searchText.toLowerCase())
     );
-    setFilteredWallets(filtered); // Update filtered results
+    setFilteredWallets(filtered);
   }, [searchText, wallets]);
 
   const options = {
     responsive: "standard",
-    serverSide: true, // Keep server-side pagination
+    serverSide: true,
     count: totalOrders,
     page,
     rowsPerPage,
@@ -68,8 +70,17 @@ const Table = () => {
       setPage(0);
     },
     onSearchChange: (searchVal) => {
-      setSearchText(searchVal || ""); // Update search text
-      setPage(0); // Reset to the first page
+      setSearchText(searchVal || "");
+      setPage(0);
+    },
+    textLabels: {
+      body: {
+        noMatch: loading ? (
+          <div style={{ textAlign: "center", padding: "10px" }}>Loading...</div>
+        ) : (
+          "No matching records found"
+        ),
+      },
     },
   };
 

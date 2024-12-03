@@ -12,7 +12,6 @@ const Table = () => {
   const { formatMoney, formatDateToReadable } = useContext(RestaurantContext);
 
   const [wallets, setWallets] = useState([]); // Fetched data
-  const [filteredWallets, setFilteredWallets] = useState([]); // Filtered data
   const [page, setPage] = useState(0); // Zero-based page index
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [totalRows, setTotalRows] = useState(0);
@@ -32,34 +31,27 @@ const Table = () => {
     "Actions",
   ];
 
-  // Fetch paginated data from the server
-  const fetchDeposits = async (page, limit) => {
-    setLoading(true);
+  // Fetch paginated and filtered data from the server
+  const fetchDeposits = async (page, limit, search = "") => {
     try {
+      setLoading(true);
       const { data } = await axios.get(`/api/deposit/get-deposits`, {
-        params: { page: page + 1, limit },
+        params: { page: page + 1, limit, search }, // Pass search parameter to backend
       });
       setWallets(data.deposits); // Update server-fetched data
-      setFilteredWallets(data.deposits); // Reset filtered data
-      setTotalRows(data.pagination.total);
+      setTotalRows(data.pagination.total); // Update total rows
     } catch (error) {
+      console.log(error);
       toast.error("Failed to fetch deposits.", { transition: Bounce });
     } finally {
       setLoading(false);
     }
   };
 
+  // Fetch data on component load or when searchText, page, or rowsPerPage changes
   useEffect(() => {
-    fetchDeposits(page, rowsPerPage);
-  }, [page, rowsPerPage]);
-
-  // Filter `wallets` based on `searchText`
-  useEffect(() => {
-    const filtered = wallets.filter((order) =>
-      order?.user?.email?.toLowerCase().includes(searchText.toLowerCase())
-    );
-    setFilteredWallets(filtered);
-  }, [searchText, wallets]);
+    fetchDeposits(page, rowsPerPage, searchText);
+  }, [page, rowsPerPage, searchText]);
 
   const getColor = (status) => {
     if (status === "success") return "green";
@@ -67,7 +59,7 @@ const Table = () => {
     if (status === "rejected") return "red";
   };
 
-  const data = filteredWallets.map((order) => [
+  const data = wallets.map((order) => [
     <div style={{ display: "flex", alignItems: "center" }}>
       <Avatar
         sx={{
@@ -87,7 +79,7 @@ const Table = () => {
     <div>{order?.usdt}</div>,
     <div>{order?.network}</div>,
     order?.screenShot ? (
-      <a href={order?.screenShot} target="_blank">
+      <a href={order?.screenShot} target="_blank" rel="noopener noreferrer">
         View Screenshot
       </a>
     ) : (
@@ -163,7 +155,7 @@ const Table = () => {
         open={open}
         handleClose={handleClose}
         active={active}
-        setState={() => fetchDeposits(page, rowsPerPage)}
+        setState={() => fetchDeposits(page, rowsPerPage, searchText)}
       />
     </>
   );
