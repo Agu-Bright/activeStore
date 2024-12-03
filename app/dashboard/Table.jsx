@@ -42,7 +42,7 @@ const Table = () => {
       setTotalRows(data.pagination.total); // Update total rows
     } catch (error) {
       console.log(error);
-      toast.error("Failed to fetch deposits.", { transition: Bounce });
+      // toast.error("Failed to fetch deposits.", { transition: Bounce });
     } finally {
       setLoading(false);
     }
