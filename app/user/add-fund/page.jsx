@@ -359,6 +359,9 @@ export default function Home() {
                   )}{" "} */}
                   {amount && (
                     <>
+                      <Typography onClick={() => handleCopy("0279099194")}>
+                        Click to copy Number
+                      </Typography>
                       <div
                         style={{
                           width: "100%",
@@ -377,6 +380,7 @@ export default function Home() {
                             src="/img/payment.jpg"
                             alt="payment"
                             style={{ width: "100%", height: "100%" }}
+                            onClick={() => handleCopy("0279099194")}
                           />
                         </div>
                       </div>
