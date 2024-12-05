@@ -301,6 +301,37 @@ export default function Home() {
                     <FlutterButton amount={amount} session={session} />
                   )}{" "} */}
                   {amount && (
+                    <>
+                      <div
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: "400px",
+                            height: "auto",
+                          }}
+                        >
+                          <img
+                            src="/img/payment.jpg"
+                            alt="payment"
+                            style={{ width: "100%", height: "100%" }}
+                          />
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setAppState("crypto")}
+                        className="btn-md btn-block button_style"
+                      >
+                        Pay With Crypto
+                      </button>
+                    </>
+                  )}
+                  {amount && (
                     <button
                       onClick={() => setAppState("crypto")}
                       className="btn-md btn-block button_style"
