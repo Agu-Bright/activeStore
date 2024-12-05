@@ -359,7 +359,10 @@ export default function Home() {
                   )}{" "} */}
                   {amount && (
                     <>
-                      <Typography onClick={() => handleCopy("0279099194")}>
+                      <Typography
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleCopy("0279099194")}
+                      >
                         Click to copy Number
                       </Typography>
                       <div
