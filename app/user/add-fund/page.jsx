@@ -131,6 +131,63 @@ export default function Home() {
       });
     }
   };
+  const handleSubmit2 = async () => {
+    if (!amount && !paymentMethod) {
+      toast.error("Amount and Payment Method, Required", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+    try {
+      setLoading(true);
+      const { data } = await axios.post("/api/deposit/crypto-deposit/", {
+        amount: amount,
+        method: "Transfer",
+        network: main?.network,
+        usdt:"",
+        screenShot: image,
+        status: "pending",
+      });
+      toast.success("Deposit Successful", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      setState((prev) => !prev);
+      setLoading(false);
+      setAmount("");
+      setAppState("default");
+      setImage("");
+      setAmount("");
+    } catch (error) {
+      setLoading(false);
+      toast.error(error?.response?.data?.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+    }
+  };
 
   const [fetching, setFetching] = useState(false);
   useEffect(() => {
