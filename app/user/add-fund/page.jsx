@@ -324,19 +324,107 @@ export default function Home() {
                         </div>
                       </div>
                       <button
-                        onClick={() => setAppState("crypto")}
-                        className="btn-md btn-block button_style"
+                        style={{
+                          background:
+                            "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
+                          border: "none",
+                          borderRadius: "10px",
+                          color: "white",
+                        }}
+                        onClick={handleScreenshot}
                       >
-                        Upload reciept{" "}
+                        Upload Screenshot
                       </button>
+                      <input
+                        type="file"
+                        id="screenshot"
+                        style={{ display: "none" }}
+                        onChange={async (e) => {
+                          const file = e.target?.files;
+                          if (file) {
+                            try {
+                              setUploading(true);
+                              const { data } = await axios.post(
+                                "/api/cloudinaryupload/profile",
+                                file
+                              );
+                              setImage(data?.photosArray[0].url);
+                              setUploading(false);
+                            } catch (error) {
+                              setUploading(false);
+                              toast.error("Unable to upload", {
+                                position: "top-center",
+                                autoClose: 5000,
+                                hideProgressBar: true,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "light",
+                                transition: Bounce,
+                              });
+                            }
+                          }
+                        }}
+                      />
+                      <div style={{ marginTop: "10px" }}>
+                        {uploading ? (
+                          <div
+                            style={{
+                              width: "150px",
+                              height: "150px",
+                              border: "0.1px solid #cacecf",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              borderRadius: "5px",
+                            }}
+                          >
+                            <CircularProgress
+                              sx={{ color: "rgba(0,212,255,1)" }}
+                            />
+                          </div>
+                        ) : (
+                          <>
+                            {image && (
+                              <>
+                                <Avatar
+                                  src={image}
+                                  alt="screendhot"
+                                  sx={{
+                                    width: "100px",
+                                    height: "100px",
+                                    borderRadius: "5px",
+                                  }}
+                                />
+                                <button
+                                  style={{
+                                    background:
+                                      "linear-gradient(90deg, rgba(128,117,255,1) 0%, rgba(128,117,255,1) 35%, rgba(0,212,255,1) 100%)",
+                                    border: "none",
+                                    padding: "2px 4px",
+                                    borderRadius: "10px",
+                                    marginTop: "10px",
+                                    color: "white",
+                                  }}
+                                  onClick={handleSubmit}
+                                >
+                                  Submit
+                                </button>
+                              </>
+                            )}
+                          </>
+                        )}
+                      </div>
                     </>
                   )}
-                  {amount &
-                  (
+                  {amount ? (
                     <p style={{ textAlign: "center" }}>
                       ---------------------------------- OR
                       ----------------------------------
                     </p>
+                  ) : (
+                    ""
                   )}
                   {amount && (
                     <button
