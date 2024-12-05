@@ -327,9 +327,16 @@ export default function Home() {
                         onClick={() => setAppState("crypto")}
                         className="btn-md btn-block button_style"
                       >
-                        Pay With Crypto
+                        Upload reciept{" "}
                       </button>
                     </>
+                  )}
+                  {amount &
+                  (
+                    <p style={{ textAlign: "center" }}>
+                      ---------------------------------- OR
+                      ----------------------------------
+                    </p>
                   )}
                   {amount && (
                     <button
