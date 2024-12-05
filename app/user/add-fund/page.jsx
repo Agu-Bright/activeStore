@@ -152,7 +152,7 @@ export default function Home() {
         amount: amount,
         method: "Transfer",
         network: main?.network,
-        usdt:"",
+        usdt: "",
         screenShot: image,
         status: "pending",
       });
@@ -464,7 +464,7 @@ export default function Home() {
                                     marginTop: "10px",
                                     color: "white",
                                   }}
-                                  onClick={handleSubmit}
+                                  onClick={handleSubmit2}
                                 >
                                   Submit
                                 </button>
