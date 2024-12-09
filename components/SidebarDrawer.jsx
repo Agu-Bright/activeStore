@@ -71,6 +71,16 @@ function SideBarDrawer({ open, close }) {
                       <div>Add Funds</div>
                     </Link>
                   </li>
+                  {/* <li
+                    className={`${
+                      pathname === "/user/add-fund" ? "active" : ""
+                    }`}
+                  >
+                    <Link href="/user/add-fund" style={{ display: "flex" }}>
+                      <AccountBalanceWalletIcon sx={{ marginRight: "10px" }} />{" "}
+                      <div>How To Login</div>
+                    </Link>
+                  </li> */}
                   <li
                     className={`${pathname === "/user/rules" ? "active" : ""}`}
                   >

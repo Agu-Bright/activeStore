@@ -22,7 +22,7 @@ export default function FlutterButton({ session, amount, activeLog, count }) {
       name: session?.user?.username,
     },
     customizations: {
-      title: "Active Store",
+      title: "Happy Mall Store",
       description: `Account Topup`,
       logo: "/img/logo.png",
     },
