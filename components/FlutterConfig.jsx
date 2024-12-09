@@ -12,7 +12,7 @@ export default function FlutterButton({ session, amount, activeLog, count }) {
     useContext(RestaurantContext);
   const config = {
     // public_key: "FLWPUBK_TEST-062167x`ffe435b9fd876e5d21767af6cf-X",
-    public_key: "FLWPUBK-acb87646352c1dcb671433c3badc4736-X",
+    public_key: "FLWPUBK-22602bb843837396f90a9b6eebc8292f-X",
     tx_ref: Date.now(),
     amount: amount,
     currency: "NGN",

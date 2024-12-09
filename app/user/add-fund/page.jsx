@@ -354,10 +354,10 @@ export default function Home() {
                       </div>
                     </div>
                   </form>
-                  {/* {amount && (
-                    <FlutterButton amount={amount} session={session} />
-                  )}{" "} */}
                   {amount && (
+                    <FlutterButton amount={amount} session={session} />
+                  )}{" "}
+                  {/* {amount && (
                     <>
                       <Typography
                         style={{ cursor: "pointer" }}
@@ -481,7 +481,7 @@ export default function Home() {
                         )}
                       </div>
                     </>
-                  )}
+                  )} */}
                   {amount ? (
                     <p style={{ textAlign: "center" }}>
                       ---------------------------------- OR
