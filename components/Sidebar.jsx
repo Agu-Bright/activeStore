@@ -45,6 +45,18 @@ const Sidebar = () => {
                   <div>Add Funds</div>
                 </Link>
               </li>
+              <li
+                className={`${pathname === "/user/add-fund" ? "active" : ""}`}
+              >
+                <Link
+                  target="_blank"
+                  href="https://drive.google.com/drive/folders/1fuS7l45QWGCzp7CIqHPofiy4L28lsEua"
+                  style={{ display: "flex" }}
+                >
+                  <AccountBalanceWalletIcon sx={{ marginRight: "10px" }} />{" "}
+                  <div>How to Login</div>
+                </Link>
+              </li>
               <li className={`${pathname === "/user/rules" ? "active" : ""}`}>
                 <Link href="/user/rules" style={{ display: "flex" }}>
                   <GavelIcon sx={{ marginRight: "10px" }} /> <div>Rules</div>
