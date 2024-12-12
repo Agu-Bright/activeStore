@@ -16,7 +16,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
-
+import AcUnitIcon from "@mui/icons-material/AcUnit";
 function SideBarDrawer({ open, close }) {
   const pathname = usePathname();
   const { data: session } = useSession();
@@ -69,6 +69,20 @@ function SideBarDrawer({ open, close }) {
                     <Link href="/user/add-fund" style={{ display: "flex" }}>
                       <AccountBalanceWalletIcon sx={{ marginRight: "10px" }} />{" "}
                       <div>Add Funds</div>
+                    </Link>
+                  </li>
+                  <li
+                    className={`${
+                      pathname === "/user/add-fund" ? "active" : ""
+                    }`}
+                  >
+                    <Link
+                      target="_blank"
+                      href="https://drive.google.com/drive/folders/1fuS7l45QWGCzp7CIqHPofiy4L28lsEua"
+                      style={{ display: "flex" }}
+                    >
+                      <AcUnitIcon sx={{ marginRight: "10px" }} />{" "}
+                      <div>How to Login</div>
                     </Link>
                   </li>
                   <li
