@@ -203,6 +203,20 @@ export default function Home() {
                   target="_blank"
                 >
                   <img
+                    src="/img/Xmas.PNG"
+                    alt="flier"
+                    style={{ width: "100%" }}
+                  />
+                </a>
+              </SwiperSlide>
+              <SwiperSlide>
+                {" "}
+                <a
+                  // href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
+                  href="https://t.me/activest0re"
+                  target="_blank"
+                >
+                  <img
                     src="/img/flier-3.png"
                     alt="flier"
                     style={{ width: "100%" }}
