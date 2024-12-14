@@ -189,7 +189,7 @@ export default function Home() {
                   target="_blank"
                 >
                   <img
-                    src="/img/flier-1.png"
+                    src="/img/Xmas.PNG"
                     alt="flier"
                     style={{ width: "100%" }}
                   />
@@ -203,12 +203,13 @@ export default function Home() {
                   target="_blank"
                 >
                   <img
-                    src="/img/Xmas.PNG"
+                    src="/img/flier-1.png"
                     alt="flier"
                     style={{ width: "100%" }}
                   />
                 </a>
               </SwiperSlide>
+
               <SwiperSlide>
                 {" "}
                 <a
