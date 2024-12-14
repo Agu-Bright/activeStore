@@ -7,6 +7,7 @@ import { RestaurantContext } from "@context/RestaurantContext";
 import { toast } from "react-toastify";
 import { Bounce } from "react-toastify"; // Import the Bounce transition if it's provided by your toast library
 import "react-toastify/dist/ReactToastify.css";
+
 export default function FlutterButton({ session, amount, activeLog, count }) {
   const { setLoading, handleClose, setOpen, setState } =
     useContext(RestaurantContext);
