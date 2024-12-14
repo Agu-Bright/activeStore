@@ -17,7 +17,7 @@ export default function SquadPayButton({ session, amount, activeLog, count }) {
     key: "pk_83ae5e454fe23e2949bca7910cf6401c53dd6d2e",
     email: session?.user?.email,
     amount: amount, // Amount in Naira, no need to multiply by 100
-    currencyCode: "NGN",  
+    currencyCode: "NGN",
   };
 
   const handlePaymentSuccess = async (response) => {
@@ -74,7 +74,7 @@ export default function SquadPayButton({ session, amount, activeLog, count }) {
     <div>
       <SquadPay
         className="btn-md btn-block flutter_style"
-        text="Pay Now"
+        text="Pay with Squad-co"
         params={params}
         onClose={handlePaymentClose}
         onLoad={handleWidgetLoad}
