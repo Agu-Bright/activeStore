@@ -358,7 +358,7 @@ export default function Home() {
                   {/* {amount && (
                     <FlutterButton amount={amount} session={session} />
                   )}{" "} */}
-                  {/* {amount && (
+                  {amount && (
                     <>
                       <Typography
                         style={{ cursor: "pointer" }}
@@ -482,14 +482,13 @@ export default function Home() {
                         )}
                       </div>
                     </>
-                  )} */}
-                  {amount && (
-                    <SquadPayButton amount={amount} session={session} />
                   )}
+                  {/* {amount && (
+                    <SquadPayButton amount={amount} session={session} />
+                  )} */}
                   {amount ? (
                     <p style={{ textAlign: "center" }}>
-                      ---------------------------------- OR
-                      ----------------------------------
+                      -------------- OR --------------{" "}
                     </p>
                   ) : (
                     ""
