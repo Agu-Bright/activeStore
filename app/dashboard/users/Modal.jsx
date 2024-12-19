@@ -90,6 +90,57 @@ export default function DeleteModal({
       setLoading(false);
     }
   };
+  const handleAccountDebit = async () => {
+    if (!amount) {
+      toast.error("Invalid Input", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
+    }
+    try {
+      setLoading(true);
+      await axios.post("/api/debit", {
+        amount: amount,
+        user: active?.user?._id,
+        method: "Admin_debit",
+      });
+      toast.error("Successful", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      setOpen(false);
+      setState((prev) => !prev);
+      setLoading(false);
+    } catch (error) {
+      toast.error(error?.response?.data?.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      setLoading(false);
+    }
+  };
 
   const handleDelete = async (id) => {
     try {
@@ -165,6 +216,72 @@ export default function DeleteModal({
                   }}
                 >
                   Top Up
+                </button>
+              ) : (
+                <button
+                  style={{
+                    color: "white",
+                    background: "green",
+                    border: "none",
+                    borderRadius: "5px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: "10px",
+                  }}
+                >
+                  <CircularProgress sx={{ color: "white" }} size={18} />
+                </button>
+              )}
+            </Stack>
+          </Box>
+        </Modal>
+      </div>
+    );
+  } else if (type === "remove") {
+    return (
+      <div>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <Stack direction="row" justifyContent="space-between">
+              <div></div>
+              <IconButton onClick={handleClose}>
+                <ClearIcon />
+              </IconButton>
+            </Stack>
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              Debit Account{" "}
+            </Typography>
+            <div className="form-group" style={{ marginTop: "10px" }}>
+              <input
+                style={{ width: "100%" }}
+                type="number"
+                name="amount"
+                className="input-text"
+                placeholder="Enter Amount"
+                onChange={(e) => setAmount(e.target.value)}
+                value={amount}
+              />
+            </div>
+
+            <Stack direction="row" justifyContent="space-between">
+              <div></div>
+              {!loading ? (
+                <button
+                  onClick={() => handleAccountDebit()}
+                  style={{
+                    color: "white",
+                    background: "green",
+                    border: "none",
+                    borderRadius: "5px",
+                  }}
+                >
+                  Debit{" "}
                 </button>
               ) : (
                 <button

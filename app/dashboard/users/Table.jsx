@@ -11,6 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DeleteModal from "./Modal";
 import { RestaurantContext } from "@context/RestaurantContext";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 const Table = () => {
   const { formatDateToReadable, formatMoney, setType } =
     useContext(RestaurantContext);
@@ -57,6 +58,7 @@ const Table = () => {
     "Created At",
     "Delete",
     "Top Up",
+    "Debit",
   ];
   const [state, setState] = useState(false);
   useEffect(() => {
@@ -143,7 +145,16 @@ const Table = () => {
             handleOpen();
           }}
         >
-          <AddCircleIcon sx={{ color: "green" }} />
+          <AddCircleIcon sx={{ color: "blue" }} />
+        </IconButton>,
+        <IconButton
+          onClick={() => {
+            setActive(order);
+            setType("remove");
+            handleOpen();
+          }}
+        >
+          <RemoveCircleIcon sx={{ color: "red" }} />
         </IconButton>,
       ])
     );
