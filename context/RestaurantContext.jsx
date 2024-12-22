@@ -18,7 +18,7 @@ const RestaurantContextProvider = ({ children }) => {
   const [myCountry, setMyCountry] = useState("");
   const [sidebar2, setSideBar2] = useState(false);
   const [globalCat, setGlobalCat] = useState([]);
-
+  const [activeLoading, setActiveLoading] = useState(false);
   //reservation Data
   const [date, setDate] = useState();
   const [time, setTime] = useState();
@@ -240,6 +240,8 @@ const RestaurantContextProvider = ({ children }) => {
         setType2,
         rate,
         formatDollar,
+        activeLoading,
+        setActiveLoading,
       }}
     >
       {children}

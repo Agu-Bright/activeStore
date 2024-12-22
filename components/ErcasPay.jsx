@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams } from "next/navigation";
 
 export default function PaymentButton({ session, amount }) {
-  const { setLoading, handleClose, setOpen, setState } =
+  const { setLoading, handleClose, setOpen, setState, setActiveLoading } =
     useContext(RestaurantContext);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -77,14 +77,15 @@ export default function PaymentButton({ session, amount }) {
   };
 
   useEffect(() => {
-    const transactionRef = searchParams.get("transactionRef"); // Get transactionRef from URL
-    if (transactionRef) {
-      verifyPayment(transactionRef);
+    const transRef = searchParams.get("transRef"); // Get transRef from URL
+    if (transRef) {
+      console.log("THERE IS TRANSACTION REFERENCE");
+      verifyPayment(transRef);
     }
   }, [searchParams]);
 
   const verifyPayment = async (transactionRef) => {
-    setLoading(true);
+    setActiveLoading(true);
     try {
       const response = await fetch(
         `${baseUrl}/payment/transaction/verify/${transactionRef}`,
@@ -100,22 +101,18 @@ export default function PaymentButton({ session, amount }) {
       const result = await response.json();
 
       if (result?.requestSuccessful) {
-        // Update deposit and notify user
         await axios.post("/api/deposit/create-deposit/", {
           amount,
-          method: "newPaymentMethod", // Adjust as needed
+          method: "newPaymentMethod",
         });
-
         toast.success("Payment verified and deposit successful.", {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: true,
           transition: Bounce,
         });
-
-        setState((prev) => !prev); // Trigger state update
+        setState((prev) => !prev);
         handleClose();
-        router.push("/user/dashboard"); // Redirect to a dashboard or appropriate page
       } else {
         toast.error(result?.responseMessage || "Payment verification failed.", {
           position: "top-center",
@@ -133,7 +130,7 @@ export default function PaymentButton({ session, amount }) {
         transition: Bounce,
       });
     } finally {
-      setLoading(false);
+      setActiveLoading(false);
     }
   };
 

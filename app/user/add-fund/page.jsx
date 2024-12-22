@@ -487,9 +487,7 @@ export default function Home() {
                   {/* {amount && (
                     <SquadPayButton amount={amount} session={session} />
                   )} */}
-                  {amount && (
-                    <PaymentButton amount={amount} session={session} />
-                  )}
+                  <PaymentButton amount={amount} session={session} />
                   {amount ? (
                     <p style={{ textAlign: "center" }}>
                       -------------- OR --------------{" "}
