@@ -135,8 +135,12 @@ export default function PaymentButton({ session, amount }) {
   };
 
   return (
-    <button onClick={initializePayment} className="btn-md">
-      TEST MODE, DONT PAY
+    <button
+      onClick={initializePayment}
+      style={{ background: "blue", color: "white" }}
+      className="btn-md"
+    >
+      Pay Now{" "}
     </button>
   );
 }
