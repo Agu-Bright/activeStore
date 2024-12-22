@@ -23,6 +23,7 @@ import { RestaurantContext } from "@context/RestaurantContext";
 import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite";
 import ClearIcon from "@mui/icons-material/Clear";
 import SquadPayButton from "@components/SquadConfig";
+import PaymentButton from "@components/ErcasPay";
 
 function formatDateString(dateString) {
   // Create a new Date object from the input date string
@@ -358,7 +359,7 @@ export default function Home() {
                   {/* {amount && (
                     <FlutterButton amount={amount} session={session} />
                   )}{" "} */}
-                  {amount && (
+                  {/* {amount && (
                     <>
                       <Typography
                         style={{ cursor: "pointer" }}
@@ -482,10 +483,13 @@ export default function Home() {
                         )}
                       </div>
                     </>
-                  )}
+                  )} */}
                   {/* {amount && (
                     <SquadPayButton amount={amount} session={session} />
                   )} */}
+                  {amount && (
+                    <PaymentButton amount={amount} session={session} />
+                  )}
                   {amount ? (
                     <p style={{ textAlign: "center" }}>
                       -------------- OR --------------{" "}
