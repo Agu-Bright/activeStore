@@ -102,8 +102,8 @@ export default function PaymentButton({ session, amount }) {
 
       if (result?.requestSuccessful) {
         await axios.post("/api/deposit/create-deposit/", {
-          amount,
-          method: "newPaymentMethod",
+          amount: result?.responseBody?.amount,
+          method: "ErcasPay",
         });
         toast.success("Payment verified and deposit successful.", {
           position: "top-center",
@@ -112,7 +112,7 @@ export default function PaymentButton({ session, amount }) {
           transition: Bounce,
         });
         setState((prev) => !prev);
-        handleClose();
+        // handleClose();
       } else {
         toast.error(result?.responseMessage || "Payment verification failed.", {
           position: "top-center",

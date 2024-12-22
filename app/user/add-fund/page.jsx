@@ -52,7 +52,7 @@ function formatAmountWithCommas(amount) {
 }
 
 export default function Home() {
-  const { data: session, status } = useSession();
+  const { data: session, status, activeLoading } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState("");
@@ -75,6 +75,8 @@ export default function Home() {
       el.click();
     }
   };
+  
+
 
   const handleSubmit = async () => {
     if (!amount && !paymentMethod) {
@@ -487,7 +489,11 @@ export default function Home() {
                   {/* {amount && (
                     <SquadPayButton amount={amount} session={session} />
                   )} */}
-                  <PaymentButton amount={amount} session={session} />
+                  {activeLoading ? (
+                    <CircularProgress size={15} sx={{ color: "blue" }}/>
+                  ) : (
+                    <PaymentButton amount={amount} session={session} />
+                  )}
                   {amount ? (
                     <p style={{ textAlign: "center" }}>
                       -------------- OR --------------{" "}
