@@ -362,7 +362,7 @@ export default function Home() {
                   {/* {amount && (
                     <FlutterButton amount={amount} session={session} />
                   )}{" "} */}
-                  {/* {amount && (
+                 {amount && (
                     <>
                       <Typography
                         style={{ cursor: "pointer" }}
@@ -486,15 +486,15 @@ export default function Home() {
                         )}
                       </div>
                     </>
-                  )} */}
+                  )} 
                   {/* {amount && (
                     <SquadPayButton amount={amount} session={session} />
                   )} */}
-                  {activeLoading ? (
+                  {/* {activeLoading ? (
                     <CircularProgress size={15} sx={{ color: "blue" }} />
                   ) : (
                     <PaymentButton amount={amount} session={session} />
-                  )}
+                  )} */}
                   {amount ? (
                     <p style={{ textAlign: "center" }}>
                       -------------- OR --------------{" "}
