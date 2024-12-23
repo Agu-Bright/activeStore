@@ -75,8 +75,6 @@ export default function Home() {
       el.click();
     }
   };
-  
-
 
   const handleSubmit = async () => {
     if (!amount && !paymentMethod) {
@@ -271,7 +269,10 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [colors.length]);
   const handleClick = () => {
-    window.open("https://streamable.com/1uvcrz", "_blank");
+    window.open(
+      "https://drive.google.com/file/d/11uFSKv63FEvZ2GoFQbvaAzADjtPDGWSM/view?usp=drivesdk",
+      "_blank"
+    );
   };
 
   useEffect(() => {
@@ -490,7 +491,7 @@ export default function Home() {
                     <SquadPayButton amount={amount} session={session} />
                   )} */}
                   {activeLoading ? (
-                    <CircularProgress size={15} sx={{ color: "blue" }}/>
+                    <CircularProgress size={15} sx={{ color: "blue" }} />
                   ) : (
                     <PaymentButton amount={amount} session={session} />
                   )}
