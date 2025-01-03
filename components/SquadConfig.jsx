@@ -74,7 +74,7 @@ export default function SquadPayButton({ session, amount, activeLog, count }) {
     <div>
       <SquadPay
         className="btn-md btn-block flutter_style"
-        text="Pay with Squad-co"
+        text="Pay with Card"
         params={params}
         onClose={handlePaymentClose}
         onLoad={handleWidgetLoad}

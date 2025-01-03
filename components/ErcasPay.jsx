@@ -140,7 +140,7 @@ export default function PaymentButton({ session, amount }) {
       style={{ background: "blue", color: "white" }}
       className="btn-md"
     >
-      Pay Now{" "}
+      Pay With Transfer
     </button>
   );
 }
