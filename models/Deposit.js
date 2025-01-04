@@ -36,7 +36,6 @@ const depositModel = new mongoose.Schema({
     default: Date.now,
   },
 });
-const Deposit =
-  mongoose.models.Deposit || mongoose.model("Deposit", depositModel);
+const Deposit = mongoose.model("Deposit", depositModel);
 
 export default Deposit;

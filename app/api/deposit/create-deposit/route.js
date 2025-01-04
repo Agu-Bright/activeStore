@@ -52,7 +52,7 @@ export const POST = async (req, res) => {
       method: body.method,
       amount: Number(body.amount),
       status: "success",
-      transactionRef: body.transactionRef,
+      transactionRef: body?.transactionRef,
     });
     wallet.balance = wallet.balance + Number(deposit.amount);
     await wallet.save();
