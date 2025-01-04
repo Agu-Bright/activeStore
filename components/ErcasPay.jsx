@@ -13,11 +13,11 @@ export default function PaymentButton({ session, amount }) {
   const { setLoading, handleClose, setOpen, setState, setActiveLoading } =
     useContext(RestaurantContext);
   const router = useRouter();
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
 
   const [reference, setReference] = useState("");
 
-  const baseUrl = " https://api.ercaspay.com/api/v1";
+  const baseUrl = "https://api.ercaspay.com/api/v1";
   const secretKey = "ECRS-LIVE-SKaFF2rOeaMLVGptmUjQaKZ2vxlnysAhtg8CXYjkHG";
   const initializePayment = async () => {
     setLoading(true);
@@ -33,7 +33,7 @@ export default function PaymentButton({ session, amount }) {
         body: JSON.stringify({
           amount,
           paymentReference: reference,
-          paymentMethods: "card,bank-transfer,ussd,qrcode",
+          paymentMethods: "bank-transfer",
           customerName: "active user",
           customerEmail: session?.user?.email,
           redirectUrl: "https://activestore.org/user/add-fund",
@@ -76,13 +76,12 @@ export default function PaymentButton({ session, amount }) {
     }
   };
 
-  useEffect(() => {
-    const transRef = searchParams.get("transRef"); // Get transRef from URL
-    if (transRef) {
-      console.log("THERE IS TRANSACTION REFERENCE");
-      verifyPayment(transRef);
-    }
-  }, [searchParams]);
+  // useEffect(() => {
+  //   if (transRef) {
+  //     alert(`THERE IS TRANSACTION REFERENCE ${transRef}`);
+  //     verifyPayment(transRef);
+  //   }
+  // }, [searchParams]);
 
   const verifyPayment = async (transactionRef) => {
     setActiveLoading(true);
@@ -138,7 +137,8 @@ export default function PaymentButton({ session, amount }) {
     <button
       onClick={initializePayment}
       style={{ background: "blue", color: "white" }}
-      className="btn-md"
+      // className="btn-md"
+      className="btn-md btn-block flutter_style"
     >
       Pay With Transfer
     </button>

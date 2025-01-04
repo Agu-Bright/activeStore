@@ -11,6 +11,7 @@ const depositModel = new mongoose.Schema({
     required: true,
     ref: "Wallet",
   },
+  transactionRef: { type: String, unique: true },
   screenShot: {
     type: String,
   },

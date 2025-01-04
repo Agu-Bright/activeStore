@@ -9,6 +9,7 @@ import {
   IconButton,
   Avatar,
   Divider,
+  Button,
 } from "@mui/material";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -24,6 +25,52 @@ import PlayCircleFilledWhiteIcon from "@mui/icons-material/PlayCircleFilledWhite
 import ClearIcon from "@mui/icons-material/Clear";
 import SquadPayButton from "@components/SquadConfig";
 import PaymentButton from "@components/ErcasPay";
+import { useSearchParams } from "next/navigation";
+
+import Modal from "@mui/material/Modal";
+import { borderRadius } from "@mui/system";
+
+const LoadingModal = ({ open, setOpen }) => {
+  // const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    borderRadius: "10px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    p: 4,
+  };
+  return (
+    <div>
+      {/* <Button onClick={handleOpen}>Open modal</Button> */}
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <CircularProgress />
+          <Typography
+            style={{ fontSize: "10px", color: "gray", marginTop: "10px" }}
+          >
+            Verifying Transaction ...
+          </Typography>
+          <Typography>Do not refersh this page</Typography>
+        </Box>
+      </Modal>
+    </div>
+  );
+};
 
 function formatDateString(dateString) {
   // Create a new Date object from the input date string
@@ -52,7 +99,7 @@ function formatAmountWithCommas(amount) {
 }
 
 export default function Home() {
-  const { data: session, status, activeLoading } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState("");
@@ -62,8 +109,83 @@ export default function Home() {
   const [image, setImage] = useState("");
   const [active, setActive] = useState("");
   const [main, setMain] = useState("");
-  const { state, setState, rate, formatMoney, formatDollar } =
-    useContext(RestaurantContext);
+  const [open, setOpen] = useState(false);
+  const baseUrl = " https://api.ercaspay.com/api/v1";
+
+  const {
+    state,
+    setState,
+    rate,
+    formatMoney,
+    formatDollar,
+    activeLoading,
+    setActiveLoading,
+  } = useContext(RestaurantContext);
+  const searchParams = useSearchParams();
+
+  const verifyPayment = async (transactionRef) => {
+    setActiveLoading(true);
+    try {
+      const response = await fetch(
+        `${baseUrl}/payment/transaction/verify/${transactionRef}`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const result = await response.json();
+
+      if (result?.requestSuccessful) {
+        await axios.post("/api/deposit/create-deposit/", {
+          amount: result?.responseBody?.amount,
+          method: "ErcasPay",
+          transactionRef: transactionRef,
+        });
+        toast.success("Payment verified and deposit successful.", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          transition: Bounce,
+        });
+        setOpen(false);
+        setState((prev) => !prev);
+        // handleClose();
+      } else {
+        toast.error(result?.responseMessage || "Payment verification failed.", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: true,
+          transition: Bounce,
+        });
+        setOpen(false);
+      }
+    } catch (error) {
+      console.error("Payment Verification Error:", error);
+      // toast.error("An error occurred during payment verification.", {
+      //   position: "top-center",
+      //   autoClose: 5000,
+      //   hideProgressBar: true,
+      //   transition: Bounce,
+      // });
+      setOpen(false);
+    } finally {
+      setActiveLoading(false);
+      setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    const transRef = searchParams.get("transRef"); // Get transRef from URL
+    if (transRef) {
+      setOpen(true);
+      console.log("THERE IS TRANSACTION REFERENCE");
+      verifyPayment(transRef);
+    }
+  }, [searchParams]);
 
   const [adminWallet, setAdminWallets] = useState([]);
 
@@ -255,7 +377,6 @@ export default function Home() {
   //--------------------------------------------------------------------------------------------------------------------
 
   const [colorIndex, setColorIndex] = useState(0);
-
   // Define the colors to cycle through
   const colors = ["red", "blue", "green"];
 
@@ -494,11 +615,22 @@ export default function Home() {
                   {amount && (
                     <PaymentButton amount={amount} session={session} />
                   )} */}
-                  {/* {activeLoading ? (
+                  {activeLoading ? (
                     <CircularProgress size={15} sx={{ color: "blue" }} />
                   ) : (
-                    <PaymentButton amount={amount} session={session} />
-                  )} */}
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        marginTop: "10px",
+                      }}
+                    >
+                      {amount && (
+                        <PaymentButton amount={amount} session={session} />
+                      )}
+                    </div>
+                  )}
                   {amount ? (
                     <p style={{ textAlign: "center" }}>------- OR ------- </p>
                   ) : (
@@ -812,6 +944,7 @@ export default function Home() {
                   );
                 })}
             </Stack>
+            <LoadingModal open={open} setOpen={setOpen} />
           </div>
         </div>
       </NavPage>
