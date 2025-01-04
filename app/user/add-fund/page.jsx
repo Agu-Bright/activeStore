@@ -14,7 +14,7 @@ import {
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 import "./style.css";
 import { toast } from "react-toastify";
 import { Bounce } from "react-toastify"; // Import the Bounce transition if it's provided by your toast library
@@ -98,7 +98,7 @@ function formatAmountWithCommas(amount) {
   return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-export default function Home() {
+const HomeData = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -188,7 +188,6 @@ export default function Home() {
   }, [searchParams]);
 
   const [adminWallet, setAdminWallets] = useState([]);
-
   const [appState, setAppState] = useState("default");
 
   const handleScreenshot = () => {
@@ -949,4 +948,12 @@ export default function Home() {
         </div>
       </NavPage>
     );
+};
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeData />
+    </Suspense>
+  );
 }
