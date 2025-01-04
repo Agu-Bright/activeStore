@@ -183,21 +183,7 @@ export default function Home() {
             >
               <SwiperSlide>
                 {" "}
-                <a
-                  // href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
-                  href="https://t.me/activest0re"
-                  target="_blank"
-                >
-                  <img
-                    src="/img/Xmas.PNG"
-                    alt="flier"
-                    style={{ width: "100%" }}
-                  />
-                </a>
-              </SwiperSlide>
-              <SwiperSlide>
-                {" "}
-                <a
+                <a  
                   // href="https://chat.whatsapp.com/LotGhr8csOs3pAYbkK14Eb"
                   href="https://t.me/activest0re"
                   target="_blank"
