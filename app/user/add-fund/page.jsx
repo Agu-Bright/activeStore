@@ -175,6 +175,7 @@ const HomeData = () => {
     } finally {
       setActiveLoading(false);
       setOpen(false);
+      router.push("/user/add-fund");
     }
   };
 

@@ -46,14 +46,25 @@ export const POST = async (req, res) => {
       );
     }
     //create deposit for this user
-    const deposit = await Deposit.create({
-      user: session?.user.id,
-      wallet: wallet.user,
-      method: body.method,
-      amount: Number(body.amount),
-      status: "success",
-      transactionRef: body?.transactionRef,
-    });
+    let deposit;
+    if (body?.transactionRef) {
+      deposit = await Deposit.create({
+        user: session?.user.id,
+        wallet: wallet.user,
+        method: body.method,
+        amount: Number(body.amount),
+        status: "success",
+        transactionRef: body?.transactionRef,
+      });
+    } else {
+      deposit = await Deposit.create({
+        user: session?.user.id,
+        wallet: wallet.user,
+        method: body.method,
+        amount: Number(body.amount),
+        status: "success",
+      });
+    }
     wallet.balance = wallet.balance + Number(deposit.amount);
     await wallet.save();
 
