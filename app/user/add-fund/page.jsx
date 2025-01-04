@@ -490,10 +490,10 @@ export default function Home() {
                   {amount && (
                     <SquadPayButton amount={amount} session={session} />
                   )}
-                  <p style={{ textAlign: "center" }}>------- OR ------- </p>
+                  {/* <p style={{ textAlign: "center" }}>------- OR ------- </p>
                   {amount && (
                     <PaymentButton amount={amount} session={session} />
-                  )}
+                  )} */}
                   {/* {activeLoading ? (
                     <CircularProgress size={15} sx={{ color: "blue" }} />
                   ) : (
