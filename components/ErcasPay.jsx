@@ -39,7 +39,7 @@ export default function PaymentButton({ session, amount }) {
           redirectUrl: "https://activestore.org/user/add-fund",
           description: "Account Topup",
           currency: "NGN",
-          // feeBearer: "customer",
+          feeBearer: "merchant",
           metadata: {
             email: session?.user?.email,
           },
