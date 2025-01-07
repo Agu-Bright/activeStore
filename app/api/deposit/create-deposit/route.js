@@ -29,7 +29,7 @@ export const POST = async (req, res) => {
       return new Response(
         JSON.stringify({
           success: false,
-          message: "Incomplet Deposit details",
+          message: "Incomplete Deposit details",
         }),
         {
           status: 404,
@@ -48,6 +48,23 @@ export const POST = async (req, res) => {
     //create deposit for this user
     let deposit;
     if (body?.transactionRef) {
+      //check if depeosit already exist
+
+      const alreadyexist = await Deposit.findOne({
+        transactionRef: body?.transactionRef,
+      });
+
+      if (alreadyexist) {
+        return new Response(
+          JSON.stringify({
+            success: false,
+            message: "Transaction Aleady Exists",
+          }),
+          {
+            status: 409,
+          }
+        );
+      }
       deposit = await Deposit.create({
         user: session?.user.id,
         wallet: wallet.user,
@@ -72,12 +89,6 @@ export const POST = async (req, res) => {
       status: 200,
     });
   } catch (error) {
-    if ((error.code = 11000 && error.keyPattern && error.keyValue)) {
-      return new Response(
-        JSON.stringify({ success: false, message: "User already exist" }),
-        { status: 500 }
-      );
-    }
     return new Response(
       JSON.stringify({ success: false, message: error.message }),
       { status: 500 }
