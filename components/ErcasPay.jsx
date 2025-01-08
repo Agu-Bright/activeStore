@@ -141,6 +141,10 @@ export default function PaymentButton({ session, amount }) {
       className="btn-md btn-block flutter_style"
     >
       Pay With Transfer
+      <Typography sx={{ color: "red" }}>
+        Pls After making payment, wait to be redirected back to our platform
+        (Don't refresh or leave the page)
+      </Typography>
     </button>
   );
 }

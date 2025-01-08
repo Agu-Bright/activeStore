@@ -180,7 +180,7 @@ const HomeData = () => {
   };
 
   useEffect(() => {
-    const transRef = searchParams.get("transRef"); // Get transRef from URL
+    const transRef = searchParams.get("transRef"); 
     if (transRef) {
       setOpen(true);
       console.log("THERE IS TRANSACTION REFERENCE");
