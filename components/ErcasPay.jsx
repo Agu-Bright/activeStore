@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { Bounce } from "react-toastify"; // Import the Bounce transition
 import "react-toastify/dist/ReactToastify.css";
 import { useSearchParams } from "next/navigation";
+import { Typography } from "@mui/material";
 
 export default function PaymentButton({ session, amount }) {
   const { setLoading, handleClose, setOpen, setState, setActiveLoading } =
