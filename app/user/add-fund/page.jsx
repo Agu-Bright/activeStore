@@ -627,13 +627,13 @@ const HomeData = () => {
                       }}
                     >
                       {amount && (
-                        <>
+                        <Stack direction="column">
                           <PaymentButton amount={amount} session={session} />
-                          <Typography sx={{ color: "red" }}>
+                          <Typography sx={{ color: "red", marginTop: "5px" }}>
                             Pls After making payment, wait to be redirected back
                             to our platform (Don't refresh or leave the page)
                           </Typography>
-                        </>
+                        </Stack>
                       )}
                     </div>
                   )}
