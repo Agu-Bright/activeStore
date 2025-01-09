@@ -180,7 +180,7 @@ const HomeData = () => {
   };
 
   useEffect(() => {
-    const transRef = searchParams.get("transRef"); 
+    const transRef = searchParams.get("transRef");
     if (transRef) {
       setOpen(true);
       console.log("THERE IS TRANSACTION REFERENCE");
@@ -627,7 +627,13 @@ const HomeData = () => {
                       }}
                     >
                       {amount && (
-                        <PaymentButton amount={amount} session={session} />
+                        <>
+                          <PaymentButton amount={amount} session={session} />
+                          <Typography sx={{ color: "red" }}>
+                            Pls After making payment, wait to be redirected back
+                            to our platform (Don't refresh or leave the page)
+                          </Typography>
+                        </>
                       )}
                     </div>
                   )}
